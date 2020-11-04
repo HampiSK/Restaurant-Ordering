@@ -3,6 +3,7 @@ To start the server run the following command in the terminal:
 ```shell
 $ node index.js
 ```
+
 ### Configure the Preview
 
 Next click on the small white arrow to the right of the **Live Site** menu and choose **New browser tab**.

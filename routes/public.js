@@ -1,4 +1,3 @@
-
 import Router from 'koa-router'
 
 const router = new Router()
@@ -12,14 +11,13 @@ const dbName = 'website.db'
  * @name Home Page
  * @route {GET} /
  */
-router.get('/', async ctx => {
+router.get('/', async(ctx) => {
 	try {
 		await ctx.render('index', ctx.hbs)
-	} catch(err) {
+	} catch (err) {
 		await ctx.render('error', ctx.hbs)
 	}
 })
-
 
 /**
  * The user registration page.
@@ -27,7 +25,7 @@ router.get('/', async ctx => {
  * @name Register Page
  * @route {GET} /register
  */
-router.get('/register', async ctx => await ctx.render('register'))
+router.get('/register', async(ctx) => await ctx.render('register'))
 
 /**
  * The script to process new user registrations.
@@ -35,13 +33,20 @@ router.get('/register', async ctx => await ctx.render('register'))
  * @name Register Script
  * @route {POST} /register
  */
-router.post('/register', async ctx => {
+router.post('/register', async(ctx) => {
 	const account = await new Accounts(dbName)
 	try {
 		// call the functions in the module
-		await account.register(ctx.request.body.user, ctx.request.body.pass, ctx.request.body.email)
-		ctx.redirect(`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`)
-	} catch(err) {
+		await account.register(
+			ctx.request.body.user,
+			ctx.request.body.pass,
+
+			ctx.request.body.email
+		)
+		ctx.redirect(
+			`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`
+		)
+	} catch (err) {
 		console.log(err)
 		ctx.hbs.msg = err.message
 		ctx.hbs.body = ctx.request.body
@@ -52,12 +57,12 @@ router.post('/register', async ctx => {
 	}
 })
 
-router.get('/login', async ctx => {
+router.get('/login', async(ctx) => {
 	console.log(ctx.hbs)
 	await ctx.render('login', ctx.hbs)
 })
 
-router.post('/login', async ctx => {
+router.post('/login', async(ctx) => {
 	const account = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
 	try {
@@ -66,7 +71,7 @@ router.post('/login', async ctx => {
 		ctx.session.authorised = true
 		const referrer = body.referrer || '/secure'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
-	} catch(err) {
+	} catch (err) {
 		console.log(err)
 		ctx.hbs.msg = err.message
 		await ctx.render('login', ctx.hbs)
@@ -75,7 +80,7 @@ router.post('/login', async ctx => {
 	}
 })
 
-router.get('/logout', async ctx => {
+router.get('/logout', async(ctx) => {
 	ctx.session.authorised = null
 	ctx.redirect('/?msg=you are now logged out')
 })
