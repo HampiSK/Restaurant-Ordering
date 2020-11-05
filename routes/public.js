@@ -40,12 +40,9 @@ router.post('/register', async(ctx) => {
 		await account.register(
 			ctx.request.body.user,
 			ctx.request.body.pass,
-
 			ctx.request.body.email
 		)
-		ctx.redirect(
-			`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`
-		)
+		ctx.redirect(`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`)
 	} catch (err) {
 		console.log(err)
 		ctx.hbs.msg = err.message
