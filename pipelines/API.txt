@@ -1,0 +1,8 @@
+Name: warm-reef-70327
+
+Client:      <none>
+ID:          23efed70-889d-497d-8a0e-9a44aa86ad4a
+Description: Long-lived user authorization
+Scope:       global
+Token:       e4181e8c-f15f-4624-9492-8633c60eaffc
+Updated at:  Thu Nov 05 2020 23:18:13 GMT+0000 (GMT) (less than a minute ago)
