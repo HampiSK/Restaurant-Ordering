@@ -7,7 +7,6 @@ red=$(tput setaf 1)
 reset=$(tput sgr0)
 
 echo
-chmod +x ./linter.sh
 echo "=========== ${red} RUNNING LINTER FIX${reset} ==============="
 npm run linterf
 echo

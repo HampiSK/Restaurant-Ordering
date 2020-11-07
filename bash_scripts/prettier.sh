@@ -7,7 +7,6 @@ red=$(tput setaf 1)
 reset=$(tput sgr0)
 
 echo
-chmod +x ./prettier.sh
 echo "=========== ${red} RUNNING PRETTIER FORMAT${reset} =========="
 npm run format
 echo

@@ -22,7 +22,19 @@
 		{{/if}}
 		<main>
 		<form action="/register" enctype="multipart/form-data" method="post">
+            <h3>Registration Form</h3>
+            <div class="form-name">
+                <label for="Name">Name</label>
+                <input type="text" name="FirstName" placeholder="First Name" value="{{body.FirstName}}">
+                <input type="text" name="MiddleName" placeholder="Middle Name" value="{{body.MiddleName}}">
+                <input type="text" name="LastName" placeholder="Last Name" value="{{body.LastName}}">
+			</div>
+
 			<p>
+                <label for="start-date">Date of Birth:</label>
+                <input type="date" name="start-date" value="{{body.birth}}"/>
+            </p>
+            <p>
 				<label for="user">Username</label><br />
 				<input type="text" name="user" placeholder="your preferred username (no spaces)" value="{{body.user}}">
 			</p>
