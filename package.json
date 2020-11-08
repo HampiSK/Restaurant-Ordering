@@ -33,8 +33,6 @@
       "npm run linterf",
       "echo \"[Husky] Running linter check: \"",
       "npm run linter",
-      "echo \"[Husky] Running tests: \"",
-      "npm test ./unitTests/*",
       "echo \"[Husky] Running git add: \"",
       "git add -A ."
     ]

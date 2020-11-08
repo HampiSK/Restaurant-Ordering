@@ -5,12 +5,19 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Create an Account</title>
-		<meta name="description" content="form to add new books">
-		<meta name="author" content="Mark Tyers">
+		<meta name="description" content="Registration form to create users">
+		<meta name="author" content="Adam Hampachel">
 		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
-		<script type="module" src="{{host}}/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">     
+        
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="module" src="{{host}}/main.js"></script>      
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>   
 	</head>
 	<body>
+<!--         <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" src="script.js"></script> -->
+
 		<header>
 		<h1>Create an Account</h1>
 		<a href="/login">Log in</a>
@@ -21,46 +28,85 @@
 			</aside>
 		{{/if}}
 		<main>
-		<form action="/register" enctype="multipart/form-data" method="post">
-            <h3>Registration Form</h3>
-            <div class="form-name">
-                <label for="Name">Name</label>
-                <input type="text" name="FirstName" placeholder="First Name" value="{{body.FirstName}}">
-                <input type="text" name="MiddleName" placeholder="Middle Name" value="{{body.MiddleName}}">
-                <input type="text" name="LastName" placeholder="Last Name" value="{{body.LastName}}">
-			</div>
-
-			<p>
-                <label for="start-date">Date of Birth:</label>
-                <input type="date" name="start-date" value="{{body.birth}}"/>
-            </p>
-            <p>
-				<label for="user">Username</label><br />
-				<input type="text" name="user" placeholder="your preferred username (no spaces)" value="{{body.user}}">
-			</p>
-			<p>
-				<label for="FirstName">First Name</label><br />
-				<input type="text" name="FirstName" placeholder="your first name" value="{{body.FirstName}}">
-			</p>
-            <p>
-				<label for="MiddleName">Middle Name</label><br />
-				<input type="text" name="MiddleName" placeholder="your middle name" value="{{body.MiddleName}}">
-			</p>
-            <p>
-				<label for="LastName">Last Name</label><br />
-				<input type="text" name="LastName" placeholder="your last name" value="{{body.LastName}}">
-			</p>
-			<p>
-				<label for="pass">Password</label><br />
-				<input type="password" name="pass" placeholder="your chosen password" value="{{body.pass}}">
-			</p>
-			<p>
-				<label for="email">Email</label><br />
-				<input type="email" name="email" placeholder="a valid email address" value="{{body.email}}">
-			</p>
-			<p><input type="submit" value="Create"></p>
-		</form>
+            <form action="/register" enctype="multipart/form-data" method="post">         
+                <section>
+                    <h2>General Information</h2>
+                    <article class="form-row">
+                        <input type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
+                    </article>
+                    <article class="form-row">
+                        <input type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
+                    </article>
+                    <article class="form-row">
+                        <select list="Genders" name="Gender" required value="{{body.Gender}}">
+                            <datalist id="Genders">
+                                <option selected="true" disabled="disabled">Choose Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </datalist>
+                        </select>
+                    </article>
+                    <article class="form-row">
+                        <label for="Birth">Date of Birth</label>
+                        <input type="date" name="Birth" required value="{{body.Birth}}"/>        
+                    </article>
+                </section>  
+                <section>
+                    <h2>Job Information</h2>
+                    <article class="form-row">
+                        <select list="Positions" name="Position" required value="{{body.Position}}">
+                            <datalist id="Positions">
+                                <option selected="true" disabled="disabled">Choose Position</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Chef">Chef</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Waiter">Waiter</option>
+                            </datalist>
+                        </select>
+                    </article>
+                    <article class="form-row">
+                        <label class="textarea">
+                            <textarea name="Comment" rows="10" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
+                        </label>
+                    </article>
+                </section>   
+                <section>
+                    <h2>Contact Details</h2>
+                    <article class="form-row">
+                        <input type="text" name="Address" placeholder="Address, number" value="{{body.Address}}">           
+                    </article>   
+                    <article class="form-row">
+                        <input type="text" name="City" placeholder="City" value="{{body.City}}">
+                    </article>  
+                    <article class="form-row">
+                        <input type="text" name="Zip" placeholder="Post Code" pattern="[0-9]*" value="{{body.Zip}}">
+                    </article>      
+                    <article class="form-row">
+                        <input type="tel" name="Phone" placeholder="Phone Number" pattern="+[0-9]{9}" value="{{body.Phone}}">           
+                    </article>          
+                    <article class="form-row">
+                        <input type="email" name="Email" placeholder="Email Address" value="{{body.Email}}">   
+                    </article>    
+                </section>
+                <section>
+                    <h2>Will be provided in first login</h2>               
+                    <article class="form-row">
+                        <label for="Password">Password</label><br />
+                        <input id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="*************" required>
+                    </article> 
+                    <article class="form-row">
+                        <label for="PasswordValidation">Confirm Password</label><br />
+                        <input id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="*************" required value="{{body.PasswordValidation}}">
+                    </article>   
+                </section>
+                <section>
+                    <p><input type="submit" value="Create"></p>
+                    <button type="button" class="btn btn-primary btn-lg">Large button</button>
+                    <a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
+                </section>
+            </form>
 		</main>
-	</body>
+	</body>   
 </html>
 

@@ -25,6 +25,25 @@ class Accounts {
 			return this
 		})()
 	}
+	// CREATE TABLE IF NOT EXISTS USER(
+	// 'UserId' INTEGER PRIMARY KEY AUTOINCREMENT,
+	// 'FirstName' VARCHAR(50) NOT NULL,
+	// 'LastName' VARCHAR(50) NOT NULL,
+	// 'Gender' VARCHAR(10) NOT NULL,
+	// 'Birth' DATETIME NOT NULL,
+	// 'Email' VARCHAR(50) NULL DEFAULT NULL,
+	// 'Phone' VARCHAR(50) NULL DEFAULT NULL,
+	// 'PasswordHash' TEXT NOT NULL,
+	// 'Admin' TINYINT(1) NOT NULL DEFAULT 0,
+	// 'Manager' TINYINT(1) NOT NULL DEFAULT 0,
+	// 'Waiter' TINYINT(1) NOT NULL DEFAULT 0,
+	// 'Chef' TINYINT(1) NOT NULL DEFAULT 0,
+	// 'CreatorId' INTEGER NOT NULL,
+	// 'Registered' DATETIME NOT NULL DEFAULT (datetime('now')),
+	// 'LastLogin' DATETIME NULL DEFAULT NULL,
+	// 'Comment' TEXT NULL DEFAULT NULL,
+	// FOREIGN KEY(CreatorId) REFERENCES USER(UserId));
+	// );
 
 	/**
    * registers a new user
