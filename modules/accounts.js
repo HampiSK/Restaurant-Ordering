@@ -25,9 +25,23 @@ class Accounts {
 			return this
 		})()
 	}
+
+	//  			ctx.request.body.FirstName,
+	// 			ctx.request.body.LastName,
+	//             ctx.request.body.PasswordValidation,
+	//             ctx.request.body.Gender,
+	//             ctx.request.body.Birth,
+	//             ctx.request.body.Position,
+	//             ctx.request.body.Comment,
+	//             ctx.request.body.Address,
+	//             ctx.request.body.City,
+	//             ctx.request.body.Zip,
+	//             ctx.request.body.Phone,
+	//             ctx.request.body.Email
 	// CREATE TABLE IF NOT EXISTS USER(
 	// 'UserId' INTEGER PRIMARY KEY AUTOINCREMENT,
 	// 'FirstName' VARCHAR(50) NOT NULL,
+	// 'MiddleName' VARCHAR(50) NOT NULL,
 	// 'LastName' VARCHAR(50) NOT NULL,
 	// 'Gender' VARCHAR(10) NOT NULL,
 	// 'Birth' DATETIME NOT NULL,

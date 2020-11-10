@@ -1,0 +1,145 @@
+header{
+    background-color: #212121;
+    border-bottom: 5px solid #000;
+    height: 15vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    margin-bottom: 20px;
+}
+aside {
+    max-width: 500px;
+    margin: auto;
+    background-color: red;
+}
+body{
+    background: -webkit-linear-gradient(left, rgba(255,145,0,1), rgba(255,192,110,1));
+    position: relative;
+    padding: 25vh 3% 0 0;
+}
+
+.nav-menu{
+    top: 0;
+    padding: 4vh 8% 0 0;
+    color: #fff;
+    font-weight: bold;
+}
+.nav-main{
+    top: 0;
+    padding: 3vh 7% 0 2%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 150%;
+}
+.nav-a{
+    color: #dadada;
+    font-weight: bold;
+    font-size: 115%;
+}
+.nav-a:hover {
+  color: #ffb300;
+}
+.register-left{
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{   
+    height: 36%;
+    background: #f8f9fa;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+
+.btnCreate-left{
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #fe7a0b;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.btnCreate-left:hover{
+    background-color: #fff;
+    color: #fe7a0b;
+}
+.btnCreate{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #fe7a0b;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.btnCreate:hover{
+    background-color: #fff;
+    color: #fe7a0b;
+    border: 1px solid #fe7a0b;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #fe7a0b;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #fe7a0b;
+    border: 2px solid #fe7a0b;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading-left{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #000000;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}

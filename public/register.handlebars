@@ -11,40 +11,26 @@
     <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
     <script type="module" src="{{host}}/main.js"></script>      
-</head>   
-<body class="register">
-    <header> 
-        <ul class="nav justify-content">
-            <li class="nav-item nav-main">
-                <a class="nav-link nav-a" href="#">User Name</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="/login">Login</a>
-            </li>
-        </ul>
-    </header>  
-    {{#if msg}}
+</head>
+<header>
+<h1>Create an Account</h1>
+<a href="/login">Log in</a>
+</header>
+{{#if msg}}
     <aside>
         <p class="msg">{{msg}}</p>
     </aside>
-    {{/if}}	 
+{{/if}}	    
+    
+<body>
     <main> 
-        <section>
+        <section class="container register">
             <form action="/register" enctype="multipart/form-data" method="post">
                 <section class="row">
                     <article class="col-md-3 register-left">
-                        <img src="{{host}}/images/tree.jpg" alt=""/>
-                        <h2 class="register-heading-left">Registration Form</h2>
-                        <input type="submit" class="btnCreate-left"  value="Create"/>
+                        <img src="{{host}}/11.jpg" alt=""/>
+                        <h2 class="register-heading">Registration Form</h2>
+                        <input type="submit" class="btnRegister-left"  value="Create"/>
                     </article>
                     <section class="col-md-9 register-right">
                         <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -64,24 +50,24 @@
                                 <article class="row register-form">
                                     <section class="col-md-6">
                                         <article class="form-group">
-                                            <input class="form-control" type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
-                                        </article>                                        
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
+                                            <input type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
                                         </article>
                                         <article class="form-group">
-                                            <input class="form-control" class="form-control" id="birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
+                                            <input type="text" name="MiddleName" placeholder="Middle Name" required value="{{body.MiddleName}}">
                                         </article>                                            
+                                        <article class="form-group">
+                                            <input type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
+                                        </article>
                                     </section>
                                     <section class="col-md-6">
                                         <article class="form-group">
-                                              <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required>
+                                              <input id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="*************" required>
                                         </article>
                                         <article class="form-group">
-                                            <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required value="{{body.PasswordValidation}}">
+                                            <input id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="*************" required value="{{body.PasswordValidation}}">
                                         </article>
                                         <article class="form-group">
-                                            <select class="form-control" list="Genders" name="Gender" required value="{{body.Gender}}">
+                                            <select list="Genders" name="Gender" required value="{{body.Gender}}">
                                                 <datalist id="Genders">
                                                     <option selected="true" disabled="disabled">Choose Gender</option>
                                                     <option value="Male">Male</option>
@@ -98,7 +84,7 @@
                                 <article class="row register-form">
                                     <section class="col-md-6">
                                         <article class="form-row">
-                                            <select class="form-control" list="Positions" name="Position" required value="{{body.Position}}">
+                                            <select multiple class="form-control" list="Positions" name="Position" required value="{{body.Position}}">
                                                 <datalist id="Positions">
                                                     <option selected="true" disabled="disabled">Choose Position</option>
                                                     <option value="Admin">Admin</option>
@@ -112,7 +98,7 @@
                                     <section class="col-md-6">
                                         <article class="form-row">
                                             <label class="textarea">
-                                                <textarea name="Comment" style="resize:none" rows="4" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
+                                                <textarea name="Comment" rows="3" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
                                             </label>
                                         </article> 
                                     </section>    
@@ -123,23 +109,23 @@
                                 <article class="row register-form">
                                     <article class="col-md-6">
                                         <article class="form-group">
-                                            <input class="form-control" type="text" name="Address" placeholder="Address, number" value="{{body.Address}}">
+                                            <input type="text" name="Address" placeholder="Address, number" value="{{body.Address}}">
                                         </article>
                                         <article class="form-group">
-                                            <input class="form-control" type="text" name="City" placeholder="City" value="{{body.City}}">
+                                            <input type="text" name="City" placeholder="City" value="{{body.City}}">
                                         </article>
                                         <article class="form-group">
-                                            <input class="form-control" type="text" name="Zip" placeholder="Post Code" pattern="[0-9]*" value="{{body.Zip}}">
+                                            <input type="text" name="Zip" placeholder="Post Code" pattern="[0-9]*" value="{{body.Zip}}">
                                         </article>
                                     </article>
                                     <article class="col-md-6">
                                         <article class="form-group">
-                                            <input class="form-control" type="tel" name="Phone" placeholder="Phone Number" pattern="+[0-9]{9}" value="{{body.Phone}}">                   
+                                            <input type="tel" name="Phone" placeholder="Phone Number" pattern="+[0-9]{9}" value="{{body.Phone}}">                   
                                         </article>                                            
                                         <article class="form-group">
-                                            <input class="form-control" type="email" name="Email" placeholder="Email Address" value="{{body.Email}}">
+                                            <input type="email" name="Email" placeholder="Email Address" value="{{body.Email}}">
                                         </article>
-                                        <input type="submit" class="btnCreate"  value="Create">
+                                        <input type="submit" class="btnRegister"  value="Register"/>
                                     </article>
                                 </article>
                             </section>
