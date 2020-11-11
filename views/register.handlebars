@@ -1,152 +1,158 @@
 <!doctype html>
 
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Create an Account</title>
-    <meta name="description" content="Registration form to create users">
-    <meta name="author" content="Adam Hampachel">
-    <link href="{{host}}/style-register.css" type="text/css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
-    <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
-    <script type="module" src="{{host}}/main.js"></script>      
-</head>   
-<body class="register">
-    <header> 
-        <ul class="nav justify-content">
-            <li class="nav-item nav-main">
-                <a class="nav-link nav-a" href="#">User Name</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="#">Link</a>
-            </li>
-            <li class="nav-item nav-menu">
-                <a class="nav-link nav-a" href="/login">Login</a>
-            </li>
-        </ul>
-    </header>  
-    {{#if msg}}
-    <aside>
-        <p class="msg">{{msg}}</p>
-    </aside>
-    {{/if}}	 
-    <main> 
-        <section>
-            <form action="/register" enctype="multipart/form-data" method="post">
-                <section class="row">
-                    <article class="col-md-3 register-left">
-                        <img src="{{host}}/images/tree.jpg" alt=""/>
-                        <h2 class="register-heading-left">Registration Form</h2>
-                        <input type="submit" class="btnCreate-left"  value="Create"/>
-                    </article>
-                    <section class="col-md-9 register-right">
-                        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">General</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="job-tab" data-toggle="tab" href="#job" role="tab" aria-controls="profile" aria-selected="false">Job</a>
-                            </li>                                    
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Contact</a>
-                            </li>       
-                        </ul>
-                        <section class="tab-content" id="myTabContent">
-                            <section class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <h3 class="register-heading">General Information</h3>
-                                <article class="row register-form">
-                                    <section class="col-md-6">
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
-                                        </article>                                        
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
-                                        </article>
-                                        <article class="form-group">
-                                            <input class="form-control" class="form-control" id="birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
-                                        </article>                                            
-                                    </section>
-                                    <section class="col-md-6">
-                                        <article class="form-group">
-                                              <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required>
-                                        </article>
-                                        <article class="form-group">
-                                            <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required value="{{body.PasswordValidation}}">
-                                        </article>
-                                        <article class="form-group">
-                                            <select class="form-control" list="Genders" name="Gender" required value="{{body.Gender}}">
-                                                <datalist id="Genders">
-                                                    <option selected="true" disabled="disabled">Choose Gender</option>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                    <option value="Other">Other</option>
-                                                </datalist>
-                                            </select>
-                                        </article>
-                                    </section>
-                                </article>
-                            </section>
-                            <section class="tab-pane fade show" id="job" role="tabpanel" aria-labelledby="job-tab">
-                                <h3 class="register-heading">Job Details</h3>
-                                <article class="row register-form">
-                                    <section class="col-md-6">
-                                        <article class="form-row">
-                                            <select class="form-control" list="Positions" name="Position" required value="{{body.Position}}">
-                                                <datalist id="Positions">
-                                                    <option selected="true" disabled="disabled">Choose Position</option>
-                                                    <option value="Admin">Admin</option>
-                                                    <option value="Chef">Chef</option>
-                                                    <option value="Manager">Manager</option>
-                                                    <option value="Waiter">Waiter</option>
-                                                </datalist>
-                                            </select>
-                                        </article>
-                                    </section>
-                                    <section class="col-md-6">
-                                        <article class="form-row">
-                                            <label class="textarea">
-                                                <textarea name="Comment" style="resize:none" rows="4" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
-                                            </label>
-                                        </article> 
-                                    </section>    
-                                </article>
-                            </section>
-                            <section class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <h3  class="register-heading">Contact Details</h3>
-                                <article class="row register-form">
-                                    <article class="col-md-6">
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="Address" placeholder="Address, number" value="{{body.Address}}">
-                                        </article>
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="City" placeholder="City" value="{{body.City}}">
-                                        </article>
-                                        <article class="form-group">
-                                            <input class="form-control" type="text" name="Zip" placeholder="Post Code" pattern="[0-9]*" value="{{body.Zip}}">
-                                        </article>
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style-register.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head>   
+    <body class="register">
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="#">User Name</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/login">Login</a>
+                </li>
+            </ul>
+        </header>  
+    <!--     {{#if msg}}
+        <aside>
+            <p class="msg">{{msg}}</p>
+        </aside>
+        {{/if}}	  -->
+        <main> 
+            <section>
+                <form action="/register" enctype="multipart/form-data" method="post">
+                    <section class="row">
+                        <article class="col-md-3 register-left">
+                            <img src="{{host}}/images/tree.jpg" alt=""/>
+                            <h2 class="register-heading-left">Registration Form</h2>
+                            <input type="submit" class="btnCreate-left"  value="Create"/>
+                            {{#if msg}}
+                            <aside class="alert alert-danger" role="alert">
+                                <p class="msg">{{msg}}</p>
+                            </aside>
+                            {{/if}}	 
+                        </article>
+                        <section class="col-md-9 register-right">
+                            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="job-tab" data-toggle="tab" href="#job" role="tab" aria-controls="profile" aria-selected="false">Job</a>
+                                </li>                                    
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="profile" aria-selected="false">Contact</a>
+                                </li>       
+                            </ul>
+                            <section class="tab-content" id="myTabContent">
+                                <section class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                                    <h3 class="register-heading">General Information</h3>
+                                    <article class="row register-form">
+                                        <section class="col-md-6">
+                                            <article class="form-group">
+                                                <input class="form-control" type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
+                                            </article>                                        
+                                            <article class="form-group">
+                                                <input class="form-control" type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
+                                            </article>
+                                            <article class="form-group">
+                                                <input class="form-control" class="form-control" id="birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
+                                            </article>                                            
+                                        </section>
+                                        <section class="col-md-6">
+                                            <article class="form-group">
+                                                  <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required>
+                                            </article>
+                                            <article class="form-group">
+                                                <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required value="{{body.PasswordValidation}}">
+                                            </article>
+                                            <article class="form-group">
+                                                <select class="form-control" list="Genders" name="Gender" required value="{{body.Gender}}">
+                                                    <datalist id="Genders">
+                                                        <option selected="true" disabled="disabled">Choose Gender</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Other">Other</option>
+                                                    </datalist>
+                                                </select>
+                                            </article>
+                                        </section>
                                     </article>
-                                    <article class="col-md-6">
-                                        <article class="form-group">
-                                            <input class="form-control" type="tel" name="Phone" placeholder="Phone Number" pattern="+[0-9]{9}" value="{{body.Phone}}">                   
-                                        </article>                                            
-                                        <article class="form-group">
-                                            <input class="form-control" type="email" name="Email" placeholder="Email Address" value="{{body.Email}}">
-                                        </article>
-                                        <input type="submit" class="btnCreate"  value="Create">
+                                </section>
+                                <section class="tab-pane fade show" id="job" role="tabpanel" aria-labelledby="job-tab">
+                                    <h3 class="register-heading">Job Details</h3>
+                                    <article class="row register-form">
+                                        <section class="col-md-6">
+                                            <article class="form-row">
+                                                <select class="form-control" list="Positions" name="Position" required value="{{body.Position}}">
+                                                    <datalist id="Positions">
+                                                        <option selected="true" disabled="disabled">Choose Position</option>
+                                                        <option value="Admin">Admin</option>
+                                                        <option value="Chef">Chef</option>
+                                                        <option value="Manager">Manager</option>
+                                                        <option value="Waiter">Waiter</option>
+                                                    </datalist>
+                                                </select>
+                                            </article>
+                                        </section>
+                                        <section class="col-md-6">
+                                            <article class="form-row">
+                                                <label class="textarea">
+                                                    <textarea name="Comment" style="resize:none" rows="4" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
+                                                </label>
+                                            </article> 
+                                        </section>    
                                     </article>
-                                </article>
+                                </section>
+                                <section class="tab-pane fade show" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <h3  class="register-heading">Contact Details</h3>
+                                    <article class="row register-form">
+                                        <article class="col-md-6">
+                                            <article class="form-group">
+                                                <input class="form-control" type="text" name="Address" placeholder="Address, number" value="{{body.Address}}">
+                                            </article>
+                                            <article class="form-group">
+                                                <input class="form-control" type="text" name="City" placeholder="City" value="{{body.City}}">
+                                            </article>
+                                            <article class="form-group">
+                                                <input class="form-control" type="text" name="Zip" placeholder="Post Code" pattern="[0-9]*" value="{{body.Zip}}">
+                                            </article>
+                                        </article>
+                                        <article class="col-md-6">
+                                            <article class="form-group">
+                                                <input class="form-control" type="tel" name="Phone" placeholder="Phone Number" pattern="+[0-9]{9}" value="{{body.Phone}}">                   
+                                            </article>                                            
+                                            <article class="form-group">
+                                                <input class="form-control" type="email" name="Email" placeholder="Email Address" value="{{body.Email}}">
+                                            </article>
+                                            <input type="submit" class="btnCreate"  value="Create">
+                                        </article>                               
+                                    </article>
+                                </section>
                             </section>
                         </section>
                     </section>
-                </section>
-            </form>
-        </section>        
-    </main>
-</body>
+                </form>
+            </section>        
+        </main>
+    </body>
+</html>

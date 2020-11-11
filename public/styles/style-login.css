@@ -1,0 +1,20 @@
+.login-body {
+background: rgb(246,246,246);
+background: -moz-radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100%);
+background: -webkit-radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100%);
+background: radial-gradient(circle, rgba(246,246,246,1) 0%, rgba(255,255,255,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f6f6f6",endColorstr="#ffffff",GradientType=1);
+}
+#login .container #login-row #login-column #login-box {
+  margin-top: 30%;
+  max-width: 90%;
+  height: 380px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#login .container #login-row #login-column #login-box #login-form {
+  padding: 20px;
+}
+#login .container #login-row #login-column #login-box #login-form #register-link {
+  margin-top: -85px;
+}

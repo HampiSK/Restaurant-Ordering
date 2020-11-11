@@ -35,7 +35,9 @@ router.get('/register', async(ctx) => regweb(ctx))
  * @name Register Script
  * @route {POST} /register
  */
-router.post('/register', async(ctx) => reguser(ctx, await new Accounts(dbName)))
+router.post('/register', async(ctx) =>
+	reguser(ctx, await new Accounts(dbName))
+)
 
 router.get('/login', async(ctx) => {
 	console.log(ctx.hbs)
