@@ -2,6 +2,8 @@
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
+import UserTable from '../modules/sql/user-table.js'
+//import CreateUserName from '../modules/accounts/accounts-register.js'
 
 const saltRounds = 10
 
@@ -18,12 +20,53 @@ class Accounts {
 		return (async() => {
 			this.db = await sqlite.open(dbName)
 			// we need this table to store the user accounts
-			const sql =
-        'CREATE TABLE IF NOT EXISTS users\
-				(id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT, pass TEXT, email TEXT);'
+			const sql = UserTable()
 			await this.db.run(sql)
 			return this
 		})()
+	}
+
+	async CreateUserName(FirstName, LastName) {
+		try {
+			let username = LastName.toLowerCase() + FirstName.toLowerCase()[0]
+			let counter = 1
+			while(true) {
+				const sql = `SELECT COUNT(UserId) as records FROM USER WHERE UserName="${username}";`
+				const data = await this.db.get(sql)
+				if (data.records !== 0)
+					username += counter.toString()
+				else
+					break
+
+				counter++
+			}
+			return username
+		} catch(err) {
+			console.log(err)
+		}
+	}
+
+	async AvaiabilityEmailCheck(Email) {
+		const sql = `SELECT COUNT(UserId) as records FROM USER WHERE Email="${Email}";`
+		const emails = await this.db.get(sql)
+		if (emails.records !== 0)
+			throw new Error(`email address "${Email}" is already in use`)
+	}
+
+	async Jobs(Position) {
+		console.log(Position)
+		switch(Position) {
+			case 'Admin':
+				return [1, 0, 0, 0]
+			case 'Manager':
+				return [0, 1, 0, 0]
+			case 'Waiter':
+				return [0, 0, 1, 0]
+			case 'Chef':
+				return [0, 0, 0, 1]
+			default:
+				throw new Error('Error: Job flag list was not created')
+		}
 	}
 
 	//  			ctx.request.body.FirstName,
@@ -38,26 +81,6 @@ class Accounts {
 	//             ctx.request.body.Zip,
 	//             ctx.request.body.Phone,
 	//             ctx.request.body.Email
-	// CREATE TABLE IF NOT EXISTS USER(
-	// 'UserId' INTEGER PRIMARY KEY AUTOINCREMENT,
-	// 'FirstName' VARCHAR(50) NOT NULL,
-	// 'MiddleName' VARCHAR(50) NOT NULL,
-	// 'LastName' VARCHAR(50) NOT NULL,
-	// 'Gender' VARCHAR(10) NOT NULL,
-	// 'Birth' DATETIME NOT NULL,
-	// 'Email' VARCHAR(50) NULL DEFAULT NULL,
-	// 'Phone' VARCHAR(50) NULL DEFAULT NULL,
-	// 'PasswordHash' TEXT NOT NULL,
-	// 'Admin' TINYINT(1) NOT NULL DEFAULT 0,
-	// 'Manager' TINYINT(1) NOT NULL DEFAULT 0,
-	// 'Waiter' TINYINT(1) NOT NULL DEFAULT 0,
-	// 'Chef' TINYINT(1) NOT NULL DEFAULT 0,
-	// 'CreatorId' INTEGER NOT NULL,
-	// 'Registered' DATETIME NOT NULL DEFAULT (datetime('now')),
-	// 'LastLogin' DATETIME NULL DEFAULT NULL,
-	// 'Comment' TEXT NULL DEFAULT NULL,
-	// FOREIGN KEY(CreatorId) REFERENCES USER(UserId));
-	// );
 
 	/**
    * registers a new user
@@ -66,20 +89,19 @@ class Accounts {
    * @param {String} email the chosen email
    * @returns {Boolean} returns true if the new user has been added
    */
-	async register(user, pass, email) {
-		Array.from(arguments).forEach((val) => {
-			if (val.length === 0) throw new Error('missing field')
-		})
-		let sql = `SELECT COUNT(id) as records FROM users WHERE user="${user}";`
-		const data = await this.db.get(sql)
-		if (data.records !== 0)
-			throw new Error(`username "${user}" already in use`)
-		sql = `SELECT COUNT(id) as records FROM users WHERE email="${email}";`
-		const emails = await this.db.get(sql)
-		if (emails.records !== 0)
-			throw new Error(`email address "${email}" is already in use`)
-		pass = await bcrypt.hash(pass, saltRounds)
-		sql = `INSERT INTO users(user, pass, email) VALUES("${user}", "${pass}", "${email}")`
+	async register(FirstName, LastName, Gender, Birth, Email, Phone, Street, City, Zip,
+		Password, Position, CreatorId, Comment) {
+		//     Array.from(arguments).forEach((val) => {
+		//         if (val.length === 0) throw new Error('Error: Missing field to create')
+		//     })
+
+		const UserName = await this.CreateUserName(FirstName, LastName)
+		await this.AvaiabilityEmailCheck(Email)
+		console.log(Password)
+		Password = await bcrypt.hash(Password, saltRounds)
+		const positions = await this.Jobs(Position)
+		const sql = `INSERT INTO USER(UserName, FirstName, LastName, Gender, Birth, Email, Phone, Street, City, Zip, PasswordHash, Admin, Manager, Waiter, Chef, CreatorId, Comment) 
+                 VALUES("${UserName}", "${FirstName}", "${LastName}", "${Gender}", "${Birth}", "${Email}", "${Phone}", "${Street}", "${City}", "${Zip}", "${Password}", "${positions[0]}", "${positions[1]}", "${positions[2]}", "${positions[3]}", "${CreatorId}", "${Comment}")`
 		await this.db.run(sql)
 		return true
 	}

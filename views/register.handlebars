@@ -32,11 +32,6 @@
                 </li>
             </ul>
         </header>  
-    <!--     {{#if msg}}
-        <aside>
-            <p class="msg">{{msg}}</p>
-        </aside>
-        {{/if}}	  -->
         <main> 
             <section>
                 <form action="/register" enctype="multipart/form-data" method="post">
@@ -75,15 +70,15 @@
                                                 <input class="form-control" type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
                                             </article>
                                             <article class="form-group">
-                                                <input class="form-control" class="form-control" id="birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
+                                                <input class="form-control datepicker" data-date-format="dd/mm/yyyy" id="birth" name="Birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
                                             </article>                                            
                                         </section>
                                         <section class="col-md-6">
                                             <article class="form-group">
-                                                  <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required>
+                                                  <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required value="{{body.Password}}">
                                             </article>
                                             <article class="form-group">
-                                                <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required value="{{body.PasswordValidation}}">
+                                                <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required>
                                             </article>
                                             <article class="form-group">
                                                 <select class="form-control" list="Genders" name="Gender" required value="{{body.Gender}}">
