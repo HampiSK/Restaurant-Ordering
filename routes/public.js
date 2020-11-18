@@ -48,7 +48,8 @@ router.post('/login', async(ctx) => {
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.user, body.pass)
+		console.log('LOGIN',body.UserName, body.Password)
+		await account.login(body.UserName, body.Password)
 		ctx.session.authorised = true
 		const referrer = body.referrer || '/secure'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)

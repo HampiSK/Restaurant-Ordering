@@ -2,8 +2,7 @@
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
-import UserTable from '../modules/sql/user-table.js'
-//import CreateUserName from '../modules/accounts/accounts-register.js'
+import { UserTable, InsertUserTable } from '../modules/sql/user-table.js'
 
 const saltRounds = 10
 
@@ -26,82 +25,111 @@ class Accounts {
 		})()
 	}
 
+	/**
+     * Create an UserName from first name and last name of the user.
+     * Making sure that each user name is unique.
+     * When duplicate usernames are created new username gets number at the end starting by 0.
+     * Username is in lowercase
+     * Return new unique username
+     *
+     */
 	async CreateUserName(FirstName, LastName) {
-		try {
-			let username = LastName.toLowerCase() + FirstName.toLowerCase()[0]
-			let counter = 1
-			while(true) {
-				const sql = `SELECT COUNT(UserId) as records FROM USER WHERE UserName="${username}";`
-				const data = await this.db.get(sql)
-				if (data.records !== 0)
-					username += counter.toString()
-				else
-					break
-
-				counter++
-			}
-			return username
-		} catch(err) {
-			console.log(err)
+		let highest = 0 // Will be used as highest number of already existing users
+		const newUsername = LastName.toLowerCase() + FirstName.toLowerCase()[0]
+		let username = newUsername
+		// until new username returned
+		while (true) {
+			const sql = `SELECT COUNT(UserId) as records FROM USER WHERE UserName="${username}";`
+			const data = await this.db.get(sql) // getting data from database
+			if (data.records !== 0) // when name already exists
+			// looping each username
+				await this.db.each(`SELECT UserName FROM USER WHERE UserName LIKE "${username}%"`, (err, row) => {
+					if (err === 0) throw new Error('Cannot open database')
+					const dbName = row.UserName
+					let number = dbName.substring(username.length - 1) // exracting only numbers from username
+					number = parseInt(number)
+					if (highest < number) highest = number // Storing highest number
+					username = newUsername+(highest++).toString() // creating new username
+				})
+			else
+				return username // Only gets here when username is unique
 		}
 	}
 
+	/**
+     * Checking if email address is not already taken
+     *
+     */
 	async AvaiabilityEmailCheck(Email) {
 		const sql = `SELECT COUNT(UserId) as records FROM USER WHERE Email="${Email}";`
-		const emails = await this.db.get(sql)
-		if (emails.records !== 0)
+		const emails = await this.db.get(sql) // getting data from database
+		if (emails.records !== 0) // when address already exists
 			throw new Error(`email address "${Email}" is already in use`)
 	}
 
-	async Jobs(Position) {
-		console.log(Position)
-		switch(Position) {
+	/**
+     * Take object and update it based on Possition values.
+     * Delete 'Position' from object.
+     *
+     */
+	async Jobs(body) {
+		switch(body.Position) {
 			case 'Admin':
-				return [1, 0, 0, 0]
+				body.Admin = 1, body.Manager = 0, body.Waiter = 0, body.Chef = 0
+				break
 			case 'Manager':
-				return [0, 1, 0, 0]
+				body.Admin = 0, body.Manager = 1, body.Waiter = 0, body.Chef = 0
+				break
 			case 'Waiter':
-				return [0, 0, 1, 0]
+				body.Admin = 0, body.Manager = 0, body.Waiter = 1, body.Chef = 0
+				break
 			case 'Chef':
-				return [0, 0, 0, 1]
+				body.Admin = 0, body.Manager = 0, body.Waiter = 0, body.Chef = 1
+				break
 			default:
 				throw new Error('Error: Job flag list was not created')
 		}
+		delete body.Position
 	}
 
-	//  			ctx.request.body.FirstName,
-	// 			ctx.request.body.LastName,
-	//             ctx.request.body.PasswordValidation,
-	//             ctx.request.body.Gender,
-	//             ctx.request.body.Birth,
-	//             ctx.request.body.Position,
-	//             ctx.request.body.Comment,
-	//             ctx.request.body.Address,
-	//             ctx.request.body.City,
-	//             ctx.request.body.Zip,
-	//             ctx.request.body.Phone,
-	//             ctx.request.body.Email
+	/**
+     * Take object and check if each value is not too long.
+     *
+     */
+	async CheckLenght(body) {
+		const Lgender = 10
+		const Lcomment = 1000
+		const Lval = 50
+
+		for (const val of Object.keys(body)) {
+			if (body['Gender'].length > Lgender)
+				throw new Error('Lenght of \'Gender\' is too long')
+			else if (body['Comment'].length > Lcomment)
+				throw new Error('Lenght of \'Comment\' is too long')
+			else if (body[val].length > Lval)
+				throw new Error(`Lenght of '${val}' is too long`)
+		}
+	}
 
 	/**
-   * registers a new user
-   * @param {String} user the chosen username
-   * @param {String} pass the chosen password
-   * @param {String} email the chosen email
-   * @returns {Boolean} returns true if the new user has been added
+   * Registers a new user.
+   * Take object parameter.
+   * Using methods to modify parameter and as a checkers.
+   * Returns Boolean returns true if the new user has been added.
    */
-	async register(FirstName, LastName, Gender, Birth, Email, Phone, Street, City, Zip,
-		Password, Position, CreatorId, Comment) {
-		//     Array.from(arguments).forEach((val) => {
-		//         if (val.length === 0) throw new Error('Error: Missing field to create')
-		//     })
-
-		const UserName = await this.CreateUserName(FirstName, LastName)
-		await this.AvaiabilityEmailCheck(Email)
-		console.log(Password)
-		Password = await bcrypt.hash(Password, saltRounds)
-		const positions = await this.Jobs(Position)
-		const sql = `INSERT INTO USER(UserName, FirstName, LastName, Gender, Birth, Email, Phone, Street, City, Zip, PasswordHash, Admin, Manager, Waiter, Chef, CreatorId, Comment) 
-                 VALUES("${UserName}", "${FirstName}", "${LastName}", "${Gender}", "${Birth}", "${Email}", "${Phone}", "${Street}", "${City}", "${Zip}", "${Password}", "${positions[0]}", "${positions[1]}", "${positions[2]}", "${positions[3]}", "${CreatorId}", "${Comment}")`
+	async register(body) {
+		body.CreatorId = 1 // temp
+		await this.CheckLenght(body) // Checking lenght
+		// Creating unique username
+		body.UserName = await this.CreateUserName(body.FirstName.trim(), body.LastName.trim())
+		if (body.Email.trim() !== '')
+			await this.AvaiabilityEmailCheck(body.Email) // Check if email is unique
+		if (body.Password.trim() !== '') // Check password is not created form spaces
+			body.PasswordHash = await bcrypt.hash(body.Password, saltRounds)
+		await this.Jobs(body)
+		delete body.Password
+		delete body.PasswordValidation
+		const sql = InsertUserTable(body) // get sql statement
 		await this.db.run(sql)
 		return true
 	}
@@ -113,12 +141,12 @@ class Accounts {
    * @returns {Boolean} returns true if credentials are valid
    */
 	async login(username, password) {
-		let sql = `SELECT count(id) AS count FROM users WHERE user="${username}";`
+		let sql = `SELECT count(UserId) AS count FROM USER WHERE UserName="${username}";`
 		const records = await this.db.get(sql)
 		if (!records.count) throw new Error(`username "${username}" not found`)
-		sql = `SELECT pass FROM users WHERE user = "${username}";`
+		sql = `SELECT PasswordHash FROM USER WHERE UserName = "${username}";`
 		const record = await this.db.get(sql)
-		const valid = await bcrypt.compare(password, record.pass)
+		const valid = await bcrypt.compare(password, record.PasswordHash)
 		if (valid === false)
 			throw new Error(`invalid password for account "${username}"`)
 		return true

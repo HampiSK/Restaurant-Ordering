@@ -9,29 +9,9 @@ async function regweb(ctx) {
 	await ctx.render('register', data)
 }
 
-// 			ctx.request.body.FirstName,
-// 			ctx.request.body.LastName,
-// 			ctx.request.body.Birth,
-// 			ctx.request.body.PasswordValidation,
-// 			ctx.request.body.Gender,
-// 			ctx.request.body.Position,
-// 			ctx.request.body.Comment,
-// 			ctx.request.body.Address,
-// 			ctx.request.body.City,
-// 			ctx.request.body.Zip,
-// 			ctx.request.body.Phone,
-// 			ctx.request.body.Email
-// (FirstName, LastName, Gender, Birth, Email, Phone, Street, City, Zip,
-//                    Password, Position, CreatorId, Comment, saltRounds)
 async function reguser(ctx, account) {
 	try {
-		await account.register(ctx.request.body.FirstName,ctx.request.body.LastName,ctx.request.body.Gender,
-			ctx.request.body.Birth,ctx.request.body.Email,ctx.request.body.Phone,
-			ctx.request.body.Address,ctx.request.body.City,ctx.request.body.Zip,
-			ctx.request.body.Password,ctx.request.body.Position,1,ctx.request.body.Comment
-
-
-		)
+		await account.register(ctx.request.body)
 		ctx.redirect(
 			`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`
 		)
@@ -46,4 +26,23 @@ async function reguser(ctx, account) {
 	}
 }
 
-export { reguser, regweb }
+async function login(ctx, Accounts, dbName) {
+	const account = await new Accounts(dbName)
+	ctx.hbs.body = ctx.request.body
+	try {
+		const body = ctx.request.body
+		await account.login(body.user, body.pass)
+		ctx.session.authorised = true
+		const referrer = body.referrer || '/secure'
+		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
+	} catch (err) {
+		console.log(err)
+		ctx.hbs.msg = err.message
+		await ctx.render('login', ctx.hbs)
+	} finally {
+		await account.close()
+	}
+}
+
+
+export { reguser, regweb, login }
