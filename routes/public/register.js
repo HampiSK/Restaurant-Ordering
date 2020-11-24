@@ -1,6 +1,8 @@
 import todaydate from '../../modules/scripts/today-date.js'
 
 async function regweb(ctx) {
+	if (ctx.hbs.authorised !== true)
+		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	const minage = 15
 	const today = todaydate(minage)
 	const data = {
@@ -10,6 +12,8 @@ async function regweb(ctx) {
 }
 
 async function reguser(ctx, account) {
+	if (ctx.hbs.authorised !== true)
+		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	try {
 		await account.register(ctx.request.body)
 		ctx.redirect(

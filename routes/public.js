@@ -28,7 +28,7 @@ router.get('/', async(ctx) => {
  * @name Register Page
  * @route {GET} /register
  */
-router.get('/register', async(ctx) => regweb(ctx))
+router.get('/register', async(ctx) => regweb(ctx, router))
 
 /**
  * Runs script to process new user registrations.
@@ -41,6 +41,11 @@ router.post('/register', async(ctx) => reguser(ctx, await new Accounts(dbName)))
 router.get('/login', async(ctx) => {
 	console.log(ctx.hbs)
 	await ctx.render('login', ctx.hbs)
+})
+
+router.get('/profile', async(ctx) => {
+	console.log(ctx.hbs)
+	await ctx.render('profile')
 })
 
 router.post('/login', async(ctx) => {

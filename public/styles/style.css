@@ -1,0 +1,47 @@
+header {
+  background-color: #212121;
+  border-bottom: 5px solid #000;
+  height: 15vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+aside {
+  max-width: 500px;
+  margin: auto;
+  background-color: red;
+}
+body {
+  background: -webkit-linear-gradient(
+    left,
+    rgba(255, 145, 0, 1),
+    rgba(255, 192, 110, 1)
+  );
+  position: relative;
+  padding: 25vh 3% 0 0;
+}
+
+.nav-menu {
+  top: 0;
+  padding: 4vh 8% 0 0;
+  color: #fff;
+  font-weight: bold;
+}
+.nav-main {
+  top: 0;
+  padding: 3vh 7% 0 2%;
+  color: #fff;
+  font-weight: bold;
+  font-size: 150%;
+}
+.nav-a {
+  color: #dadada;
+  font-weight: bold;
+  font-size: 115%;
+}
+.nav-a:hover {
+  color: #ffb300;
+}

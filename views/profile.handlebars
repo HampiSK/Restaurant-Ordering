@@ -1,0 +1,213 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link href="{{host}}/styles/style-profile.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head>   
+    <body>
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="#">User Name</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/login">Login</a>
+                </li>
+            </ul>
+        </header>  
+        <main class="container emp-profile"> 
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="{{host}}/images/tree.jpg" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5>USERNAME{{body.UserName}}</h5>
+                                    <p class="proile-rating">USERID{{body.UserId}}</p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">                                 
+                                    <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General Information</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact Details</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-body">
+                            <p>SOMETHING</p>
+                            <a>Something</a><br/>
+                            <a>Something</a>
+                            <p>SOMETHING</p>
+                            <a>Something</a><br/>
+                            <a>Something</a>                          
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <section class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>First Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{body.FirstName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Last Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{body.LastName}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Gender</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{body.Gender}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Date Of Birth</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{body.Birth}}</p>
+                                            </div>
+                                        </div>                                       
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Position</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{body.Position}}</p>
+                                            </div>
+                                        </div>
+                            </section>
+                            <section class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{body.Email}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Phone</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{body.Phone}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Street</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{body.Street}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{body.City}}</p>
+                                    </div>
+                                </div>   
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Zip</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>{{body.Zip}}</p>
+                                    </div>
+                                </div>                                  
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </form>                
+        </main>
+    </body>
+</html>
+
+<!-- value="{{body.UserName}}"
+value="{{body.FirstName}}"
+value="{{body.LastName}}"
+value="{{body.Birth}}"
+value="{{body.Password}}"
+value="{{body.Gender}}"
+value="{{body.Position}}"
+value="{{body.Comment}}"
+value="{{body.Street}}"
+value="{{body.City}}"
+value="{{body.Zip}}"
+value="{{body.Phone}}"                 
+value="{{body.Email}}"
+
+                    <section class="col-md-6">
+                        <article class="form-group">
+                            <input class="form-control" type="text" name="FirstName" placeholder="First Name" required value="{{body.FirstName}}">
+                        </article>                                        
+                        <article class="form-group">
+                            <input class="form-control" type="text" name="LastName" placeholder="Last Name" required value="{{body.LastName}}">
+                        </article>
+                        <article class="form-group">
+                            <input class="form-control datepicker" data-date-format="dd/mm/yyyy" id="birth" name="Birth" type="date" min="1900-01-01" max="{{birth}}" required value="{{body.Birth}}">
+                        </article>                                            
+                    </section>
+                    <section class="col-md-6">
+                        <article class="form-group">
+                              <input class="form-control" id="password" name="Password" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 4 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password" required value="{{body.Password}}">
+                        </article>
+                        <article class="form-group">
+                            <input class="form-control" id="password_two" name="PasswordValidation" type="password" minlength="4" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm Password" required>
+                        </article>
+                        <article class="form-group">
+                            <select class="form-control" list="Genders" name="Gender" required value="{{body.Gender}}">
+                                <datalist id="Genders">
+                                    <option selected="true" disabled="disabled">Choose Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </datalist>
+                            </select>
+                        </article>
+                    </section> -->
