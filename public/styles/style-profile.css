@@ -8,14 +8,14 @@
     text-align: center;
 }
 .profile-img img{
-    width: 70%;
-    height: 100%;
+    width: 60%;
+    height: 80%;
 }
 .profile-img .file {
     position: relative;
     overflow: hidden;
     margin-top: -20%;
-    width: 70%;
+    width: 60%;
     border: none;
     border-radius: 0;
     font-size: 15px;
@@ -34,7 +34,7 @@
 .profile-head h5{
     color: #333;
 }
-.profile-edit-btn{
+.profile-btn{
     border: none;
     border-radius: 1.5rem;
     width: 70%;
@@ -42,9 +42,8 @@
     font-weight: 600;
     color: #fff;  
     background: #fe7a0b;
-    cursor: pointer;
 }
-.profile-edit-btn:hover {
+.profile-btn:hover {
   background-color: #fff;
   color: #fe7a0b;
   border: 1px solid #fe7a0b;
