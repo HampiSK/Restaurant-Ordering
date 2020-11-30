@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head>  
+    <header> 
+        <ul class="nav justify-content">
+            <li class="nav-item nav-main">
+                <a class="nav-link nav-a" href="/profile">{{UserName}}</a>
+            </li>
+            <li class="nav-item nav-menu">
+                <a class="nav-link nav-a" href="#">Link</a>
+            </li>
+            <li class="nav-item nav-menu">
+                <a class="nav-link nav-a" href="#">Link</a>
+            </li>
+            <li class="nav-item nav-menu">
+                <a class="nav-link nav-a" href="#">Link</a>
+            </li>
+            <li class="nav-item nav-menu">
+                <a class="nav-link nav-a" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </header>      
+    <body>
+        <div class="row block">
+            <div class="col mb-8">
+                <section class="container p-3 my-3 bg-white">       
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                      <div class="col mb-4">
+                        <div class="card">
+                          <button type="button">
+                          <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                          <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                          </div>
+                          </button>
+                        </div>                      
+                      </div>
+                    </div>
+                </section> 
+            </div>
+            <div class="col mb-2">
+                <section class="container p-3 my-3 bg-white">     
+                <p>Jozo</p>
+                </section>
+            </div>
+        </div>
+    </body>
+</html>

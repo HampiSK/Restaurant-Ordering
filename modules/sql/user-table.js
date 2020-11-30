@@ -20,14 +20,14 @@
  * Manager	       TINYINT(1)		The flag to identify whether the user is an manager.
  * Waiter	       TINYINT(1)		The flag to identify whether the user is an waiter.
  * Chef	           TINYINT(1)		The flag to identify whether the user is an chef.
- * UserId  		   INTEGER  		The unique id to identify creator fo the user.
+ * CreatorId  	   INTEGER  		The unique id to identify creator fo the user.
  * Registered	   DATETIME		    Date of user registration. I.e.: It can be used for calculating
  *                                  life of the user with the application.
  * LastLogin	   DATETIME		    It can be used to identify the last login of the user.
  * Comment		   TEXT	     	    The comment about user. Can be created by manager or admin.
  *
  */
-function UserTable() {
+export default function UserTable() {
 	const sql = 'CREATE TABLE IF NOT EXISTS USER(\'UserId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'UserName\' VARCHAR(50) NOT NULL UNIQUE,\'FirstName\' VARCHAR(50) NOT NULL,\
                 \'LastName\' VARCHAR(50) NOT NULL,\'Gender\' VARCHAR(10) NOT NULL,\
@@ -43,32 +43,4 @@ function UserTable() {
 	return sql
 }
 
-/**
- * Takes object from witch sql statement is created.
- * Sql statement will inserts data into USER table from passed object.
- * All strings are modified by trim() function.
- * Empty values are not inserted into database. Empty values are created by database with NULL.
- * Returns sql statement
- *
- */
-function InsertUserTable(body) {
-	let columns = ''
-	let values = ''
-	// Iterating object and using its keys
-	for (const val of Object.keys(body)) {
-		if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
-		if (body[val] === '') continue // skip empty values
-		if (columns.length === 0) { // first value
-			columns += `${val}`
-			values += `"${body[val]}"`
-		} else {
-			columns += `,${val}`
-			values += `,"${body[val]}"`
-		}
-	}
-	const sql = `INSERT INTO USER(${columns}) VALUES (${values})`
-	return sql
-}
-
-export {UserTable, InsertUserTable}
 

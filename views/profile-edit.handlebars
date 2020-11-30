@@ -34,11 +34,17 @@
             </ul>
         </header>  
         <main class="container emp-profile"> 
-            <form action="/profile" enctype="multipart/form-data" method="post">
                 <section class="row">
                     <section class="col-md-4">
                         <article class="profile-img">
-                            <img src="{{host}}/images/users/{{Photo}}" alt="Profile Picture"/>    
+                            <img src="{{host}}/images/users/{{Photo}}" alt="Profile Picture"/>     
+                            <form action="/profile" enctype="multipart/form-data" method="post">
+                                <article class="file btn btn-lg btn-primary">
+                                    Change Photo
+                                    <input type="file" accept="image/png, image/jpeg" value="{{NewPhoto}}"/>
+                                    <input type="submit"/>
+                                </article>                               
+                            </form>
                         </article>
                     </section>
                     <section class="col-md-6">
@@ -64,7 +70,7 @@
                             <a>Something</a>
                             <p>SETTINGS</p>  
                             <article class="profile-body">
-                                    <input type="submit" class="profile-btn" value="Edit Profile"/>
+                                    <input type="submit" class="profile-btn" value="Edit Profile" href="/logout"/>
                             </article> 
                             <article class="profile-body">
                                     <input type="submit" class="profile-btn" value="Change Password"/>
@@ -159,8 +165,7 @@
                             </section>
                         </article>
                     </article>
-                </section> 
-            </form>
+                </section>               
         </main>
     </body>
 </html>

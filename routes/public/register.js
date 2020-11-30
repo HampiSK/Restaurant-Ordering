@@ -1,8 +1,8 @@
 import todaydate from '../../modules/scripts/today-date.js'
 
 async function regweb(ctx) {
-	if (ctx.hbs.authorised !== true)
-		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+// 	if (ctx.hbs.authorised.authorized !== true)
+// 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	const minage = 15
 	const today = todaydate(minage)
 	const data = {
@@ -12,8 +12,8 @@ async function regweb(ctx) {
 }
 
 async function reguser(ctx, account) {
-	if (ctx.hbs.authorised !== true)
-		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+// 	if (ctx.hbs.authorised.authorized !== true)
+// 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	try {
 		await account.register(ctx.request.body)
 		ctx.redirect(
@@ -35,8 +35,9 @@ async function login(ctx, Accounts, dbName) {
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.user, body.pass)
-		ctx.session.authorised = true
+		await account.login(body.UserName, body.Password)
+		const data = await account.db.get(`SELECT UserId FROM USER WHERE UserName = '${body.UserName}'`)
+		ctx.session.authorised = { userid: data.UserId, username: data.UserName, authorized: true }
 		const referrer = body.referrer || '/secure'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
 	} catch (err) {

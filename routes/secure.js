@@ -1,12 +1,16 @@
 import Router from 'koa-router'
 
-const router = new Router({ prefix: '/secure' })
+const router = new Router({ prefix: '/secure'})
 
 async function checkAuth(ctx, next) {
 	console.log('secure router middleware')
 	console.log(ctx.hbs)
-	if (ctx.hbs.authorised !== true)
+	try{
+		if (ctx.hbs.authorised.authorized !== true)
+			return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+	} catch(err) {
 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+	}
 	await next()
 }
 
@@ -19,6 +23,7 @@ router.get('/', async(ctx) => {
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)
 	}
+
 })
 
 // import Accounts from '../modules/accounts.js'
@@ -41,6 +46,9 @@ router.get('/', async(ctx) => {
 //  * @name Register Page
 //  * @route {GET} /register
 //  */
-// router.get('/register', async(ctx) => regweb(ctx))
+// router.get('/register', async(ctx) => {
+//     router.use(checkAuth)
+//     regweb(ctx)
+// })
 
 export default router

@@ -9,8 +9,9 @@ mainRouter.use(bodyParser({ multipart: true }))
 
 const nestedRoutes = [publicRouter, secureRouter]
 for (const router of nestedRoutes) {
-	mainRouter.use(router.routes())
-	mainRouter.use(router.allowedMethods())
+	mainRouter
+		.use(router.routes())
+		.use(router.allowedMethods())
 }
 
 export default mainRouter

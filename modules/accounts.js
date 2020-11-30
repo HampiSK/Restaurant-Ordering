@@ -2,7 +2,8 @@
 
 import bcrypt from 'bcrypt-promise'
 import sqlite from 'sqlite-async'
-import { UserTable, InsertUserTable } from '../modules/sql/user-table.js'
+import UserTable from '../modules/sql/user-table.js'
+import SQLInsert from '../modules/sql/sql-insert.js'
 
 const saltRounds = 10
 
@@ -129,7 +130,7 @@ class Accounts {
 		await this.Jobs(body)
 		delete body.Password
 		delete body.PasswordValidation
-		const sql = InsertUserTable(body) // get sql statement
+		const sql = await SQLInsert(body,'USER') // get sql statement
 		await this.db.run(sql)
 		return true
 	}
