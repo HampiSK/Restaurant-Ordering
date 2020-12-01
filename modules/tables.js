@@ -1,7 +1,11 @@
 /** module Tables */
 
+import sqlite from 'sqlite-async'
 import RestaraurantTable from '../modules/sql/restaurant_table-table.js'
 import SQLInsert from '../modules/sql/sql-insert.js'
+import SQLModify from '../modules/sql/sql-modify.js'
+
+const Lcomment = 1000
 
 /**
  * Tables
@@ -33,7 +37,6 @@ class Tables {
 	}
 
 	async create(body) {
-		const Lcomment = 1000
 		if (body['Comment'].length > Lcomment) throw new Error('Lenght of \'Comment\' is too long')
 		const sql = await SQLInsert(body,'RESTAURANT_TABLE')
 		await this.db.run(sql)
@@ -41,11 +44,16 @@ class Tables {
 	}
 
 	async modify(body, UserId) {
-		const Lcomment = 1000
 		if (body['Comment'].length > Lcomment) throw new Error('Lenght of \'Comment\' is too long')
-		const sql = await SQLInsert(body,'RESTAURANT_TABLE')
+		const sql = await SQLModify(body,'RESTAURANT_TABLE','UserId',UserId)
 		await this.db.run(sql)
 		return true
 	}
 
+	async close() {
+		await this.db.close()
+	}
+
 }
+
+export default Tables

@@ -47,7 +47,7 @@ body {
 }
 
 .block {
-    padding: 3vh 7% 0 2%;
+  padding: 0 2% 2% 2%;
   font-size: 12px;
   font-weight: 600;
 }

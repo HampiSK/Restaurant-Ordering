@@ -3,7 +3,7 @@ import Router from 'koa-router'
 const router = new Router()
 
 import Accounts from '../modules/accounts.js'
-import { getphoto, uploadphoto } from '../modules/scripts/upload-photo.js'
+import { getphoto } from '../modules/scripts/upload-photo.js'
 import { reguser, regweb } from '../routes/public/register.js'
 
 const dbName = 'website.db'
@@ -52,25 +52,15 @@ router.get('/profile', async(ctx) => {
 	}
 	data.Photo = getphoto(data.UserName)
 	const body = {
-		Photo: data.Photo,
-		UserId: data.UserId,
-		UserName: data.UserName,
-		FirstName: data.FirstName,
-		LastName: data.LastName,
-		Birth: data.Birth,
-		Gender: data.Gender,
-		Position: data.Position,
-		Street: data.Street,
-		City: data.City,
-		Zip: data.Zip,
-		Phone: data.Phone,
-		Email: data.Email
+		Photo: data.Photo, UserId: data.UserId, UserName: data.UserName, FirstName: data.FirstName,
+		LastName: data.LastName, Birth: data.Birth, Gender: data.Gender, Position: data.Position,
+		Street: data.Street, City: data.City, Zip: data.Zip, Phone: data.Phone, Email: data.Email
 	}
 	await ctx.render('profile', body)
 })
 
 router.post('/profile', async(ctx) => {
-	const body = ctx.request.body
+	//const body = ctx.request.body
 	console.log(ctx.request.body)
 //     const account = await new Accounts(dbName)
 //     const data = await account.db.get(`SELECT * FROM USER WHERE UserId = '${ctx.hbs.authorised.userid}'`)
@@ -79,7 +69,13 @@ router.post('/profile', async(ctx) => {
 
 router.get('/tables', async(ctx) => {
 	try {
-		await ctx.ctx.redirect('/tables', ctx.hbs)
+		const body = {
+			Username: 'ha',
+			Table: [ { TableName: 'Table 1', Comment: 'None' },{ TableName: 'Table 2', Comment: '' },
+				{ TableName: 'Table 3', Comment: 'None' },{ TableName: 'Table 4', Comment: 'None' },
+				{ TableName: 'Table 5', Comment: '' },{ TableName: 'Table 6', Comment: 'None' }]
+		}
+		await ctx.render('tables', body)
 	} catch (err) {
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)

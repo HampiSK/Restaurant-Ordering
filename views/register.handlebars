@@ -152,3 +152,72 @@
         </main>
     </body>
 </html>
+
+
+
+
+
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head> 
+    <body>
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="/profile">{{UserName}}</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="#">Link</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </header>      
+        <main class="block">
+            <section class="row">
+                <section class="col-md-9">
+                    <article class="container p-3 my-3 bg-white">       
+                        <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                            {{for Table}}
+                          <article class="col mb-3">
+                            <article class="card">
+                              <button type="button">
+                              <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                              <article class="card-body">
+                                <h5 class="card-title">{{>TableName}}</h5>
+                                <p class="card-text">{{>Comment}}</p>
+                              </article>
+                              </button>
+                            </article>                      
+                          </article>
+                            {{/for}}
+                        </article>
+                    </article> 
+                </section>
+                <section class="col-md-3">
+                    <article class="container p-3 my-3 bg-white">     
+                    <p>Jozo</p>
+                    </article>
+                </section>
+            </section>
+        </main>
+    </body>
+</html>
