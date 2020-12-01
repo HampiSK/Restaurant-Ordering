@@ -1,9 +1,9 @@
 /** @module Accounts */
 
 import bcrypt from 'bcrypt-promise'
-import sqlite from 'sqlite-async'
+import { SQLInsert, SQLModify, SQLCreate } from '../modules/sql/sql-module.js'
 import UserTable from '../modules/sql/user-table.js'
-import SQLInsert from '../modules/sql/sql-insert.js'
+import todaydate from './scripts/today-date.js'
 
 const saltRounds = 10
 
@@ -17,13 +17,7 @@ class Accounts {
    * @param {String} [dbName=":memory:"] - The name of the database file to use.
    */
 	constructor(dbName = ':memory:') {
-		return (async() => {
-			this.db = await sqlite.open(dbName)
-			// we need this table to store the user accounts
-			const sql = UserTable()
-			await this.db.run(sql)
-			return this
-		})()
+		return (async() => SQLCreate(this,dbName,UserTable()) )()
 	}
 
 	/**
@@ -150,6 +144,9 @@ class Accounts {
 		const valid = await bcrypt.compare(password, record.PasswordHash)
 		if (valid === false)
 			throw new Error(`invalid password for account "${username}"`)
+		const body = {LastLogin: todaydate()}
+		sql = await SQLModify(body,'USER','UserName',username)
+		await this.db.run(sql)
 		return true
 	}
 

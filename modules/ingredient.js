@@ -1,33 +1,22 @@
 /** module Tables */
 
 import { SQLInsert, SQLModify, SQLCreate } from '../modules/sql/sql-module.js'
-import RestaraurantTable from '../modules/sql/restaurant_table-table.js'
+import IngredientTable from '../modules/sql/Ingredient-table.js'
 import todaydate from './scripts/today-date.js'
 import { CommentChecker } from './scripts/checkers.js'
 
 const Lcomment = 1000
-
 /**
  * Tables
  * ES6 module that handles creating and managing tables.
  */
-class Tables {
+class Ingredients {
 	/**
    * Create an tables object
    * @param {String} [dbName=":memory:"] - The name of the database file to use.
    */
 	constructor(dbName = ':memory:') {
-		return (async() => SQLCreate(this,dbName,RestaraurantTable()) )()
-	}
-
-	async gettables(flag = 1) {
-		if (flag < 0 || flag > 1) throw new Error('Invalid flag for gettables')
-		const tables = []
-		await this.db.each(`SELECT TableId FROM RESTAURANT_TABLE WHERE InUse = "${flag}%"`, (err, row) => {
-			if (err === 0) throw new Error('Cannot open database')
-			tables.push(row.TableId)
-		})
-		return tables
+		return (async() => SQLCreate(this,dbName,IngredientTable()) )()
 	}
 
 	async create(body) {
@@ -51,4 +40,4 @@ class Tables {
 
 }
 
-export default Tables
+export default Ingredients

@@ -1,7 +1,7 @@
 import test from 'ava'
 import Accounts from '../modules/accounts.js'
 
-test('LOGIN    : invalid username', async(test) => {
+test('LOGIN : invalid username', async(test) => {
 	test.plan(1)
 	const body = {
 		FirstName: 'j',
@@ -35,7 +35,7 @@ test('LOGIN    : invalid username', async(test) => {
 	}
 })
 
-test('LOGIN    : invalid password', async(test) => {
+test('LOGIN : invalid password', async(test) => {
 	test.plan(1)
 	const body = {
 		FirstName: 'j',
