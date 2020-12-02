@@ -27,7 +27,7 @@ export default function IngredientTable() {
                 \'CreatorId\' INTEGER NOT NULL,\
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
-                \'Comment\' TEXT NULL DEFAULT NULL\
+                \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 
 	return sql

@@ -21,8 +21,8 @@ test('LOGIN : invalid username', async(test) => {
 	const account = await new Accounts()
 	try {
 
-		await account.register(body)
-		await account.login('roej', 'password')
+		await account.Register(body)
+		await account.Login('roej', 'password')
 		test.fail('error not thrown')
 	} catch (err) {
 		test.is(
@@ -31,7 +31,7 @@ test('LOGIN : invalid username', async(test) => {
 			'incorrect error message'
 		)
 	} finally {
-		account.close()
+		account.Close()
 	}
 })
 
@@ -54,8 +54,8 @@ test('LOGIN : invalid password', async(test) => {
 	}
 	const account = await new Accounts()
 	try {
-		await account.register(body)
-		await account.login('doej', 'bad')
+		await account.Register(body)
+		await account.Login('doej', 'bad')
 		test.fail('error not thrown')
 	} catch (err) {
 		test.is(
@@ -64,6 +64,6 @@ test('LOGIN : invalid password', async(test) => {
 			'incorrect error message'
 		)
 	} finally {
-		account.close()
+		account.Close()
 	}
 })

@@ -87,9 +87,9 @@ router.post('/login', async(ctx) => {
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.UserName, body.Password)
+		await account.Login(body.UserName, body.Password)
 		const data = await account.db.get(`SELECT UserId FROM USER WHERE UserName = '${body.UserName}'`)
-		ctx.session.authorised = { userid: data.UserId, username: data.UserName, authorized: true }
+		ctx.session = await CTXSession(ctx.session, data, true)
 		const referrer = body.referrer || '/secure'
 		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
 	} catch (err) {
@@ -97,7 +97,7 @@ router.post('/login', async(ctx) => {
 		ctx.hbs.msg = err.message
 		await ctx.render('login', ctx.hbs)
 	} finally {
-		await account.close()
+		await account.Close()
 	}
 })
 

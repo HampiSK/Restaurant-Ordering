@@ -1,10 +1,11 @@
 import todaydate from '../../modules/scripts/today-date.js'
+import CTXSession from '../../modules/ctx/cookies.js'
 
 async function regweb(ctx) {
 // 	if (ctx.hbs.authorised.authorized !== true)
 // 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	const minage = 15
-	const today = todaydate(minage)
+	const today = todaydate(minage,"date")
 	const data = {
 		birth: today,
 	}
@@ -15,10 +16,8 @@ async function reguser(ctx, account) {
 // 	if (ctx.hbs.authorised.authorized !== true)
 // 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	try {
-		await account.register(ctx.request.body)
-		ctx.redirect(
-			`/login?msg=new user "${ctx.request.body.user}" added, you need to log in`
-		)
+		await account.Register(ctx.request.body)
+        await regweb(ctx)
 	} catch (err) {
 		console.log(err)
 		ctx.hbs.msg = err.message
@@ -26,7 +25,7 @@ async function reguser(ctx, account) {
 		console.log(ctx.hbs)
 		await ctx.render('register', ctx.hbs)
 	} finally {
-		await account.close()
+		await account.Close()
 	}
 }
 
@@ -35,7 +34,7 @@ async function login(ctx, Accounts, dbName) {
 	ctx.hbs.body = ctx.request.body
 	try {
 		const body = ctx.request.body
-		await account.login(body.UserName, body.Password)
+		await account.Login(body.UserName, body.Password)
 		const data = await account.db.get(`SELECT UserId FROM USER WHERE UserName = '${body.UserName}'`)
 		ctx.session.authorised = { userid: data.UserId, username: data.UserName, authorized: true }
 		const referrer = body.referrer || '/secure'
@@ -45,7 +44,7 @@ async function login(ctx, Accounts, dbName) {
 		ctx.hbs.msg = err.message
 		await ctx.render('login', ctx.hbs)
 	} finally {
-		await account.close()
+		await account.Close()
 	}
 }
 

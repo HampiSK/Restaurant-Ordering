@@ -112,7 +112,7 @@ class Accounts {
    * Using methods to modify parameter and as a checkers.
    * Returns Boolean returns true if the new user has been added.
    */
-	async register(body) {
+	async Register(body) {
 		body.CreatorId = 1 // temp
 		await this.CheckLenght(body) // Checking lenght
 		// Creating unique username
@@ -135,7 +135,7 @@ class Accounts {
    * @param {String} password the password to check
    * @returns {Boolean} returns true if credentials are valid
    */
-	async login(username, password) {
+	async Login(username, password) {
 		let sql = `SELECT count(UserId) AS count FROM USER WHERE UserName="${username}";`
 		const records = await this.db.get(sql)
 		if (!records.count) throw new Error(`username "${username}" not found`)
@@ -150,7 +150,7 @@ class Accounts {
 		return true
 	}
 
-	async close() {
+	async Close() {
 		await this.db.close()
 	}
 }

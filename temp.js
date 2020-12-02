@@ -1,5 +1,22 @@
+import ctxSession from './modules/ctx/session.js'
+import { stringLenghtChecker, emptyStringChecker, numberChecker } from './modules/scripts/checkers.js'
+import todayDate from './modules/scripts/today-date.js'
+
+const data = {
+    a: 1,
+    b: 2,
+    c: 3,
+    d: 0,
+    f: -1
+}
+
+
+console.log(await todayDate(-2300))
+
+
 // import Tables from './modules/tables.js'
 // import todaydate from './modules/scripts/today-date.js'
+// import Ingredients from './modules/ingredients.js'
 // //import { SQLInsert, SQLModify, SQLCreate } from './modules/sql/sql-module.js'
 // // 'CREATE TABLE IF NOT EXISTS RESTAURANT_TABLE(\
 // //                 \'TableId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
@@ -10,20 +27,24 @@
 // //                 \'Comment\' TEXT NULL DEFAULT NULL),\
 // //                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 // const body = {
-//         CreatorId: 1
-//     }
-// const table = await new Tables()
-
-//     await table.create(body)
-//     const data1  = await table.db.get(`SELECT * FROM RESTAURANT_TABLE`)
-
-//     data1.InUse = 0
-//     await table.modify(data1, data1.TableId)
-//     const data2  = await table.db.get(`SELECT * FROM RESTAURANT_TABLE`)
-// console.log(data2)
-
-// table.close()
-
+// Title: 'Potato',
+// Type: 'Fruit',
+// CreatorId: 1,
+// Comment: 'Comment'
+// }
+// const ingredient = await new Ingredients()
+// await ingredient.Create(body)
+// const data1 = await ingredient.db.get('SELECT * FROM INGREDIENT')
+// data1.Type = 'Vegetable'
+// await ingredient.Modify(data1, data1.IngredientId)
+// const data2 = await ingredient.db.get('SELECT * FROM INGREDIENT')
+// const time = todaydate()
+// console.log(data2.UpdatedAt, time)
+// ingredient.Close()
+// let s = false
+// console.log(typeof s)
+// s = true
+// console.log(typeof s)
 // // import Accounts from './modules/accounts.js'
 
 // // async function SQLModify(body,tablename,where,like) {
