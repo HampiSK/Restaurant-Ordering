@@ -1,6 +1,11 @@
+/** @SQL Restaurant Table */
+
 /**
+ * @Function
  * Return string for creating sql table named RESTAURANT_TABLE.
  * Table wont be created if table RESTAURANT_TABLE already exists.
+ *
+ * @return {string} [SQL] - Sql statement for table creation.
  *
  * TABLE RESTAURANT_TABLE
  * TableId  	   INTEGER  		The unique id to identify the table.
@@ -11,8 +16,8 @@
  * Comment		   TEXT	     	    The comment about table.
  *
  */
-export default function RestaraurantTable() {
-	const sql = 'CREATE TABLE IF NOT EXISTS RESTAURANT_TABLE(\
+const restaurantTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS RESTAURANT_TABLE(\
                 \'TableId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'InUse\' TINYINT(1) NOT NULL DEFAULT 1,\
                 \'CreatorId\' INTEGER NOT NULL,\
@@ -20,6 +25,8 @@ export default function RestaraurantTable() {
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
-	return sql
+	return SQL
 }
 
+/** @Restaraurant Table Export */
+export default restaurantTable

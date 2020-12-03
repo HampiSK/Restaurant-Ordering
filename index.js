@@ -14,8 +14,8 @@ const port = process.env.PORT || defaultPort
 async function getHandlebarData(ctx, next) {
 	console.log(`${ctx.method} ${ctx.path}`)
 	ctx.hbs = {
-        username: ctx.session.username,
-        userid: ctx.session.userid,
+		username: ctx.session.username,
+		userid: ctx.session.userid,
 		authorised: ctx.session.authorised,
 		host: `https://${ctx.host}`
 	}

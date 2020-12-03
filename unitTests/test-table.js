@@ -1,6 +1,6 @@
 import test from 'ava'
 import Tables from '../modules/tables.js'
-import todaydate from '../modules/scripts/today-date.js'
+import todayDate from '../modules/scripts/today-date.js'
 
 test('TABLE : Creating table with comment', async(test) => {
 	test.plan(1)
@@ -50,7 +50,7 @@ test('TABLE : Comment too long', async(test) => {
 	} catch (err) {
 		test.is(
 			err.message,
-			'Lenght of string is too long',
+			'Table was not created => Lenght of \'Comment\' is too long',
 			'incorrect error message'
 		)
 	} finally {
@@ -70,7 +70,7 @@ test('TABLE : Creating table without id', async(test) => {
 	} catch (err) {
 		test.is(
 			err.message,
-			'SQLITE_CONSTRAINT: NOT NULL constraint failed: RESTAURANT_TABLE.CreatorId',
+			'Table was not created => SQLITE_CONSTRAINT: NOT NULL constraint failed: RESTAURANT_TABLE.CreatorId',
 			'incorrect error message'
 		)
 	} finally {
@@ -127,7 +127,7 @@ test('TABLE : UpdatedAt is updated', async(test) => {
 		data1.InUse = 0
 		await table.Modify(data1, data1.TableId)
 		const data2 = await table.db.get('SELECT * FROM RESTAURANT_TABLE')
-		const time = todaydate()
+		const time = await todayDate()
 		test.is(data2.UpdatedAt, time, 'UpdatedAt was not updated')
 	} catch (err) {
 		test.fail('error thrown')

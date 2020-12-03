@@ -1,6 +1,11 @@
+/** @SQL User Table */
+
 /**
+ * @Function
  * Return string for creating sql table named USER.
  * Table wont be created if table USER already exists.
+ *
+ * @return {string} [SQL] - Sql statement for table creation.
  *
  * TABLE USER
  * UserId  		   INTEGER  		The unique id to identify the user.
@@ -27,8 +32,8 @@
  * Comment		   TEXT	     	    The comment about user. Can be created by manager or admin.
  *
  */
-export default function UserTable() {
-	const sql = 'CREATE TABLE IF NOT EXISTS USER(\'UserId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
+const userTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS USER(\'UserId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'UserName\' VARCHAR(50) NOT NULL UNIQUE,\'FirstName\' VARCHAR(50) NOT NULL,\
                 \'LastName\' VARCHAR(50) NOT NULL,\'Gender\' VARCHAR(10) NOT NULL,\
                 \'Birth\' DATETIME NOT NULL,\'Email\' VARCHAR(50) NULL DEFAULT NULL UNIQUE,\
@@ -40,7 +45,9 @@ export default function UserTable() {
                 \'Registered\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'LastLogin\' DATETIME NULL DEFAULT NULL,\'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
-	return sql
+	return SQL
 }
 
+/** @User Table Export */
+export default userTable
 

@@ -1,6 +1,11 @@
+/** @SQL Ingredient Table */
+
 /**
+ * @Function
  * Return string for creating sql table named INGREDIENT.
  * Table wont be created if table INGREDIENT already exists.
+ *
+ * @return {string} [SQL] - Sql statement for table creation.
  *
  * TABLE INGREDIENT
  * IngredientId		INTEGER 		The unique id to identify the ingredient.
@@ -15,9 +20,8 @@
  * Comment		    TEXT		    The comment about ingredient.
  *
  */
-
-export default function IngredientTable() {
-	const sql = 'CREATE TABLE IF NOT EXISTS INGREDIENT(\
+const ingredientTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS INGREDIENT(\
                 \'IngredientId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'Title\' VARCHAR(75) NOT NULL UNIQUE,\
                 \'Type\' VARCHAR(30) NOT NULL,\
@@ -30,5 +34,8 @@ export default function IngredientTable() {
                 \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 
-	return sql
+	return SQL
 }
+
+/** @Ingredient Table Export */
+export default ingredientTable

@@ -1,52 +1,91 @@
-import todaydate from '../../modules/scripts/today-date.js'
-import CTXSession from '../../modules/ctx/cookies.js'
+/** @Module Router Register */
 
-async function regweb(ctx) {
-// 	if (ctx.hbs.authorised.authorized !== true)
-// 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
-	const minage = 15
-	const today = todaydate(minage,"date")
-	const data = {
-		birth: today,
+/* Modules */
+import todayDate from '../../modules/scripts/today-date.js'
+import ctxSession from '../../modules/ctx/cookies.js'
+
+/**
+  * @Function
+  * Render 'register' webiste.
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  *
+  */
+const regWeb = async(ctx) => {
+	try{
+		const MINAGE = 15
+		const TODAY = await todayDate(MINAGE,'date')
+		const DATA = {
+			birth: TODAY,
+		}
+		await ctx.render('register', DATA)
+	}catch(err) {
+		console.log(`regWeb(): ${err.message}`)
+		ctx.hbs.error = `regWeb(): ${err.message}`
+		await ctx.render('error', ctx.hbs)
 	}
-	await ctx.render('register', data)
 }
 
-async function reguser(ctx, account) {
-// 	if (ctx.hbs.authorised.authorized !== true)
-// 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
+
+/**
+  * @Function
+  * Register user.
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [account] - Account to be registered.
+  *
+  */
+const regUser = async(ctx, account) => {
 	try {
 		await account.Register(ctx.request.body)
-        await regweb(ctx)
-	} catch (err) {
-		console.log(err)
-		ctx.hbs.msg = err.message
+		await regWeb(ctx)
+	}catch(err) {
+		console.log(`regUser(): ${err.message}`)
+		ctx.hbs.msg = `regUser(): ${err.message}`
 		ctx.hbs.body = ctx.request.body
-		console.log(ctx.hbs)
-		await ctx.render('register', ctx.hbs)
+		await regWeb(ctx)
 	} finally {
 		await account.Close()
 	}
 }
 
-async function login(ctx, Accounts, dbName) {
-	const account = await new Accounts(dbName)
+
+/**
+  * @Function
+  * Login.
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [Account] - Account to login.
+  * @param {string} [dbName] - Name of database to store data.
+  *
+  */
+const login = async(ctx, Accounts, dbName) => {
+	const ACCOUNT = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
 	try {
-		const body = ctx.request.body
-		await account.Login(body.UserName, body.Password)
-		const data = await account.db.get(`SELECT UserId FROM USER WHERE UserName = '${body.UserName}'`)
-		ctx.session.authorised = { userid: data.UserId, username: data.UserName, authorized: true }
-		const referrer = body.referrer || '/secure'
-		return ctx.redirect(`${referrer}?msg=you are now logged in...`)
-	} catch (err) {
-		console.log(err)
-		ctx.hbs.msg = err.message
+		const BODY = ctx.request.body
+		await ACCOUNT.Login(BODY.UserName, BODY.Password)
+		const DATA = await ACCOUNT.db.get(`SELECT UserId,UserName FROM USER WHERE UserName = '${BODY.UserName}'`)
+		ctx.session = ctxSession(DATA)
+		const REFERRER = BODY.referrer || '/secure'
+		return ctx.redirect(`${REFERRER}?msg=you are now logged in...`)
+	}catch(err) {
+		console.log(`login(): ${err.message}`)
+		ctx.hbs.msg = `login(): ${err.message}`
 		await ctx.render('login', ctx.hbs)
 	} finally {
-		await account.Close()
+		await ACCOUNT.Close()
 	}
 }
 
-
-export { reguser, regweb, login }
+/** @Export For Router Register */
+export { regUser, regWeb, login }

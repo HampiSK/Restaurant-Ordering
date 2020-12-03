@@ -1,60 +1,121 @@
-/** module Tables */
+/** @Module Items */
 
-import { SQLInsert, SQLModify, SQLCreate } from '../modules/sql/sql-module.js'
-import ItemMenuTable from '../modules/sql/item_menu-table.js'
-import todaydate from './scripts/today-date.js'
-import { StringLenghtChecker } from './scripts/checkers.js'
+/* Modules */
+import { sqlInsert, sqlModify, sqlCreate } from '../modules/sql/sql-module.js'
+import itemTable from '../modules/sql/item-table.js'
+import todayDate from './scripts/today-date.js'
+import { stringLenghtChecker } from './scripts/checkers.js'
 
+const LTITLE = 75
+const LCOMMENT = 1000
 
-const Ltitle = 75
-const Ltype = 30
-const Lcomment = 1000
-const Lother = 10000
 /**
- * Tables
- * ES6 module that handles creating and managing tables.
+ * @Object
+ * Object Items is ES6 module that handles creating and modifying items.
+ *
  */
 class Items {
 	/**
-   * Create an tables object
-   * @param {String} [dbName=":memory:"] - The name of the database file to use.
-   */
+     * @Constructor
+     * Create an Item object.
+     *
+     * @Alert
+     * Async.
+     *
+     * Optional:
+     * @param {String} [dbName=":memory:"] - The name of the database file to use.
+     *                                       On default runs in main memory.
+     * @return {object} - Itself.
+     *
+     */
 	constructor(dbName = ':memory:') {
-		return (async() => SQLCreate(this,dbName,ItemMenuTable()) )()
+		return (async() => sqlCreate(this,dbName,itemTable()) )()
 	}
-    
-    async CheckLenght(body) {
-        for (const val of Object.keys(body)) {
-            if (body[val] === 'Title')
-                await StringLenghtChecker(body[val],Ltitle,val)
-            else if (body[val] === 'Type')
-                await StringLenghtChecker(body[val],Ltype,val)
-            else if (body[val] === 'Comment'
-                await StringLenghtChecker(body[val],Lcomment,val)
-            else
-                await StringLenghtChecker(body[val],Lother,val)
+
+
+  	/**
+	 * @Method
+     * Check if string value is not too long.
+     *
+     * @Alert
+     * Async. Not pure method, using LTITLE LCOMMENT
+     *
+     * @param {object} [body] - Object with new item data
+     *
+     */
+	async CheckLenght(body) {
+		try{
+			stringLenghtChecker(body['Title'],LTITLE,'Title')
+			stringLenghtChecker(body['Comment'],LCOMMENT,'Comment')
+		}catch(err) {
+			throw new Error(`CheckLenght(): ${err.message}`)
 		}
-    }
-    
+	}
+
+
+   	/**
+	 * @Method
+     * Create item.
+     *
+     * @Alert
+     * Async.
+     *
+     * @param {object} [body] - Object with new item data.
+     *
+     * @return {boolean} - True if item was created.
+     *
+     */
 	async Create(body) {
-		await this.CheckLenght(body)
-		const sql = await SQLInsert(body,'ITEM_MENU')
-		await this.db.run(sql)
-		return true
+		try{
+			await this.CheckLenght(body)
+			const SQL = await sqlInsert(body,'ITEM_MENU')
+			await this.db.run(SQL)
+			return true
+		}catch(err) {
+			throw new Error(`Item was not created => ${err.message}`)
+		}
 	}
 
+
+   	/**
+	 * @Method
+     * Modify item.
+     *
+     * @Alert
+     * Async.
+     *
+     * @param {object} [body]   - Object with new item data.
+     * @param {string} [ItemId] - Id of item to change
+     *
+     * @return {boolean} - True if ingredient was modified.
+     *
+     */
 	async Modify(body, ItemId) {
-		await this.CheckLenght(body)
-		body.UpdatedAt = todaydate()
-		const sql = await SQLModify(body,'ITEM_MENU','ItemId',ItemId)
-		await this.db.run(sql)
-		return true
+		try{
+			await this.CheckLenght(body)
+			body.UpdatedAt = await todayDate()
+			const sql = await sqlModify(body,'ITEM_MENU','ItemId',ItemId)
+			await this.db.run(sql)
+			return true
+		}catch(err) {
+			throw new Error(`Item was not created => ${err.message}`)
+		}
+
 	}
 
+
+	/**
+	 * @Method
+     * Close.
+     *
+     * @Alert
+     * Async.
+     *
+     */
 	async Close() {
 		await this.db.close()
 	}
-
 }
 
+/** @Export For Items */
 export default Items

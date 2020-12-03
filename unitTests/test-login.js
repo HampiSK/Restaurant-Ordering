@@ -27,7 +27,7 @@ test('LOGIN : invalid username', async(test) => {
 	} catch (err) {
 		test.is(
 			err.message,
-			'username "roej" not found',
+			'Login failed => Username "roej" not found',
 			'incorrect error message'
 		)
 	} finally {
@@ -60,7 +60,7 @@ test('LOGIN : invalid password', async(test) => {
 	} catch (err) {
 		test.is(
 			err.message,
-			'invalid password for account "doej"',
+			'Login failed => Invalid password for account "doej"',
 			'incorrect error message'
 		)
 	} finally {

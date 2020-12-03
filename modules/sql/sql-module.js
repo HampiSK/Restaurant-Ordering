@@ -1,71 +1,106 @@
+/** @SQL Modules */
+
+/* Packages */
 import sqlite from 'sqlite-async'
-import { StringChecker } from '../scripts/checkers.js'
-/**
- *
- * Param body - Object.
- * Param dbName - Database where data are stored in.
- * Param table - sql statement used to dreate table in database.
- *
- * Open database (when DB is not there will be created) and run sql statement assigned int table param.
- *
- * Returns object
- *
- */
-async function SQLCreate(body,dbName,table) {
-	body.db = await sqlite.open(dbName)
-	await body.db.run(table)
-	return body
-}
+
+/* Modules */
+import { emptyStringChecker } from '../scripts/checkers.js'
 
 /**
+ * @Function
+ * Open database (when DB is not there will be created) and run sql statement assigned int table param.
  *
- * Param body - object from which sql statement is created.
- * Param tablename - table name where data will be inserted.
- * Param column - name of column
- * Param value - specify value
+ * @Alert
+ * Async function.
  *
+ * @param {object} [body]   - Object to open database with.
+ * @param {string} [dbName] - Name of database where data are stored in.
+ * @param {string} [table]  - Sql statement used to dreate table in database.
+ *
+ * @return {object} [body]
+ *
+ */
+const sqlCreate = async(body,dbName,table) => {
+	try{
+		body.db = await sqlite.open(dbName)
+		await body.db.run(table)
+		return body
+	}catch(err) {
+		throw new Error(`Something in SQLCreate went wrong => ${err.message}`)
+	}
+}
+
+
+/**
+ * @Function
  * Takes object from witch sql statement is created.
- * Sql statement will modify data of specified table.
  * All strings are modified by trim() function.
  * Empty values are not modified.
  *
- * Returns sql statement (string)
+ * @param {object} [body]      - Object from which sql statement is created.
+ *
+ * @return {string} [change] - Returns sql statement
  *
  */
-async function SQLModify(body,tablename,column,value) {
+const modifyStatement = (body) => {
 	let change = ''
 	// Iterating object and using its keys
 	for (const val of Object.keys(body)) {
 		if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
-		if (await StringChecker(body[val])) continue
-		if (change.length === 0) // first value
-			change += `${val} = "${body[val]}"`
-		else
-			change += `,${val} = "${body[val]}"`
+		if (emptyStringChecker(body[val])) continue
+		// first value
+		if (change.length === 0) change += `${val} = "${body[val]}"`
+		else change += `,${val} = "${body[val]}"`
 	}
-
-	const sql = `UPDATE ${tablename} SET ${change} WHERE ${column}='${value}';`
-	return sql
+	return change
 }
 
 
 /**
+ * @Function
+ * Takes object from witch sql statement is created.
+ * Sql statement will modify data of specified table.
  *
- * Param body - object from which sql statement is created.
- * Param tablename - table name where data will be inserted.
- * Return - sql statement (string)
+ * @Alert
+ * Async function.
  *
+ * @param {object} [body]      - Object from which sql statement is created.
+ * @param {string} [tablename] - Table name where data will be inserted.
+ * @param {string} [column]    - Name of column.
+ * @param {string} [value]     - Specify value.
+ *
+ * @return {string} [SQL] - Returns sql statement
+ *
+ */
+const sqlModify = async(body,tablename,column,value) => {
+	try{
+		const CHANGE = modifyStatement(body)
+		const SQL = `UPDATE ${tablename} SET ${CHANGE} WHERE ${column}='${value}';`
+		return SQL
+	}catch(err) {
+		throw new Error(`Something went wrong in SQLModify => ${err.message}`)
+	}
+}
+
+
+/**
+ * @Function
  * All strings are modified by trim() function.
  * Empty values are not inserted into database. Empty values are created by database with NULL value by default.
  *
+ * @param {object} [body] - object from which sql statement is created.
+ * @param {string} [body] - table name where data will be inserted.
+ *
+ * @return {array} - Values for statement
+ *
  */
-async function SQLInsert(body,tablename) {
+const insertStatement = (body) => {
 	let columns = ''
 	let values = ''
 	// Iterating object and using its keys
 	for (const val of Object.keys(body)) {
 		if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
-		if (await StringChecker(body[val])) continue
+		if (emptyStringChecker(body[val])) continue
 		if (columns.length === 0) { // first value
 			columns += `${val}`
 			values += `"${body[val]}"`
@@ -74,8 +109,33 @@ async function SQLInsert(body,tablename) {
 			values += `,"${body[val]}"`
 		}
 	}
-	const sql = `INSERT INTO ${tablename}(${columns}) VALUES (${values})`
-	return sql
+	return [columns, values]
 }
 
-export { SQLInsert, SQLModify, SQLCreate }
+
+/**
+ * @Function
+ * All strings are modified by trim() function.
+ * Empty values are not inserted into database. Empty values are created by database with NULL value by default.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [body] - object from which sql statement is created.
+ * @param {string} [tablename] - table name where data will be inserted.
+ *
+ * @return {string} [SQL] - Returns sql statement
+ *
+ */
+const sqlInsert = async(body,tablename) => {
+	try {
+		const STATEMENT = insertStatement(body)
+		const SQL = `INSERT INTO ${tablename}(${STATEMENT[0]}) VALUES (${STATEMENT[1]})`
+		return SQL
+	}catch(err) {
+		throw new Error(`Something went wrong in SQLInsert => ${err.message}`)
+	}
+}
+
+/** @Export For SQL Modules */
+export { sqlInsert, sqlModify, sqlCreate }

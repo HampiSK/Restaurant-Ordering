@@ -47,8 +47,8 @@ router.post('/register', async(ctx) => reguser(ctx, await new Accounts(dbName)))
  * @route {GET} /register
  */
 router.get('/register', async(ctx) => {
-    router.use(checkAuth)
-    regweb(ctx)
+	router.use(checkAuth)
+	regweb(ctx)
 })
 
 export default router

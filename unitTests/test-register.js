@@ -183,7 +183,7 @@ test('REGISTER : register a duplicate email', async(test) => {
 	} catch (err) {
 		test.is(
 			err.message,
-			'email address "email@email.com" is already in use',
+			'User was not created => EmailCheck(): Email address "email@email.com" is already in use',
 			'incorrect error message'
 		)
 	} finally {
@@ -213,7 +213,9 @@ test('REGISTER : error if First name too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'FirstName\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'FirstName\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -241,7 +243,9 @@ test('REGISTER : error if Last name too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'LastName\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'LastName\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -269,7 +273,9 @@ test('REGISTER : error if Birth too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Birth\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Birth\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -297,7 +303,9 @@ test('REGISTER : error if Password too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Password\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => Password(): Lenght of \'Password\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -325,7 +333,9 @@ test('REGISTER : error if Gender too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Gender\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Gender\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -353,7 +363,9 @@ test('REGISTER : error if Position too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Position\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => Jobs(): Lenght of \'Position\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -381,7 +393,9 @@ test('REGISTER : error if Street too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Street\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Street\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -409,7 +423,9 @@ test('REGISTER : error if City too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'City\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'City\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -437,7 +453,9 @@ test('REGISTER : error if Zip too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Zip\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Zip\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -465,7 +483,9 @@ test('REGISTER : error if Phone too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Phone\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Phone\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -493,7 +513,9 @@ test('REGISTER : error if Email too long', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'Lenght of \'Email\' is too long', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => CheckLenght(): Lenght of \'Email\' is too long',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -521,7 +543,9 @@ test('REGISTER : error if blank First name', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.FirstName', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.FirstName',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -550,7 +574,7 @@ test('REGISTER : error if invalid password', async(test) => {
 		test.fail('error not thrown')
 	} catch (err) {
 		test.is(err.message,
-			'SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.PasswordHash', 'incorrect error message')
+			'User was not created => Password(): Password is not accepted.', 'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -578,7 +602,9 @@ test('REGISTER : error if blank Last name', async(test) => {
 		await account.Register(body)
 		test.fail('error not thrown')
 	} catch (err) {
-		test.is(err.message, 'SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.LastName', 'incorrect error message')
+		test.is(err.message,
+			'User was not created => SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.LastName',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}
@@ -607,7 +633,8 @@ test('REGISTER : error if blank password', async(test) => {
 		test.fail('error not thrown')
 	} catch (err) {
 		test.is(err.message,
-			'SQLITE_CONSTRAINT: NOT NULL constraint failed: USER.PasswordHash', 'incorrect error message')
+			'User was not created => Password(): Password is not accepted.',
+			'incorrect error message')
 	} finally {
 		account.Close()
 	}

@@ -1,57 +1,127 @@
-/** module Tables */
+/** @Module Ingredients */
 
-import { SQLInsert, SQLModify, SQLCreate } from '../modules/sql/sql-module.js'
-import IngredientTable from '../modules/sql/ingredient-table.js'
-import todaydate from './scripts/today-date.js'
-import { StringLenghtChecker } from './scripts/checkers.js'
+/* Modules */
+import { stringLenghtChecker} from './scripts/checkers.js'
+import { sqlInsert, sqlModify, sqlCreate } from '../modules/sql/sql-module.js'
+import ingredientTable from '../modules/sql/ingredient-table.js'
+import todayDate from '../modules/scripts/today-date.js'
 
+const LTITLE = 75
+const LTYPE = 30
+const LCOMMENT = 1000
 
-const Ltitle = 75
-const Ltype = 30
-const Lcomment = 1000
 /**
- * Tables
- * ES6 module that handles creating and managing tables.
+ * @Object
+ * Object Ingredients is ES6 module that handles creating and modifying ingredients .
+ *
  */
 class Ingredients {
 	/**
-   * Create an tables object
-   * @param {String} [dbName=":memory:"] - The name of the database file to use.
-   */
+     * @Constructor
+     * Create an Ingredients object.
+     *
+     * @Alert
+     * Async.
+     *
+     * Optional:
+     * @param {String} [dbName=":memory:"] - The name of the database file to use.
+     *                                       On default runs in main memory.
+     * @return {object} - Itself.
+     *
+     */
 	constructor(dbName = ':memory:') {
-		return (async() => SQLCreate(this,dbName,IngredientTable()) )()
+		return (async() => sqlCreate(this,dbName,ingredientTable()) )()
 	}
-    
-    async CheckLenght(body) {
-        for (const val of Object.keys(body)) {
-            if (body[val] === 'Title')
-                await StringLenghtChecker(body[val],Ltitle,val)
-            else if (body[val] === 'Type')
-                await StringLenghtChecker(body[val],Ltype,val)
-            else
-                await StringLenghtChecker(body[val],Lcomment,val)
+
+
+  	/**
+	 * @Method
+     * Check if each string value is not too long.
+     *
+     * @Alert
+     * Async. Not pure method, using LTITLE LTYPE LCOMMENT
+     *
+     * @param {object} [body] - Object with new ingredient data
+     *
+     */
+	async CheckLenght(body) {
+		try{
+			for (const val of Object.keys(body)) {
+				if (body[val] === 'Title')
+					stringLenghtChecker(body[val],LTITLE,val)
+				else if (body[val] === 'Type')
+					stringLenghtChecker(body[val],LTYPE,val)
+				else
+					stringLenghtChecker(body[val],LCOMMENT,val)
+			}
+		}catch(err) {
+			throw new Error(`CheckLenght(): ${err.message}`)
 		}
-    }
-    
+	}
+
+
+   	/**
+	 * @Method
+     * Create ingredient.
+     *
+     * @Alert
+     * Async.
+     *
+     * @param {object} [body] - Object with new ingredient data.
+     *
+     * @return {boolean} - True if ingredient was created.
+     *
+     */
 	async Create(body) {
-		await this.CheckLenght(body)
-		const sql = await SQLInsert(body,'INGREDIENT')
-		await this.db.run(sql)
-		return true
+		try{
+			await this.CheckLenght(body)
+			const SQL = await sqlInsert(body,'INGREDIENT')
+			await this.db.run(SQL)
+			return true
+		}catch(err) {
+			throw new Error(`Ingredient was not created => ${err.message}`)
+		}
 	}
 
+
+   	/**
+	 * @Method
+     * Modify ingredient.
+     *
+     * @Alert
+     * Async.
+     *
+     * @param {object} [body] - Object with new ingredient data.
+     * @param {string} [IngredientId]
+     *
+     * @return {boolean} - True if ingredient was modified.
+     *
+     */
 	async Modify(body, IngredientId) {
-		await this.CheckLenght(body)
-		body.UpdatedAt = todaydate()
-		const sql = await SQLModify(body,'INGREDIENT','IngredientId',IngredientId)
-		await this.db.run(sql)
-		return true
+		try{
+			await this.CheckLenght(body)
+			body.UpdatedAt = await todayDate()
+			const SQL = await sqlModify(body,'INGREDIENT','IngredientId',IngredientId)
+			await this.db.run(SQL)
+			return true
+		}catch(err) {
+			throw new Error(`Ingredient was not created => ${err.message}`)
+		}
 	}
 
+
+	/**
+	 * @Method
+     * Close.
+     *
+     * @Alert
+     * Async.
+     *
+     */
 	async Close() {
 		await this.db.close()
 	}
-
 }
 
+/** @Export For Ingredients */
 export default Ingredients

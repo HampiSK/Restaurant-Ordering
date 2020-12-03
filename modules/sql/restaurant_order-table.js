@@ -1,6 +1,11 @@
+/** @SQL Restaurant Order Table */
+
 /**
+ * @Function
  * Return string for creating sql table named RESTAURANT_ORDER.
  * Table wont be created if table RESTAURANT_ORDER already exists.
+ *
+ * @return {string} [sql] - Sql statement for table creation.
  *
  * TABLE RESTAURANT_ORDER
  * OrderId		    INTEGER 		The unique id to identify the order.
@@ -15,9 +20,8 @@
  * CreatorId  	    INTEGER  		The unique id to identify creator of the table.
  *
  */
-
-export default function RestaurantOrderTable() {
-	const sql = 'CREATE TABLE IF NOT EXISTS RESTAURANT_ORDER(\
+const restaurantOrderTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS RESTAURANT_ORDER(\
                 \'OrderId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'MenuId\' INTEGER NOT NULL,\
                 \'TableId\' INTEGER NOT NULL,\
@@ -30,5 +34,8 @@ export default function RestaurantOrderTable() {
                 FOREIGN KEY(MenuId) REFERENCES MENU(MenuId),\
                 FOREIGN KEY(TableId) REFERENCES RESTAURANT_TABLE(TableId),\
                 FOREIGN KEY(UserId,CreatorId) REFERENCES USER(UserId));'
-	return sql
+	return SQL
 }
+
+/** @Restaurant Order Export */
+export default restaurantOrderTable

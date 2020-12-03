@@ -1,6 +1,11 @@
+/** @SQL Payment Table */
+
 /**
+ * @Function
  * Return string for creating sql table named PAYMENT.
  * Table wont be created if table PAYMENT already exists.
+ *
+ * @return {string} [SQL] - Sql statement for table creation.
  *
  * TABLE PAYMENT
  * PaymentId		INTEGER		    The unique id to identify the payment.
@@ -16,9 +21,8 @@
  * Comment		    TEXT	    	The comment about payment.
  *
  */
-
-export default function PaymentTable() {
-	const sql = 'CREATE TABLE IF NOT EXISTS PAYMENT(\
+const paymentTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS PAYMENT(\
                 \'PaymentId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'OrderId\' INTEGER NOT NULL,\
                 \'PaymentMethod\' VARCHAR(10) NOT NULL DEFAULT NULL,\
@@ -32,5 +36,8 @@ export default function PaymentTable() {
                 \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(OrderId) REFERENCES RESTAURANT_ORDER(OrderId));\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
-	return sql
+	return SQL
 }
+
+/** @Payment Export */
+export default paymentTable
