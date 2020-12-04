@@ -14,12 +14,14 @@
 const ctxSession = (data = {}) => {
 	if (!Object.keys(data).length) {
 		return {
-			authorised: false,
+			position: null,
+			userid: null,
 			username: null,
-			userid: null
+			authorised: false
 		}
 	}
 	return {
+		position: data.Position,
 		userid: data.UserId,
 		username: data.UserName,
 		authorised: true

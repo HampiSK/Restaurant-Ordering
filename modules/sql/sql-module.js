@@ -6,6 +6,7 @@ import sqlite from 'sqlite-async'
 /* Modules */
 import { emptyStringChecker } from '../scripts/checkers.js'
 
+
 /**
  * @Function
  * Open database (when DB is not there will be created) and run sql statement assigned int table param.
@@ -26,7 +27,7 @@ const sqlCreate = async(body,dbName,table) => {
 		await body.db.run(table)
 		return body
 	}catch(err) {
-		throw new Error(`Something in SQLCreate went wrong => ${err.message}`)
+		throw new Error(`Something in sqlCreate went wrong => ${err.message}`)
 	}
 }
 
@@ -78,7 +79,7 @@ const sqlModify = async(body,tablename,column,value) => {
 		const SQL = `UPDATE ${tablename} SET ${CHANGE} WHERE ${column}='${value}';`
 		return SQL
 	}catch(err) {
-		throw new Error(`Something went wrong in SQLModify => ${err.message}`)
+		throw new Error(`Something went wrong in sqlModify => ${err.message}`)
 	}
 }
 
@@ -133,7 +134,7 @@ const sqlInsert = async(body,tablename) => {
 		const SQL = `INSERT INTO ${tablename}(${STATEMENT[0]}) VALUES (${STATEMENT[1]})`
 		return SQL
 	}catch(err) {
-		throw new Error(`Something went wrong in SQLInsert => ${err.message}`)
+		throw new Error(`Something went wrong in sqlInsert => ${err.message}`)
 	}
 }
 

@@ -1,5 +1,5 @@
 import test from 'ava'
-import Accounts from '../modules/accounts.js'
+import Accounts from '../modules/builders/accounts.js'
 
 test('LOGIN : invalid username', async(test) => {
 	test.plan(1)

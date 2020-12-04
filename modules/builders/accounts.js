@@ -4,13 +4,14 @@
 import bcrypt from 'bcrypt-promise'
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../modules/sql/sql-module.js'
-import userTable from '../modules/sql/user-table.js'
-import todayDate from './scripts/today-date.js'
-import { stringLenghtChecker, emptyStringChecker } from './scripts/checkers.js'
+import { sqlInsert, sqlModify, sqlCreate } from '../sql/sql-module.js'
+import userTable from '../sql/user-table.js'
+import todayDate from '../scripts/today-date.js'
+import { stringLenghtChecker, emptyStringChecker } from '../scripts/checkers.js'
 
 const SALTROUNDS = 10 // Rounds to encrypt password
-
+const LCOMMENT = 1000
+const LVAL = 50
 /**
  * @Object
  * Object Account is ES6 module that handles registering accounts and logging in.
@@ -176,15 +177,13 @@ class Accounts {
      * Check if each value is not too long.
      *
      * @Alert
-     * Async.
+     * Async. Not pure function using LCOMMENT, LVAL
      *
      * @param {object} [body] - Object with new user data
      *
      */
 	async CheckLenght(body) {
 		try{
-			const LCOMMENT = 1000
-			const LVAL = 50
 			for (const VAL of Object.keys(body)) {
 				if (VAL === 'PasswordHash') continue
 				else if (VAL === 'Comment')
@@ -195,7 +194,6 @@ class Accounts {
 		}catch(err) {
 			throw new Error(`CheckLenght(): ${err.message}`)
 		}
-
 	}
 
 
@@ -273,6 +271,7 @@ class Accounts {
      */
 	async Login(username, password) {
 		try{
+			await this.CheckLenght({username, password})
 			let sql = `SELECT count(UserId) AS count FROM USER WHERE UserName="${username}";`
 			const RECORDS = await this.db.get(sql)
 			if (!RECORDS.count) throw new Error(`Username "${username}" not found`)

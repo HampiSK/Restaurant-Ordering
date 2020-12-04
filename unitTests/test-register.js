@@ -1,5 +1,5 @@
 import test from 'ava'
-import Accounts from '../modules/accounts.js'
+import Accounts from '../modules/builders/accounts.js'
 
 //                     FirstName: 'j',
 //                     LastName: 'doe',

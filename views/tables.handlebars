@@ -16,7 +16,7 @@
         <header> 
             <ul class="nav justify-content">
                 <li class="nav-item nav-main">
-                    <a class="nav-link nav-a" href="/profile">{{UserName}}</a>
+                    <a class="nav-link nav-a" href="/profile">{{username}}</a>
                 </li>
                 <li class="nav-item nav-menu">
                     <a class="nav-link nav-a" href="#">Link</a>
@@ -36,20 +36,20 @@
             <section class="row">
                 <section class="col-md-9">
                     <article class="container p-3 my-3 bg-white">       
-                        <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-                            {{for Table}}
-                          <article class="col mb-3">
-                            <article class="card">
-                              <button type="button">
-                              <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
-                              <article class="card-body">
-                                <h5 class="card-title">{{>Table.TableName}}</h5>
-                                <p class="card-text">{{>Table.Comment}}</p>
+                        <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5 row-cols-lg-6">
+                            {{#each Tables}}
+                              <article class="col mb-3">
+                                <article class="card">
+                                  <button type="button">
+                                  <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                                  <article class="card-body">
+                                    <h5 class="card-title">{{this.TableName}}</h5>
+                                    <p class="card-text">{{this.Comment}}</p>
+                                  </article>
+                                  </button>
+                                </article>                      
                               </article>
-                              </button>
-                            </article>                      
-                          </article>
-                            {{/for}}
+                            {{/each}}
                         </article>
                     </article> 
                 </section>
