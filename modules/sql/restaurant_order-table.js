@@ -33,7 +33,7 @@ const restaurantOrderTable = () => {
                 \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(MenuId) REFERENCES MENU(MenuId),\
                 FOREIGN KEY(TableId) REFERENCES RESTAURANT_TABLE(TableId),\
-                FOREIGN KEY(UserId,CreatorId) REFERENCES USER(UserId));'
+                FOREIGN KEY(UserId,CreatorId) REFERENCES USER(UserId,UserId));'
 	return SQL
 }
 

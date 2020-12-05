@@ -1,7 +1,7 @@
 /** @Module Login */
 
 /* Modules */
-import todayDate from '../../scripts/today-date.js'
+import message from '../../scripts/messages.js'
 import ctxSession from '../../ctx/session.js'
 
 
@@ -20,7 +20,7 @@ import ctxSession from '../../ctx/session.js'
   */
 const loginGet = async(ctx) => {
 	try {
-		console.log(`${await todayDate()} - PUBLIC GET: Login for '${ctx.hbs.username}' in path '${ctx.path}`)
+		await message(ctx,'failed',err.message)
 		await ctx.render('login', ctx.hbs)
 	}catch(err) {
 		ctx.hbs.error = err.message
@@ -58,10 +58,6 @@ const position = body => {
 }
 
 
-const linterNonsense1 = () => 'SELECT UserId,UserName,Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '
-const le2 = (time) => `${time} - PUBLIC POST: Login to account user `
-
-
 /**
   * @Function
   * Login.
@@ -87,10 +83,10 @@ const loginPost = async(ctx, Accounts, dbName) => {
 		DATA.Position = position(DATA)
 		ctx.session = ctxSession(DATA)
 		const REFERRER = BODY.referrer || '/secure'
-		console.log(`${le2(await todayDate())} '${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
+		await message(ctx,'sucessful')
 		return ctx.redirect(`${REFERRER}?msg=you are now logged in...`)
 	}catch(err) {
-		console.log(`${await todayDate()} - PUBLIC POST: Login failed due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.msg = err.message
 		await loginGet(ctx)
 	} finally {

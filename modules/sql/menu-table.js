@@ -19,12 +19,12 @@
 const menuTable = () => {
 	const SQL = 'CREATE TABLE IF NOT EXISTS MENU(\
                 \'MenuId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
-                \'ItemMenuId\' INTEGER NOT NULL,\
+                \'ItemId\' INTEGER NOT NULL,\
                 \'CreatorId\' INTEGER NOT NULL,\
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
-                FOREIGN KEY(ItemMenuId) REFERENCES ITEM_MENU(ItemMenuId)),\
+                FOREIGN KEY(ItemId) REFERENCES ITEM(ItemId),\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 	return SQL
 }

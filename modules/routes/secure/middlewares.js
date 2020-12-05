@@ -19,22 +19,21 @@ import todayDate from '../../scripts/today-date.js'
 const secureAuth = async(ctx, next) => {
 	const TIME = await todayDate()
 	try{
-		if (!ctx.hbs.authorised)
+		if (!ctx.hbs.authorised) {
+			console.log(`${TIME} - SECURE AUTH: Authorisation deined for user: `+
+                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
 			return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
-		console.log(`${TIME} - SECURE AUTH: Authorisation was successfull for user 
-'${ctx.hbs.username}' (ID: ${ctx.hbs.userid})`)
+		}
+		console.log(`${TIME} - SECURE AUTH: Authorisation successfull for user: `+
+                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
 	}catch(err) {
-		console.log(`${TIME} - SECURE AUTH: Authorisation failed for user 
-'${ctx.hbs.username}' (ID: ${ctx.hbs.userid})`)
+		console.log(`${TIME} - SECURE AUTH: Authorisation failed for user: `+
+                    `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	} finally{
 		await next()
 	}
 }
-
-
-const le1 = (time) => `${time} - SECURE PERM: Access granted for user `
-const linterNonsense2 = (time) => `${time} - SECURE PERM: Access deined for user `
 
 
 /**
@@ -52,20 +51,21 @@ const linterNonsense2 = (time) => `${time} - SECURE PERM: Access deined for user
  *
  */
 const securePerm = async(pos,ctx,next) => {
-	const TIME = await todayDate()
 	try{
 		for (const POSSITION of pos) {
 			if (ctx.hbs.position === POSSITION) {
-				console.log(`${le1(TIME)}'${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) to use path: '${ctx.path}'`)
+				console.log(`${await todayDate()} - SECURE PERM: Access granted for user: `+
+                            `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'`)
 				return
 			}
 		}
-		console.log(`${linterNonsense2(TIME)}'${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) to use path: '${ctx.path}'`)
+		console.log(`${await todayDate()} - SECURE PERM: Access deined for user: `+
+                    `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'`)
 		ctx.hbs.error = 'Access Deined'
 		return ctx.redirect('error', ctx.hbs)
 	}catch(err) {
-		console.log(`${TIME} - SECURE PERM: Access granted for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) to use path: '${ctx.path}'`)
+		console.log(`${await todayDate()} - SECURE PERM: Failed for user: '${ctx.hbs.username}'`+
+                    ` id: ${ctx.hbs.userid}) in path: '${ctx.path}' due to ${err.message}`)
 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	} finally{
 		await next()

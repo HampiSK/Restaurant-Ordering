@@ -1,0 +1,69 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head> 
+    <body>
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="/secure/profile">{{username}}</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/orders">Orders</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/tables">Tables</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/menu">Menu</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </header>      
+        <main class="block">
+            <section class="row">
+                <section class="col-md-9">
+                    <article class="container p-3 my-3 bg-white">       
+                        <article class="row row-cols-1 row-cols-sm-2">
+                            {{#each Orders}}
+                                <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                                  <article class="col mb-3">
+                                    <article class="card">
+                                        <button type="submit" name="Order" value="{{this.OrderId}}">
+                                          <article class="row">
+                                           <article class="card-body">
+                                               <article class="card-title col-9">Table: {{this.TableName}} [ID: {{this.TableId}}]</article>
+                                               <article class="card-title col-4">
+                                                  <h5>Status: {{this.Status}}</h5>
+                                               </article>
+                                               <article class="col-6 card-text">
+                                                  <p>Time of Order: {{this.Time}}</p>
+                                                  <p>Created by: {{this.CreatorId}}</p>
+                                                  <p>Number of Diners: {{this.Diners}}</p>
+                                                </article>                                               
+                                            </article>                                         
+                                         </article>                                        
+                                      </button>
+                                    </article>                      
+                                  </article>
+                                </form>
+                            {{/each}}
+                        </article>
+                    </article> 
+                </section>
+            </section>
+        </main>
+    </body>
+</html>

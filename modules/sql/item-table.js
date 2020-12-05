@@ -20,13 +20,18 @@
 const itemTable = () => {
 	const SQL = 'CREATE TABLE IF NOT EXISTS ITEM(\
                 \'ItemId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
-                \'Title\' VARCHAR(75) NOT NULL UNIQUE,\
                 \'IngredientId\' INTEGER NOT NULL,\
+                \'Title\' VARCHAR(75) NOT NULL UNIQUE,\
+                \'Type\' VARCHAR(30) NOT NULL,\
+                \'Kitchen\' TINYINT(1) NOT NULL DEFAULT 0,\
+                \'Price\' FLOAT NOT NULL DEFAULT 0,\
+                \'Recipe\' TEXT NULL DEFAULT NULL,\
+                \'Instructions\' TEXT NULL DEFAULT NULL,\
                 \'CreatorId\' INTEGER NOT NULL,\
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
-                FOREIGN KEY(IngredientId) REFERENCES INGREDIENT(IngredientId)),\
+                FOREIGN KEY(IngredientId) REFERENCES INGREDIENT(IngredientId),\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 	return SQL
 }

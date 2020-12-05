@@ -1,10 +1,10 @@
 /** @Module Orders */
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../modules/sql/sql-module.js'
-import restaurantOrderTable from '../modules/sql/restaurant_order-table.js'
-import todayDate from './scripts/today-date.js'
-import { stringLenghtChecker } from './scripts/checkers.js'
+import { sqlInsert, sqlModify, sqlCreate } from '../sql/sql-module.js'
+import restaurantOrderTable from '../sql/restaurant_order-table.js'
+import todayDate from '../scripts/today-date.js'
+import { stringLenghtChecker } from '../scripts/checkers.js'
 
 const LCOMMENT = 1000
 
@@ -31,6 +31,34 @@ class Orders {
 		return (async() => sqlCreate(this,dbName,restaurantOrderTable()) )()
 	}
 
+
+	/**
+	 * @Method
+     * Get sorted orders. From newest to oldest.
+     *
+     * @Alert
+     * Async.
+     *
+     * Optional:
+     * @param {number} [option] - Return specified orders based on status
+     *                          - On default "all" - returns all orders.
+     *
+     * @return {array} [ORDERS] - Contain orders data.
+     *
+     */
+	async GetOrders(option = 'all') {
+		try{
+			if (option === 'all') option = '"Placed", "Prepared", "Served","Failed","Paid"'
+			const orders = []
+			await this.db.each(`SELECT * FROM RESTAURANT_ORDER WHERE Status IN(${option})`, (err, row) => {
+				if (err === 0) throw new Error('Cannot open database')
+				orders.push(row)
+			})
+			return orders.sort().reverse()
+		}catch(err) {
+			throw new Error(`Could not retrieve tables => ${err.message}`)
+		}
+	}
 
    	/**
 	 * @Method

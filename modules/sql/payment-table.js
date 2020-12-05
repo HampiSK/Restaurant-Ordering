@@ -34,7 +34,7 @@ const paymentTable = () => {
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
-                FOREIGN KEY(OrderId) REFERENCES RESTAURANT_ORDER(OrderId));\
+                FOREIGN KEY(OrderId) REFERENCES RESTAURANT_ORDER(OrderId);\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 	return SQL
 }

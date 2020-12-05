@@ -30,7 +30,7 @@ class Ingredients {
      *
      */
 	constructor(dbName = ':memory:') {
-		return (async() => sqlCreate(this,dbName,ingredientTable()) )()
+		return (async() => await sqlCreate(this,dbName,ingredientTable()) )()
 	}
 
 

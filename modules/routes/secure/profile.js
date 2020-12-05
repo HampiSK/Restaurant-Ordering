@@ -1,7 +1,7 @@
 /** @Module Profile */
 
 /* Modules */
-import todayDate from '../../scripts/today-date.js'
+import message from '../../scripts/messages.js'
 import { getphoto } from '../../scripts/upload-photo.js' //uploadphoto
 
 /**
@@ -20,15 +20,13 @@ import { getphoto } from '../../scripts/upload-photo.js' //uploadphoto
   */
 const profileGet = async(ctx,account) => {
 	try{
-		console.log(`${await todayDate()} - SECURE GET: Profile for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
 		const DATA = await account.db.get(`SELECT * FROM USER WHERE UserId = '${ctx.hbs.userid}'`)
 		DATA.Photo = getphoto(DATA.UserName)
 		Object.assign(ctx.hbs, DATA)
+		await message(ctx,'sucessful')
 		await ctx.render('profile', ctx.hbs)
 	}catch(err) {
-		console.log(`${await todayDate()} - SECURE GET: Profile failed for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.error = `profileGet(): ${err.message}`
 		await ctx.render('error', ctx.hbs)
 	}finally{
@@ -50,12 +48,10 @@ const profileGet = async(ctx,account) => {
   */
 const profilePost = async(ctx, account) => {
 	try {
-		console.log(`${await todayDate()} - SECURE POST: Profile update successful by '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
+		await message(ctx,'modified','Profile updated by')
 		await profileGet(ctx, account)
 	}catch(err) {
-		console.log(`${await todayDate()} - SECURE GET: Profile update failed for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.msg = `profilePost(): ${err.message}`
 		await profileGet(ctx, account)
 	} finally {

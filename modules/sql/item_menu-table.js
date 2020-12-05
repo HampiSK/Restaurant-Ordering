@@ -36,7 +36,7 @@ const itemMenuTable = () => {
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
-                FOREIGN KEY(ItemId) REFERENCES ITEM(ItemId)),\
+                FOREIGN KEY(ItemId) REFERENCES ITEM(ItemId),\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 	return SQL
 }

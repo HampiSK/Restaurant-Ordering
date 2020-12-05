@@ -1,7 +1,7 @@
 /** @Module Logout */
 
 /* Modules */
-import todayDate from '../../scripts/today-date.js'
+import message from '../../scripts/messages.js'
 import ctxSession from '../../ctx/session.js'
 
 /**
@@ -19,14 +19,12 @@ import ctxSession from '../../ctx/session.js'
   */
 const logoutGet = async(ctx) => {
 	try{
-		console.log(`${await todayDate()} - PUBLIC GET: Logout successfull for user 
-'${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
 		ctx.session = ctxSession()
+		await message(ctx,'sucessful')
 		ctx.redirect('/login?msg=you are now logged out')
 	}catch(err) {
-		console.log(`${await todayDate()} - PUBLIC GET: Logout failed for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
 		ctx.hbs.error = err.message
+		await message(ctx,'failed',err.message)
 		await ctx.render('error', ctx.hbs)
 	}
 }

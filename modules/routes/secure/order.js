@@ -2,7 +2,7 @@
 
 /* Modules */
 import message from '../../scripts/messages.js'
-import tableButton from '../../scripts/table-buttons.js'
+// import tableButton from '../../scripts/table-buttons.js'
 
 /**
   * @Function
@@ -18,7 +18,7 @@ import tableButton from '../../scripts/table-buttons.js'
   * @render [/error]  - When something went wrong error is rendered.
   *
   */
-const tableGetId = async(ctx,table) => {
+const orderGetId = async(ctx,table) => {
 	try{
 		ctx.hbs.selected = ctx.hbs.Table
 		await tableGet(ctx, table)
@@ -44,7 +44,7 @@ const tableGetId = async(ctx,table) => {
   * @render [/error]  - When something went wrong error is rendered.
   *
   */
-const tableGet = async(ctx,table) => {
+const orderGet = async(ctx,order) => {
 	try{
 		const TABLES = await table.GetTables()
 		if (TABLES !== undefined) ctx.hbs.Tables = TABLES
@@ -71,7 +71,7 @@ const tableGet = async(ctx,table) => {
   * @param {object} [table] - Table object.
   *
   */
-const tablePost = async(ctx, table) => {
+const orderPost = async(ctx, table) => {
 	try {
 		await tableButton(ctx.hbs.userid, ctx.request.body.Button)
 		await message(ctx,'modified',`${ctx.request.body.Button} by`)
@@ -87,4 +87,4 @@ const tablePost = async(ctx, table) => {
 }
 
 /** @Export For Table */
-export { tableGet, tableGetId, tablePost }
+export { orderGet, orderGetId, orderPost }

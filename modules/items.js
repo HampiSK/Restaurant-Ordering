@@ -29,7 +29,7 @@ class Items {
      *
      */
 	constructor(dbName = ':memory:') {
-		return (async() => sqlCreate(this,dbName,itemTable()) )()
+		return (async() => await sqlCreate(this,dbName,itemTable()) )()
 	}
 
 
@@ -68,7 +68,7 @@ class Items {
 	async Create(body) {
 		try{
 			await this.CheckLenght(body)
-			const SQL = await sqlInsert(body,'ITEM_MENU')
+			const SQL = await sqlInsert(body,'ITEM')
 			await this.db.run(SQL)
 			return true
 		}catch(err) {

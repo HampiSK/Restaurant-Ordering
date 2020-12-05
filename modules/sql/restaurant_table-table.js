@@ -9,6 +9,7 @@
  *
  * TABLE RESTAURANT_TABLE
  * TableId  	   INTEGER  		The unique id to identify the table.
+ * TableName       VARCHAR(50)      The name of table.
  * InUse	       TINYINT(1)		The flag to identify whether the table is use.
  * CreatorId  	   INTEGER  		The unique id to identify creator of the table.
  * CreatedAt	   DATETIME		    It stores the date and time at which the table is created.
@@ -19,6 +20,7 @@
 const restaurantTable = () => {
 	const SQL = 'CREATE TABLE IF NOT EXISTS RESTAURANT_TABLE(\
                 \'TableId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
+                \'TableName\' VARCHAR(50) NULL DEFAULT NULL,\
                 \'InUse\' TINYINT(1) NOT NULL DEFAULT 1,\
                 \'CreatorId\' INTEGER NOT NULL,\
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\

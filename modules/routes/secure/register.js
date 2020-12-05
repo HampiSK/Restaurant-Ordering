@@ -2,6 +2,7 @@
 
 /* Modules */
 import todayDate from '../../scripts/today-date.js'
+import message from '../../scripts/messages.js'
 
 /**
   * @Function
@@ -18,15 +19,13 @@ import todayDate from '../../scripts/today-date.js'
   */
 const registerGet = async(ctx) => {
 	try{
-		console.log(`${await todayDate()} - SECURE GET: Register for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
 		const MINAGE = 15
 		const TODAY = await todayDate(MINAGE,'date')
 		ctx.hbs.birth = TODAY
+		await message(ctx,'sucessful')
 		await ctx.render('register', ctx.hbs)
 	}catch(err) {
-		console.log(`${await todayDate()} - SECURE GET: Register failed for user '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.error = `regWeb(): ${err.message}`
 		await ctx.render('error', ctx.hbs)
 	}
@@ -47,12 +46,10 @@ const registerGet = async(ctx) => {
 const registerPost = async(ctx, account) => {
 	try {
 		await account.Register(ctx.request.body)
-		console.log(`${await todayDate()} - SECURE POST: Register user successful by '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
+		await message(ctx,'modified','New user registered by')
 		await registerGet(ctx)
 	}catch(err) {
-		console.log(`${await todayDate()} - SECURE POST: Register user failed by '${ctx.hbs.username}' 
-(ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.msg = `regUser(): ${err.message}`
 		ctx.hbs.body = ctx.request.body
 		await registerGet(ctx)

@@ -1,7 +1,7 @@
 /** @Module Default Secure*/
 
 /* Modules */
-import todayDate from '../../scripts/today-date.js'
+import message from '../../scripts/messages.js'
 
 /**
  * @Function get
@@ -18,12 +18,10 @@ import todayDate from '../../scripts/today-date.js'
  */
 const defaultGetSecure = async(ctx) => {
 	try {
-		console.log(`${await todayDate()} - SECURE GET: Default for user 
-'${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) in path '${ctx.path}'`)
+		await message(ctx,'sucessful')
 		await ctx.render('secure', ctx.hbs)
 	} catch (err) {
-		console.log(`${await todayDate()} - PUBLIC GET: Default failed for user 
-'${ctx.hbs.username}' (ID: ${ctx.hbs.userid}) in path '${ctx.path}' due to ${err.message}`)
+		await message(ctx,'failed',err.message)
 		ctx.hbs.error = err.message
 		await ctx.render('error', ctx.hbs)
 	}

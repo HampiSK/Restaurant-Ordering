@@ -24,6 +24,24 @@ body {
   padding: 25vh 3% 0 0;
 }
 
+.style-padding{
+    padding: 2%;            
+}
+.style-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #fff;  
+    background: #fe7a0b;
+}
+.style-btn:hover {
+  background-color: #fff;
+  color: #fe7a0b;
+  border: 1px solid #fe7a0b;
+}
+
 .nav-menu {
   top: 0;
   padding: 4vh 8% 0 0;

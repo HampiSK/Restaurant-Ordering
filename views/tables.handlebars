@@ -8,7 +8,7 @@
         <meta name="author" content="Adam Hampachel">
         <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
-        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
         <script type="module" src="{{host}}/main.js"></script>      
     </head> 
@@ -16,16 +16,16 @@
         <header> 
             <ul class="nav justify-content">
                 <li class="nav-item nav-main">
-                    <a class="nav-link nav-a" href="/profile">{{username}}</a>
+                    <a class="nav-link nav-a" href="/secure/profile">{{username}}</a>
                 </li>
                 <li class="nav-item nav-menu">
-                    <a class="nav-link nav-a" href="#">Link</a>
+                    <a class="nav-link nav-a" href="/secure/orders">Orders</a>
                 </li>
                 <li class="nav-item nav-menu">
-                    <a class="nav-link nav-a" href="#">Link</a>
+                    <a class="nav-link nav-a" href="/secure/tables">Tables</a>
                 </li>
                 <li class="nav-item nav-menu">
-                    <a class="nav-link nav-a" href="#">Link</a>
+                    <a class="nav-link nav-a" href="/secure/menu">Menu</a>
                 </li>
                 <li class="nav-item nav-menu">
                     <a class="nav-link nav-a" href="/logout">Logout</a>
@@ -38,24 +38,74 @@
                     <article class="container p-3 my-3 bg-white">       
                         <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5 row-cols-lg-6">
                             {{#each Tables}}
-                              <article class="col mb-3">
-                                <article class="card">
-                                  <button type="button">
-                                  <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
-                                  <article class="card-body">
-                                    <h5 class="card-title">{{this.TableName}}</h5>
-                                    <p class="card-text">{{this.Comment}}</p>
+                                <form action="/secure/tables/{{this.TableId}}" enctype="multipart/form-data" method="get">
+                                  <article class="col mb-3">
+                                    <article class="card">
+                                      <button type="submit" name="Table" value="{{this.TableId}}">
+                                      <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                                      <article class="card-body">
+                                        <h5 class="card-title">{{this.TableName}} ID:{{this.TableId}}</h5>
+                                        <p class="card-text">{{this.Comment}}</p>
+                                      </article>
+                                      </button>
+                                    </article>                      
                                   </article>
-                                  </button>
-                                </article>                      
-                              </article>
+                                </form>
                             {{/each}}
                         </article>
                     </article> 
                 </section>
                 <section class="col-md-3">
-                    <article class="container p-3 my-3 bg-white">     
-                    <p>Jozo</p>
+                    <article class="container p-3 my-3 bg-white">    
+                        <form action="/secure/tables" enctype="multipart/form-data" method="post">
+                            <section class="row">
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg " name="Button" value="Add Table"/>   
+                                </article>
+                                {{#if Tables}}
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg" name="Button" value="Delete Table"/>   
+                                </article>    
+                                {{else}}
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg" disabled name="Button" value="Delete Table"/>   
+                                </article>
+                                {{/if}}
+                            </section>
+                            {{#if Table}}
+                            <section class="row">                               
+                                <article class="col style-padding">
+                                    <a href="{{host}}/secure/orders/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Order</a>  
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                    <a href="{{host}}/secure/payment/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Payment</a>
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                    <a href="{{host}}/secure/table/{{Table}}/modify" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Modify</a>
+                                </article>
+                            </section> 
+                            {{else}}
+                            <section class="row">                               
+                                <article class="col style-padding">
+                                      <input type="button" class="btn btn-outline-dark btn-lg btn-block" disabled name="Order" value="Order"/>   
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                      <input type="button" class="btn btn-outline-dark btn-lg btn-block" disabled name="Payment" value="Payment"/>   
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg btn-block" disabled name="Modify" value="Modify"/>   
+                                </article>
+                            </section> 
+                            {{/if}}
+                        </form>
                     </article>
                 </section>
             </section>

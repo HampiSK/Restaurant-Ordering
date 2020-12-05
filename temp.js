@@ -1,39 +1,169 @@
-// // import ctxSession from './modules/ctx/session.js'
-// // import { stringLenghtChecker, emptyStringChecker, numberChecker } from './modules/scripts/checkers.js'
-// // import todayDate from './modules/scripts/today-date.js'
-// // import ingredientTable from './modules/sql/ingredient-table.js'
-// // import itemTable from './modules/sql/item-table.js'
-// // import itemMenuTable from './modules/sql/item_menu-table.js'
-// // import menuTable from './modules/sql/menu-table.js'
-// // import paymentTable from './modules/sql/payment-table.js'
-// // import restaurantOrderTable from './modules/sql/restaurant_order-table.js'
-// // import restaurantTable from './modules/sql/restaurant_table-table.js'
-// // import { sqlInsert, sqlModify, sqlCreate } from './modules/sql/sql-module.js'
-// // import userTable from './modules/sql/user-table.js'
-// // import Accounts from './modules/builders/accounts.js'
-// // import Ingredients from './modules/ingredients.js'
-// // import Items from './modules/items.js'
-// // import Menus from './modules/menus.js'
-// // import Orders from './modules/orders.js'
-// // import Payments from './modules/payments.js'
-// // import Tables from './modules/tables.js'
+// import ctxSession from './modules/ctx/session.js'
+// import { stringLenghtChecker, emptyStringChecker, numberChecker } from './modules/scripts/checkers.js'
+// import todayDate from './modules/scripts/today-date.js'
+// import ingredientTable from './modules/sql/ingredient-table.js'
+// import itemTable from './modules/sql/item-table.js'
+// import itemMenuTable from './modules/sql/item_menu-table.js'
+// import menuTable from './modules/sql/menu-table.js'
+// import paymentTable from './modules/sql/payment-table.js'
+// import restaurantOrderTable from './modules/sql/restaurant_order-table.js'
+// import restaurantTable from './modules/sql/restaurant_table-table.js'
+// import { sqlInsert, sqlModify, sqlCreate } from './modules/sql/sql-module.js'
+// import userTable from './modules/sql/user-table.js'
+// import Accounts from './modules/builders/accounts.js'
+import Ingredients from './modules/ingredients.js'
+import Items from './modules/items.js'
+import Menus from './modules/menus.js'
+import Orders from './modules/builders/orders.js'
+// import Payments from './modules/payments.js'
+import Tables from './modules/builders/tables.js'
 
-// // let adminF = 0
-// // let chefF = 0
-// // let managerF = 0
-// // let waiterF = 1
-// // let n = 'name'
+const ss = async () => {
+//     const inn = {
+//         Title: "Potato",
+//         Type: "Vege",
+//         CreatorId: 2
+//     }
 
-// // const body = { UserId: 2, UserName: 'ha', Admin: 1, Chef: 0, Manager: 0, Waiter: 0 }
-// // const FLAGS = { Admin: body.Admin, Chef: body.Chef, Manager: body.Manager, Waiter: body.Waiter }
-// // delete body.Admin
-// // delete body.Chef
-// // delete body.Manager
-// // delete body.Waiter
-// // for (const VAL of Object.keys(FLAGS)){
-// //     if(FLAGS[VAL] === 1)
-// //         body.Position = VAL
-// // }
+//     const ing = await new Ingredients()
+//     await ing.Create(inn) 
+    
+//     const i = {
+//         Title: "Potato",
+//         Type: "Main",
+//         IngredientId: 1,
+//         CreatorId: 2
+//     }
+    
+//     const imt = await new Items()
+//     await imt.Create(i) 
+
+    
+//     const menu = {
+//         CreatorId: 2,
+//         ItemId: 1
+//     }
+//     const m = await new Menus()
+//     await m.Create(menu)
+    
+    const body1 = {
+        CreatorId: 2,
+        TableId: 2,
+        MenuId: 1,
+        UserId: 2,
+        Status: "Placed",
+        Comment: 'Comment'
+    }
+    const body2 = {
+        CreatorId: 1,
+        TableId: 1,
+        MenuId: 1,
+        UserId: 1,
+        Status: "Prepared",
+        Comment: 'Comment'
+    }
+    const body3 = {
+        CreatorId: 1,
+        TableId: 1,
+        MenuId: 1,
+        UserId: 1,
+        Status: "Served",
+        Comment: 'Comment'
+    }
+    const body4 = {
+        CreatorId: 1,
+        TableId: 1,
+        MenuId: 1,
+        UserId: 1,
+        Status: "Failed"
+
+    }
+    const body5 = {
+        CreatorId: 1,
+        TableId: 1,
+        MenuId: 1,
+        UserId: 1,
+        Status: "Paid"
+
+    }
+    const order = await new Orders()
+//     let counter = 0
+//     while (counter != 10000)
+//     {
+        await order.Create(body1)
+        await order.Create(body2)
+        await order.Create(body3)
+        await order.Create(body4)
+        await order.Create(body5)
+//         counter++
+//     }
+
+    const test1 = await order.GetOrders()
+    console.log(test1[0],test1[test1.length - 1])
+}
+
+await ss()
+
+// let list = ['2020-12-05 16:26:05','2000-12-05 16:26:05','2020-10-05 16:26:05','2020-12-05 16:20:05','2020-12-05 16:27:05']
+// let sorted = []
+// console.log(list)
+// console.log(list.sort())
+// console.log(sorted)
+// // for (let num in list){
+//    for (let i in list){ 
+//        sorted.reduce(list[i])
+//    }
+// } 
+
+// console.log(list)
+// console.log(sorted)
+// if(list[0] > list[4])
+//     console.log(`${list[0]} > ${list[4]}`)
+
+// const body = {
+//     CreatorId: 1,
+//     Comment: 'Comment'
+// }
+// const table = await new Tables()
+
+// await table.Create(body)
+// await table.Create(body)
+// await table.Create(body)
+// await table.Create(body)
+
+// const tables = await table.GetTables()
+// console.log(tables)
+
+// const deac = tables[0]
+// delete deac.TableName
+// deac.InUse = 0
+// await table.Modify(deac,deac.TableId)
+
+// const deac1 = tables[3]
+// delete deac1.TableName
+// deac1.InUse = 0
+// await table.Modify(deac1,deac1.TableId)
+
+// const tables1 = await table.GetTables()
+// console.log(tables1)
+
+// await table.Create(body)
+
+// const tables2 = await table.GetTables()
+// console.log(tables2)
+
+// await table.Create(body)
+// await table.Create(body)
+
+// const tables3 = await table.GetTables()
+// console.log(tables3)
+
+// const tester = await table.GetTables(0)
+// console.log(tester)
+// await table.Modify(body)
+// const data = await table.db.get('SELECT * FROM RESTAURANT_TABLE WHERE ')
+
+
 
 
 // const a = ['a','b']
