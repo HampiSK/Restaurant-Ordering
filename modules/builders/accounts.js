@@ -289,6 +289,15 @@ class Accounts {
 	}
 
 
+    
+    async Get(body,select = "*") {
+        try{
+            const SQL = await sqlGet(body,'USER',select)
+            return await this.db.get(SQL)
+        }catch(err) {
+            throw new Error(`Accounts => Get(): ${err.message}`)
+        }
+	}
 	/**
 	 * @Method
      * Close.

@@ -1,5 +1,13 @@
 /** @SQL Item Table */
+// CREATE TABLE all_candy 
+//    (candy_num SERIAL PRIMARY KEY,
+//     candy_maker CHAR(25));
 
+// CREATE TABLE hard_candy 
+//    (candy_num INT, 
+//     candy_flavor CHAR(20),
+//     FOREIGN KEY (candy_num) REFERENCES all_candy
+//     ON DELETE CASCADE)
 /**
  * @Function
  * Return string for creating sql table named ITEM.
@@ -17,10 +25,9 @@
  * Comment		    TEXT		    The comment about item.
  *
  */
-const itemTable = () => {
-	const SQL = 'CREATE TABLE IF NOT EXISTS ITEM(\
-                \'ItemId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
-                \'IngredientId\' INTEGER NOT NULL,\
+const foodTable = () => {
+	const SQL = 'CREATE TABLE IF NOT EXISTS FOOD(\
+                \'FoodId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'Title\' VARCHAR(75) NOT NULL UNIQUE,\
                 \'Type\' VARCHAR(30) NOT NULL,\
                 \'Kitchen\' TINYINT(1) NOT NULL DEFAULT 0,\
@@ -31,10 +38,9 @@ const itemTable = () => {
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
-                FOREIGN KEY(IngredientId) REFERENCES INGREDIENT(IngredientId),\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
 	return SQL
 }
 
 /** @Item Table Export */
-export default itemTable
+export default foodTable

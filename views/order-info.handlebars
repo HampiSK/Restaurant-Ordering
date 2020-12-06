@@ -1,0 +1,156 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head> 
+    <body>
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="/secure/profile">{{username}}</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/orders">Orders</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/tables">Tables</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/menu">Menu</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </header>      
+        <main class="block">
+            <section class="row">
+                <section class="col-md-9">
+                    <article class="container p-3 my-3 bg-white">    
+                        <article class="row">                                  
+                          <article class="col mb-3 nav-b bg-dark">               
+                                <article class="row"> 
+                                    <article class="col 1">
+                                       <p>Created: {{CreatedAt}}</p>
+                                    </article>
+                                    <article class="col 3">
+                                        {{#if UpdatedAt}}
+                                       <p>Last Update: {{UpdatedAt}}</p>
+                                        {{else}}
+                                       <p>Last Update: Not Updated</p>
+                                        {{/if}}
+                                    </article>
+                                </article>
+                                <article class="row">  
+                                    <article class="col 1">
+                                      <h2>Status: {{Status}}</h2>
+                                    </article>
+                                    <article class="col 3">            
+                                      <p>Table: {{TableName}} ID: {{TableId}}</p>
+                                      <p>Created by: {{CreatorName}}</p>
+                                      <p>Number of Diners: {{Diners}}</p>
+                                    </article>
+                                </article>     
+                          </article>
+                        </article>
+                        <article class="row">  
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                {{#each Tabs}}
+                                    <li class="nav-item">  
+                                        <a class="nav-link nav-b" id="{{this.Type}}-tab" data-toggle="tab" href="#{{this.Type}}" role="tab" aria-controls="{{this.Type}}" aria-selected="false">{{this.Type}}</a>
+                                    </li>  
+                                {{/each}}
+                            </ul>
+                        </article>                   
+                        <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5">  
+                            <form action="/secure/orders" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name ="OrderId" value="{{Order}}"> 
+                            <article class="tab-content pad" id="myTabContent">
+                            {{#each Tabs}}
+                            <section class="tab-pane fade" id="{{this.Type}}" role="tabpanel" aria-labelledby="{{this.Type}}-tab">      
+                                <article class="col mb-3 style-padding">
+                                    <article class="card">                                           
+                                      <button type="submit" class="btn btn-outline-dark" name="FoodId" value="{{this.FoodId}}">                                                                     
+                                          <article class="card-body">
+                                            <h6 class="card-title">{{this.Title}}</h6>
+                                          </article>
+                                      </button>
+                                    </article>                      
+                                  </article>       
+                            </section>
+                            {{/each}} 
+                            </article>
+                         </form>
+                        </article>                       
+                    </article>
+                </section>                
+                <section class="col-md-3">
+                    <article class="container p-3 my-3 bg-white">     
+                        <article class="row">
+                        <form action="/secure/tables" enctype="multipart/form-data" method="get">
+                          <article class="col mb-3">
+                            <article >
+                                {{#if InUse}}
+                                  <button type="submit" name="Table" value="{{this.TableId}}">
+                                      <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                                      <article class="card-body">
+                                          <h5 class="card-title">{{this.TableName}} ID:{{this.TableId}}</h5>
+                                          <p class="card-text">{{this.Comment}}</p>
+                                      </article>
+                                  </button>
+                                {{else}}
+                                  <button type="submit" name="Table" disabled value="{{this.TableId}}">
+                                      <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                                      <article class="card-body">
+                                          <h5 class="card-title">Table Not In Use</h5>
+                                          <p class="card-text">{{this.Comment}}</p>
+                                      </article>
+                                  </button>
+                                {{/if}}
+                            </article>                      
+                          </article>
+                        </form>
+                    </article> 
+                    {{#if InUse}}
+                    <section class="row">
+                        <article class="col style-padding">
+                            <a href="{{host}}/secure/payment/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Payment NW</a>
+                        </article>
+                    </section>
+                    <section class="row">
+                        <article class="col style-padding">
+                            <a href="{{host}}/secure/tables/modify/:id" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Modify NW</a>
+                        </article>
+                    </section> 
+                    {{else}}
+                    <section class="row">
+                    <article class="col style-padding">
+                          <input type="button" class="btn btn-outline-dark btn-lg btn-block" disabled name="Payment" value="Payment"/>   
+                    </article>
+                    </section>
+                    <section class="row">
+                        <article class="col style-padding">
+                              <input type="submit" class="btn btn-outline-dark btn-lg btn-block" disabled name="Modify" value="Modify"/>   
+                        </article>
+                    </section> 
+                    {{/if}}
+                    <section class="row">
+                        <article class="col style-padding">
+                            <a href="{{host}}/secure/tables" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Cancel</a>
+                        </article>
+                    </section>     
+                    </article>
+                </section>
+            </section>           
+        </main>
+    </body>
+</html>

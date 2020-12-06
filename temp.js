@@ -12,94 +12,130 @@
 // import userTable from './modules/sql/user-table.js'
 // import Accounts from './modules/builders/accounts.js'
 import Ingredients from './modules/ingredients.js'
-import Items from './modules/items.js'
+import Foods from './modules/builders/foods.js'
+import Contains from './modules/builders/contains.js'
 import Menus from './modules/menus.js'
 import Orders from './modules/builders/orders.js'
 // import Payments from './modules/payments.js'
 import Tables from './modules/builders/tables.js'
 
+const DBNAME = "website.db"
+
 const ss = async () => {
-//     const inn = {
+//     const potato = {
 //         Title: "Potato",
-//         Type: "Vege",
+//         Type: "Vegetables",
+//         Quantity: 10,
+//         Unit: 2000,
+//         Price: 1.36,
+//         CreatorId: 2,
+//         Comment: "Vodka is made from potatoes"
+//     }
+//     const salt = {
+//         Title: "Salmon",
+//         Type: "Fish",
+//         Quantity: 12,
+//         Unit: 1200,
+//         Price: 15,
 //         CreatorId: 2
 //     }
+//     const ing = await new Ingredients(DBNAME)
+//     await ing.Create(potato) 
+//     await ing.Create(salt) 
 
-//     const ing = await new Ingredients()
-//     await ing.Create(inn) 
-    
-//     const i = {
-//         Title: "Potato",
-//         Type: "Main",
-//         IngredientId: 1,
-//         CreatorId: 2
+//     const f = {
+//     Title: "Salmon with potatoes",
+//     Type: "Main",
+//     Kitchen: 1,
+//     CreatorId: 2
 //     }
-    
-//     const imt = await new Items()
-//     await imt.Create(i) 
+    const foo = await new Foods(DBNAME)
+    await foo.Modify({Type:"Side"},1) 
 
-    
+//     const contain1 = {
+//     FoodId: 2,
+//     IngredientId: 1,
+//     Quantity: 5,
+//     CreatorId: 2
+//     }
+//     const contain2 = {
+//     FoodId: 2,
+//     IngredientId: 2,
+//     Quantity: 1,
+//     CreatorId: 2
+//     }
+//     const contain3 = {
+//     FoodId: 2,
+//     IngredientId: 5,
+//     Quantity: 1,
+//     CreatorId: 2
+//     }    
+//     const con = await new Contains(DBNAME)
+//     await con.Create(contain1) 
+//     await con.Create(contain2) 
+//     await con.Create(contain3) 
+ 
 //     const menu = {
 //         CreatorId: 2,
-//         ItemId: 1
+//         FoodId: 1
 //     }
-//     const m = await new Menus()
+//     const m = await new Menus(DBNAME)
 //     await m.Create(menu)
     
-    const body1 = {
-        CreatorId: 2,
-        TableId: 2,
-        MenuId: 1,
-        UserId: 2,
-        Status: "Placed",
-        Comment: 'Comment'
-    }
-    const body2 = {
-        CreatorId: 1,
-        TableId: 1,
-        MenuId: 1,
-        UserId: 1,
-        Status: "Prepared",
-        Comment: 'Comment'
-    }
-    const body3 = {
-        CreatorId: 1,
-        TableId: 1,
-        MenuId: 1,
-        UserId: 1,
-        Status: "Served",
-        Comment: 'Comment'
-    }
-    const body4 = {
-        CreatorId: 1,
-        TableId: 1,
-        MenuId: 1,
-        UserId: 1,
-        Status: "Failed"
-
-    }
-    const body5 = {
-        CreatorId: 1,
-        TableId: 1,
-        MenuId: 1,
-        UserId: 1,
-        Status: "Paid"
-
-    }
-    const order = await new Orders()
-//     let counter = 0
-//     while (counter != 10000)
-//     {
-        await order.Create(body1)
-        await order.Create(body2)
-        await order.Create(body3)
-        await order.Create(body4)
-        await order.Create(body5)
-//         counter++
+//     const body1 = {
+//         CreatorId: 2,
+//         TableId: 2,
+//         FoodId: 1,
+//         UserId: 2,
+//         Status: "Placed",
+//         Comment: 'Comment'
 //     }
+//     const body2 = {
+//         CreatorId: 2,
+//         TableId: 1,
+//         FoodId: 1,
+//         UserId: 3,
+//         Status: "Prepared",
+//         Comment: 'Comment'
+//     }
+//     const body3 = {
+//         CreatorId: 2,
+//         TableId: 1,
+//         FoodId: 1,
+//         UserId: 3,
+//         Status: "Served",
+//         Comment: 'Comment'
+//     }
+//     const body4 = {
+//         CreatorId: 2,
+//         TableId: 1,
+//         FoodId: 1,
+//         UserId: 3,
+//         Status: "Failed"
 
-    const test1 = await order.GetOrders()
-    console.log(test1[0],test1[test1.length - 1])
+//     }
+//     const body5 = {
+//         CreatorId: 2,
+//         TableId: 1,
+//         FoodId: 1,
+//         UserId: 3,
+//         Status: "Paid"
+
+//     }
+//     const order = await new Orders(DBNAME)
+// //     let counter = 0
+// //     while (counter != 10000)
+// //     {
+//         await order.Create(body1)
+//         await order.Create(body2)
+//         await order.Create(body3)
+//         await order.Create(body4)
+//         await order.Create(body5)
+// //         counter++
+// //     }
+
+//     const test1 = await order.GetOrders()
+//     console.log(test1[0],test1[test1.length - 1])
 }
 
 await ss()

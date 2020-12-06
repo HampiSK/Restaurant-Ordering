@@ -1,10 +1,10 @@
 /** @Module Items */
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../modules/sql/sql-module.js'
-import itemTable from '../modules/sql/item-table.js'
-import todayDate from './scripts/today-date.js'
-import { stringLenghtChecker } from './scripts/checkers.js'
+import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
+import foodTable from '../sql/food-table.js'
+import todayDate from '../scripts/today-date.js'
+import { stringLenghtChecker } from '../scripts/checkers.js'
 
 const LTITLE = 75
 const LCOMMENT = 1000
@@ -14,7 +14,7 @@ const LCOMMENT = 1000
  * Object Items is ES6 module that handles creating and modifying items.
  *
  */
-class Items {
+class Foods {
 	/**
      * @Constructor
      * Create an Item object.
@@ -29,7 +29,7 @@ class Items {
      *
      */
 	constructor(dbName = ':memory:') {
-		return (async() => await sqlCreate(this,dbName,itemTable()) )()
+		return (async() => await sqlCreate(this,dbName,foodTable()) )()
 	}
 
 
@@ -68,7 +68,7 @@ class Items {
 	async Create(body) {
 		try{
 			await this.CheckLenght(body)
-			const SQL = await sqlInsert(body,'ITEM')
+			const SQL = await sqlInsert(body,'FOOD')
 			await this.db.run(SQL)
 			return true
 		}catch(err) {
@@ -77,6 +77,7 @@ class Items {
 	}
 
 
+    
    	/**
 	 * @Method
      * Modify item.
@@ -90,11 +91,11 @@ class Items {
      * @return {boolean} - True if ingredient was modified.
      *
      */
-	async Modify(body, ItemId) {
+	async Modify(body, FoodId) {
 		try{
 			await this.CheckLenght(body)
 			body.UpdatedAt = await todayDate()
-			const sql = await sqlModify(body,'ITEM_MENU','ItemId',ItemId)
+			const sql = await sqlModify(body,'FOOD','FoodId',FoodId)
 			await this.db.run(sql)
 			return true
 		}catch(err) {
@@ -103,7 +104,21 @@ class Items {
 
 	}
 
+    
 
+    async Get(body,select = "*",dbname = "FOOD") {
+        try{
+            const SQL = await sqlGet(body,dbname,select)
+            const BODY = []
+            await this.db.each(SQL, (err, row) => BODY.push(row))
+            return BODY
+        }catch(err) {
+            throw new Error(`Orders => Get(): ${err.message}`)
+        }
+	}
+    
+    
+    
 	/**
 	 * @Method
      * Close.
@@ -118,4 +133,4 @@ class Items {
 }
 
 /** @Export For Items */
-export default Items
+export default Foods

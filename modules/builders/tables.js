@@ -1,7 +1,7 @@
 /** module Table */
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../sql/sql-module.js'
+import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
 import restaraurantTable from '../sql/restaurant_table-table.js'
 import todayDate from '../scripts/today-date.js'
 import { stringLenghtChecker } from '../scripts/checkers.js'
@@ -156,11 +156,12 @@ class Tables {
      */
 	async SortNames() {
 		try{
+            const LTABLE = 6
 			let counter = 1
 			await this.db.each('SELECT * FROM RESTAURANT_TABLE WHERE InUse = 1', (err, row) => {
 				if (err === 0) throw new Error('Cannot open database')
 				const DBNAME = row.TableName
-				let number = DBNAME.substring(6) // 6 is lenght of "Table "
+				let number = DBNAME.substring(LTABLE) // 6 is lenght of "Table "
 				number = parseInt(number)
 				if(number !== counter)
 					this.Modify({TableName: `Table ${counter}`}, row.TableId)
@@ -171,7 +172,20 @@ class Tables {
 		}
 	}
 
-
+    
+    
+    
+    async Get(body,select = "*") {
+		try{
+			const SQL = await sqlGet(body,'RESTAURANT_TABLE',select)
+			return await this.db.get(SQL)
+		}catch(err) {
+			throw new Error(`Tables => Get(): ${err.message}`)
+		}
+	}
+    
+    
+    
 	/**
 	 * @Method
      * Close.

@@ -33,7 +33,6 @@ const ingredientTable = () => {
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\
                 \'Comment\' TEXT NULL DEFAULT NULL,\
                 FOREIGN KEY(CreatorId) REFERENCES USER(UserId));'
-
 	return SQL
 }
 

@@ -1,7 +1,7 @@
 /** @Module Orders */
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../sql/sql-module.js'
+import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
 import restaurantOrderTable from '../sql/restaurant_order-table.js'
 import todayDate from '../scripts/today-date.js'
 import { stringLenghtChecker } from '../scripts/checkers.js'
@@ -31,6 +31,7 @@ class Orders {
 		return (async() => sqlCreate(this,dbName,restaurantOrderTable()) )()
 	}
 
+    
 
 	/**
 	 * @Method
@@ -60,6 +61,35 @@ class Orders {
 		}
 	}
 
+    
+    
+    async GetUpdatedData(body){ 
+         const SPECIAL = `SELECT count(OrderId) AS count FROM 'RESTAURANT_ORDER' WHERE TableId
+         = '${body.TableId}' AND (Status = 'Placed' OR Status = 'Served' OR Status = 'Prepared');`
+         const COUNT = await this.db.get(SPECIAL)
+         const TABLE = await this.Get({TableId: body.TableId},'TableName,InUse','RESTAURANT_TABLE')
+         const NAME = await this.Get({UserId: body.CreatorId},'UserName','USER')
+         return {
+            CreatorName: NAME.UserName,
+            TableName: TABLE.TableName,
+            InUse: TABLE.InUse,
+            Diners: COUNT.count
+        }       
+    }
+
+   
+    
+    async Get(body,select = "*",dbname = "RESTAURANT_ORDER") {
+		try{
+			const SQL = await sqlGet(body,dbname,select)
+			return await this.db.get(SQL)
+		}catch(err) {
+			throw new Error(`Orders => Get(): ${err.message}`)
+		}
+	}
+
+    
+    
    	/**
 	 * @Method
      * Create item.
@@ -84,6 +114,7 @@ class Orders {
 	}
 
 
+    
  	/**
 	 * @Method
      * Modify order.
@@ -109,6 +140,7 @@ class Orders {
 		}
 	}
 
+    
 
 	/**
 	 * @Method

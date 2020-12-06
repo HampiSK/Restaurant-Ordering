@@ -33,37 +33,177 @@
             </ul>
         </header>      
         <main class="block">
-            <section class="row">
-                <section class="col-md-9">
-                    <article class="container p-3 my-3 bg-white">       
-                        <article class="row row-cols-1 row-cols-sm-2">
-                            {{#each Orders}}
-                                <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+            <article class="container-fluid p-5 bg-dark">  
+                <section class="row justify-content">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-b nav-link active" id="placed-tab" data-toggle="tab" href="#placed" role="tab" aria-controls="placed" aria-selected="true">Placed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-b nav-link" id="prepared-tab" data-toggle="tab" href="#prepared" role="tab" aria-controls="prepared" aria-selected="false">Prepared</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-b nav-link" id="served-tab" data-toggle="tab" href="#served" role="tab" aria-controls="served" aria-selected="false">Served</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-b nav-link" id="finished-tab" data-toggle="tab" href="#finished" role="tab" aria-controls="finished" aria-selected="false">Finished</a>
+                        </li>                        
+                    </ul>
+                </section> 
+                <article class="tab-content profile-tab" id="myTabContent">
+                    <section class="tab-pane fade show active" id="placed" role="tabpanel" aria-labelledby="placed-tab">
+                        <article class="row row-cols-1 row-cols-2">
+                          {{#each Placed}}
+                            <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                              <article class="row">                                     
                                   <article class="col mb-3">
-                                    <article class="card">
-                                        <button type="submit" name="Order" value="{{this.OrderId}}">
-                                          <article class="row">
-                                           <article class="card-body">
-                                               <article class="card-title col-9">Table: {{this.TableName}} [ID: {{this.TableId}}]</article>
-                                               <article class="card-title col-4">
-                                                  <h5>Status: {{this.Status}}</h5>
-                                               </article>
-                                               <article class="col-6 card-text">
-                                                  <p>Time of Order: {{this.Time}}</p>
-                                                  <p>Created by: {{this.CreatorId}}</p>
+                                    <article class="card">                  
+                                        <button type="submit" class="btn btn-outline-secondary btn-block" name="Order" value="{{this.OrderId}}">
+                                            <article class="row"> 
+                                                <article class="col 1">
+                                                   <p>Created: {{this.CreatedAt}}</p>
+                                                </article>
+                                                <article class="col 3">
+                                                    {{#if this.UpdatedAt}}
+                                                   <p>Last Update: {{this.UpdatedAt}}</p>
+                                                    {{else}}
+                                                   <p>Last Update: Not Updated</p>
+                                                    {{/if}}
+                                                </article>
+                                            </article>
+                                            <article class="row">  
+                                                <article class="col 1">
+                                                  <h2>Status: {{this.Status}}</h2>
+                                                </article>
+                                                <article class="col 3">            
+                                                  <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
+                                                  <p>Created by: {{this.CreatorName}}</p>
                                                   <p>Number of Diners: {{this.Diners}}</p>
-                                                </article>                                               
-                                            </article>                                         
-                                         </article>                                        
-                                      </button>
-                                    </article>                      
+                                                </article>
+                                            </article>   
+                                         </button>
+                                    </article>   
                                   </article>
-                                </form>
-                            {{/each}}
+                                </article>
+                             </form>
+                           {{/each}}
                         </article>
-                    </article> 
-                </section>
-            </section>
+                    </section>
+                    <section class="tab-pane fade" id="prepared" role="tabpanel" aria-labelledby="prepared-tab">
+                        <article class="row row-cols-1 row-cols-2">
+                          {{#each Prepared}}
+                            <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                              <article class="row">                                     
+                                  <article class="col mb-3">
+                                    <article class="card">                  
+                                        <button type="submit" class="btn btn-outline-secondary btn-block" name="Order" value="{{this.OrderId}}">
+                                            <article class="row"> 
+                                                <article class="col 1">
+                                                   <p>Created: {{this.CreatedAt}}</p>
+                                                </article>
+                                                <article class="col 3">
+                                                    {{#if this.UpdatedAt}}
+                                                   <p>Last Update: {{this.UpdatedAt}}</p>
+                                                    {{else}}
+                                                   <p>Last Update: Not Updated</p>
+                                                    {{/if}}
+                                                </article>
+                                            </article>
+                                            <article class="row">  
+                                                <article class="col 1">
+                                                  <h2>Status: {{this.Status}}</h2>
+                                                </article>
+                                                <article class="col 3">            
+                                                  <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
+                                                  <p>Created by: {{this.CreatorName}}</p>
+                                                  <p>Number of Diners: {{this.Diners}}</p>
+                                                </article>
+                                            </article>   
+                                         </button>
+                                    </article>   
+                                  </article>
+                                </article>
+                             </form>
+                           {{/each}}
+                        </article>                        
+                    </section>
+                    <section class="tab-pane fade" id="served" role="tabpanel" aria-labelledby="served-tab">
+                        <article class="row row-cols-1 row-cols-2">
+                          {{#each Served}}
+                            <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                              <article class="row">                                     
+                                  <article class="col mb-3">
+                                    <article class="card">                  
+                                        <button type="submit" class="btn btn-outline-secondary btn-block" name="Order" value="{{this.OrderId}}">
+                                            <article class="row"> 
+                                                <article class="col 1">
+                                                   <p>Created: {{this.CreatedAt}}</p>
+                                                </article>
+                                                <article class="col 3">
+                                                    {{#if this.UpdatedAt}}
+                                                   <p>Last Update: {{this.UpdatedAt}}</p>
+                                                    {{else}}
+                                                   <p>Last Update: Not Updated</p>
+                                                    {{/if}}
+                                                </article>
+                                            </article>
+                                            <article class="row">  
+                                                <article class="col 1">
+                                                  <h2>Status: {{this.Status}}</h2>
+                                                </article>
+                                                <article class="col 3">            
+                                                  <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
+                                                  <p>Created by: {{this.CreatorName}}</p>
+                                                  <p>Number of Diners: {{this.Diners}}</p>
+                                                </article>
+                                            </article>   
+                                         </button>
+                                    </article>   
+                                  </article>
+                                </article>
+                             </form>
+                           {{/each}}
+                        </article>                        
+                    </section>
+                    <section class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
+                        <article class="row row-cols-1 row-cols-2">
+                          {{#each Finished}}
+                            <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                              <article class="row">                                     
+                                  <article class="col mb-3">
+                                    <article class="card">                  
+                                        <button type="submit" class="btn btn-outline-secondary btn-block" name="Order" value="{{this.OrderId}}">
+                                            <article class="row"> 
+                                                <article class="col 1">
+                                                   <p>Created: {{this.CreatedAt}}</p>
+                                                </article>
+                                                <article class="col 3">
+                                                    {{#if this.UpdatedAt}}
+                                                   <p>Last Update: {{this.UpdatedAt}}</p>
+                                                    {{else}}
+                                                   <p>Last Update: Not Updated</p>
+                                                    {{/if}}
+                                                </article>
+                                            </article>
+                                            <article class="row">  
+                                                <article class="col 1">
+                                                  <h2>Status: {{this.Status}}</h2>
+                                                </article>
+                                                <article class="col 3">            
+                                                  <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
+                                                  <p>Created by: {{this.CreatorName}}</p>
+                                                </article>
+                                            </article>   
+                                         </button>
+                                    </article>   
+                                  </article>
+                                </article>
+                             </form>
+                           {{/each}}
+                        </article>                        
+                    </section>
+                </article>
+            </article> 
         </main>
     </body>
 </html>

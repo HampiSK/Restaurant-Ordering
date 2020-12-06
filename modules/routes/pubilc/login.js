@@ -3,7 +3,7 @@
 /* Modules */
 import message from '../../scripts/messages.js'
 import ctxSession from '../../ctx/session.js'
-
+import todayDate from '../../scripts/today-date.js'
 
 /**
   * @Function
@@ -20,7 +20,7 @@ import ctxSession from '../../ctx/session.js'
   */
 const loginGet = async(ctx) => {
 	try {
-		await message(ctx,'failed',err.message)
+		await message(ctx,'sucessful')
 		await ctx.render('login', ctx.hbs)
 	}catch(err) {
 		ctx.hbs.error = err.message
@@ -28,6 +28,7 @@ const loginGet = async(ctx) => {
 		await ctx.render('error', ctx.hbs)
 	}
 }
+
 
 
 /**
@@ -79,7 +80,8 @@ const loginPost = async(ctx, Accounts, dbName) => {
 	try {
 		const BODY = ctx.request.body
 		await ACCOUNT.Login(BODY.UserName, BODY.Password)
-		const DATA = await ACCOUNT.db.get(`${linterNonsense1()} '${BODY.UserName}'`)
+		const DATA = await ACCOUNT.db.get(`SELECT UserId,UserName,
+Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '${BODY.UserName}'`)
 		DATA.Position = position(DATA)
 		ctx.session = ctxSession(DATA)
 		const REFERRER = BODY.referrer || '/secure'
