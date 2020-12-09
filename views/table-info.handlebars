@@ -1,0 +1,158 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Create an Account</title>
+        <meta name="description" content="Registration form to create users">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head> 
+    <body>
+        <header> 
+            <ul class="nav justify-content">
+                <li class="nav-item nav-main">
+                    <a class="nav-link nav-a" href="/secure/profile">{{username}}</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/orders">Orders</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/tables">Tables</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/secure/menu">Menu</a>
+                </li>
+                <li class="nav-item nav-menu">
+                    <a class="nav-link nav-a" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </header>      
+        <main class="block">
+            <section class="row">
+                <section class="col-md-9">
+                    <article class="container p-3 my-3 bg-dark">  
+                        <section class="row syle-padding justify-content-end">
+                            <form action="/secure/table/{{Table.TableId}}/create" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name ="TableId" value="{{Table.TableId}}"> 
+                                <button type="submit" class="btn btn-light">Create Order</button>
+                            </form>                          
+                        </section>
+                        <section class="row syle-padding style-font-light offset-sm-0">
+                            <article class="col">
+                                <h4>Orders For: {{Table.TableName}} ID:{{Table.TableId}}</h4>
+                            </article>        
+                        </section>
+                        {{#each Orders}}
+                        <section class="row style-font-light">
+                            <article class="col-3">
+                                <p>Order ID: {{this.OrderId}}</p>                            
+                            </article>
+                            <article class="col-4">
+                                <p>Food: {{this.FoodName}}</p>  
+                            </article>
+                            <article class="col">
+                                <p>Price: {{this.FoodPrice}}</p>
+                            </article>
+                        </section>
+                        {{/each}}
+                        <section class="row syle-padding style-font-light offset-sm-0">
+                            <h4>Total: {{TotalPrice}}</h4>
+                        </section>
+                        {{#each Orders}}
+                        <form action="/secure/orders/{{this.OrderId}}" enctype="multipart/form-data" method="get">
+                            <article class="row">          
+                                <article class="col mb-3">
+                                    <article class="card">                  
+                                        <button type="submit" class="btn btn-outline-secondary btn-block" name="Order" value="{{this.OrderId}}">                            
+                                            <article class="row"> 
+                                                <article class="col 1">
+                                                    <p>Created: {{this.CreatedAt}}</p>
+                                                </article>
+                                                <article class="col 3">
+                                                   {{#if this.UpdatedAt}}
+                                                       <p>Last Update: {{this.UpdatedAt}}</p>
+                                                   {{else}}
+                                                       <p>Last Update: Not Updated</p>
+                                                   {{/if}}
+                                                </article>
+                                            </article>
+                                            <article class="row">  
+                                                <article class="col 1">
+                                                    <h2>Status: {{this.Status}}</h2>
+                                                    <p>Food: {{this.FoodName}} Type: {{this.FoodType}}</p>
+                                                    <p>Price: {{this.FoodPrice}}</p>
+                                                </article>
+                                                <article class="col 3">            
+                                                    <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
+                                                    <p>Created by: {{this.CreatorName}}</p>
+                                                    <p>Number of Diners: {{this.Diners}}</p>
+                                                    <p>Comment: {{this.Comment}}</p>
+                                                </article>
+                                           </article>    
+                                        </button>       
+                                    </article>
+                                </article>                            
+                            </article>
+                        </form>
+                        {{/each}}
+                    </article>
+                </section>
+                <section class="col-md-3">
+                    <article class="container p-3 my-3 bg-dark"> 
+                        <section class="row">                       
+                            <form action="/secure/tables" enctype="multipart/form-data" method="get">
+                                <article class="col mb-3">
+                                    <article class="card">
+                                        <button type="submit">
+                                            <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
+                                            <article class="card-body">
+                                                <h5 class="card-title">{{Table.TableName}} ID:{{Table.TableId}}</h5>
+                                            </article>
+                                        </button>
+                                    </article>                      
+                                </article>
+                            </form>                     
+                        </section>
+                        <form action="/secure/table/{{Table.TableId}}/update" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name ="TableId" value="{{Table.TableId}}"> 
+                            <section class="row style-font-light">
+                                <article class="col style-padding">
+                                    <h5>Diners: {{Table.Diners}}</h5>
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col">
+                                    <input type="submit" class="btn btn-light btn-lg" name="Button" value="Add Diner"/>   
+                                </article>
+                                <article class="col">
+                                    <input type="submit" class="btn btn-light btn-lg" name="Button" value="Delete Diner"/>   
+                                </article>                                
+                            </section>  
+                            <section class="row ">
+                                <article class="col style-padding">
+                                    <article class="form-group">
+                                        <textarea class="form-control" name="Comment" style="resize:none" rows="4" placeholder="{{Table.Comment}}" value="{{Comment}}"></textarea>
+                                    </article>  
+                                </article>
+                            </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                    <button type="submit" name="Button" class="btn btn-light">Update Comment</button>   
+                                </article>                             
+                            </section>
+                        </form>
+                    </article>
+                </section>
+            </section>
+        </main>
+    </body>
+</html>
+
+<!--                                             <p class="card-text">Diners: {{Table.Diners}}</p>
+                        <p class="card-text">{{Table.Comment}}</p> -->
+<!--         <article class="col mb-3 nav-b bg-dark">  -->

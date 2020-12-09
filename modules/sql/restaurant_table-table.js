@@ -22,6 +22,7 @@ const restaurantTable = () => {
                 \'TableId\' INTEGER PRIMARY KEY AUTOINCREMENT,\
                 \'TableName\' VARCHAR(50) NULL DEFAULT NULL,\
                 \'InUse\' TINYINT(1) NOT NULL DEFAULT 1,\
+                \'Diners\' INTEGER NULL DEFAULT 0,\
                 \'CreatorId\' INTEGER NOT NULL,\
                 \'CreatedAt\' DATETIME NOT NULL DEFAULT (datetime(\'now\')),\
                 \'UpdatedAt\' DATETIME NULL DEFAULT NULL,\

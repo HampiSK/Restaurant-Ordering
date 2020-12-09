@@ -53,27 +53,35 @@
                                 <article class="row">  
                                     <article class="col 1">
                                       <h2>Status: {{Status}}</h2>
+                                      <p>Food: {{FoodName}} Type: {{FoodType}}</p>
+                                      <p>Price: {{FoodPrice}}</p>
                                     </article>
                                     <article class="col 3">            
                                       <p>Table: {{TableName}} ID: {{TableId}}</p>
                                       <p>Created by: {{CreatorName}}</p>
                                       <p>Number of Diners: {{Diners}}</p>
+                                      <p>Comment: {{Comment}}</p>
                                     </article>
                                 </article>     
                           </article>
                         </article>
+                        {{#if InUse}}
                         <article class="row">  
+                           
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                                 {{#each Tabs}}
                                     <li class="nav-item">  
                                         <a class="nav-link nav-b" id="{{this.Type}}-tab" data-toggle="tab" href="#{{this.Type}}" role="tab" aria-controls="{{this.Type}}" aria-selected="false">{{this.Type}}</a>
                                     </li>  
                                 {{/each}}
+                                <li class="nav-item">  
+                                        <a class="nav-link nav-b" id="Comment-tab" data-toggle="tab" href="#Comment" role="tab" aria-controls="Comment" aria-selected="false">Comment</a>
+                                </li>  
                             </ul>
                         </article>                   
                         <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5">  
                             <form action="/secure/orders" enctype="multipart/form-data" method="post">
-                                <input type="hidden" name ="OrderId" value="{{Order}}"> 
+                                <input type="hidden" name ="OrderId" value="{{OrderId}}"> 
                             <article class="tab-content pad" id="myTabContent">
                             {{#each Tabs}}
                             <section class="tab-pane fade" id="{{this.Type}}" role="tabpanel" aria-labelledby="{{this.Type}}-tab">      
@@ -88,15 +96,27 @@
                                   </article>       
                             </section>
                             {{/each}} 
+                            <section class="tab-pane fade" id="Comment" role="tabpanel" aria-labelledby="Comment-tab">  
+                                <article class="col mb-3 style-padding">
+                                    <textarea name="Comment" style="resize:none" rows="4" cols="30" placeholder="Comment..." value="{{body.Comment}}"></textarea>
+                                </article> 
+                                <article class="col style-padding">
+                                    <button type="submit" class="btn btn-outline-dark">Update Comment</button>   
+                                </article> 
+                            </section>
                             </article>
                          </form>
-                        </article>                       
+                        </article> 
+                        {{/if}}
                     </article>
-                </section>                
+                </section>   
+          
                 <section class="col-md-3">
+                    
                     <article class="container p-3 my-3 bg-white">     
                         <article class="row">
-                        <form action="/secure/tables" enctype="multipart/form-data" method="get">
+                            <form action="/secure/table/{{this.TableId}}" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name ="TableId" value="{{this.TableId}}"> 
                           <article class="col mb-3">
                             <article >
                                 {{#if InUse}}
@@ -104,7 +124,7 @@
                                       <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
                                       <article class="card-body">
                                           <h5 class="card-title">{{this.TableName}} ID:{{this.TableId}}</h5>
-                                          <p class="card-text">{{this.Comment}}</p>
+                                          <p class="card-text">{{this.TableComment}}</p>
                                       </article>
                                   </button>
                                 {{else}}
@@ -112,7 +132,7 @@
                                       <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
                                       <article class="card-body">
                                           <h5 class="card-title">Table Not In Use</h5>
-                                          <p class="card-text">{{this.Comment}}</p>
+                                          <p class="card-text">{{this.TableComment}}</p>
                                       </article>
                                   </button>
                                 {{/if}}
@@ -120,36 +140,40 @@
                           </article>
                         </form>
                     </article> 
+                        <form action="/secure/orders" enctype="multipart/form-data" method="post">
+                            <input type="hidden" name ="OrderId" value="{{OrderId}}">
                     {{#if InUse}}
-                    <section class="row">
-                        <article class="col style-padding">
-                            <a href="{{host}}/secure/payment/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Payment NW</a>
-                        </article>
-                    </section>
-                    <section class="row">
-                        <article class="col style-padding">
-                            <a href="{{host}}/secure/tables/modify/:id" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Modify NW</a>
-                        </article>
-                    </section> 
+                        {{#each Buttons}}
+                        <section class="row">
+                            <article class="col style-padding">
+                                  <input type="submit" class="btn btn-outline-dark btn-lg btn-block" name="Status" value="{{this}}"/>   
+                            </article>
+                        </section>     
+                        {{/each}}
+                        <section class="row">
+                            <article class="col style-padding">
+                                  <button type="submit" class="btn btn-outline-dark btn-lg btn-block" name="Status" value="Failed">Cancel</button> 
+                            </article>
+                        </section> 
                     {{else}}
-                    <section class="row">
-                    <article class="col style-padding">
-                          <input type="button" class="btn btn-outline-dark btn-lg btn-block" disabled name="Payment" value="Payment"/>   
+                        {{#each Buttons}}
+                        <section class="row">
+                            <article class="col style-padding">
+                                  <input type="submit" class="btn btn-outline-dark btn-lg btn-block" disabled name="Status" value="{{this}}"/>   
+                            </article>
+                        </section>     
+                        {{/each}}
+                        <section class="row">
+                            <article class="col style-padding">
+                                  <input type="button" class="btn btn-outline-dark btn-lg btn-block" disabled value="Cancel"/>   
+                            </article>
+                        </section> 
+                    {{/if}} 
+                        </form>
                     </article>
-                    </section>
-                    <section class="row">
-                        <article class="col style-padding">
-                              <input type="submit" class="btn btn-outline-dark btn-lg btn-block" disabled name="Modify" value="Modify"/>   
-                        </article>
-                    </section> 
-                    {{/if}}
-                    <section class="row">
-                        <article class="col style-padding">
-                            <a href="{{host}}/secure/tables" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Cancel</a>
-                        </article>
-                    </section>     
-                    </article>
+                    
                 </section>
+                
             </section>           
         </main>
     </body>

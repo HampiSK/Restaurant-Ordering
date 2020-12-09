@@ -16,21 +16,31 @@ const DBNAME = 'website.db'
   * @param {string} [option] - Button action
   *
   */
-const tableButton = async(userId, option) => {
-	const TABLES = await new Tables(DBNAME)
-	try{
+const tableButton = async(table, Id, option) => {
+	try{       
 		switch (option) {
 			case 'Add Table':
-				await tableAdd(userId,TABLES)
+				await tableAdd(Id,table)
 				break
 			case 'Delete Table':
-				await tableDel(userId,TABLES)
-				break
+				await tableDel(Id,table)				
+                break  
+            case 'Add Diner':
+                const DATA = await table.Get({TableId: Id},"Diners")
+                let num = DATA.Diners
+                num++
+                await table.Modify({Diners: num}, Id)
+                break  
+            case 'Delete Diner':
+                const DATA2 = await table.Get({TableId: Id},"Diners")
+                let num2 = DATA2.Diners
+                num2--
+                if (num2 < 0) num2 = 0
+                await table.Modify({Diners: num2}, Id)
+                break                  
 		}
 	}catch(err) {
 		throw new Error(`tableButton(): ${err.message}`)
-	}finally{
-		TABLES.Close()
 	}
 }
 

@@ -106,7 +106,7 @@ class Foods {
 
     
 
-    async Get(body,select = "*",dbname = "FOOD") {
+    async Get(body = {},select = "*",dbname = "FOOD") {
         try{
             const SQL = await sqlGet(body,dbname,select)
             const BODY = []

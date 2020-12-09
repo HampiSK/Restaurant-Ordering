@@ -34,6 +34,9 @@
         </header>      
         <main class="block">
             <article class="container-fluid p-5 bg-dark">  
+                  <section class="row justify-content-end">
+                      <a href="{{host}}/secure/tables" class="btn btn btn-outline-light btn-lg active" role="button" aria-pressed="true">Create Order</a>
+                </section>
                 <section class="row justify-content">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
@@ -74,11 +77,13 @@
                                             <article class="row">  
                                                 <article class="col 1">
                                                   <h2>Status: {{this.Status}}</h2>
+                                                  <p>Food: {{this.FoodName}} Type: {{this.FoodType}}</p>
                                                 </article>
                                                 <article class="col 3">            
                                                   <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
                                                   <p>Created by: {{this.CreatorName}}</p>
                                                   <p>Number of Diners: {{this.Diners}}</p>
+                                                  <p>Comment: {{this.Comment}}</p>
                                                 </article>
                                             </article>   
                                          </button>
@@ -112,11 +117,14 @@
                                             <article class="row">  
                                                 <article class="col 1">
                                                   <h2>Status: {{this.Status}}</h2>
+                                                  <p>Food: {{this.FoodName}} Type: {{this.FoodType}}</p>
+                                                  <p>Price: {{this.FoodPrice}}</p>
                                                 </article>
                                                 <article class="col 3">            
                                                   <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
                                                   <p>Created by: {{this.CreatorName}}</p>
                                                   <p>Number of Diners: {{this.Diners}}</p>
+                                                  <p>Comment: {{this.Comment}}</p>  
                                                 </article>
                                             </article>   
                                          </button>
@@ -150,11 +158,13 @@
                                             <article class="row">  
                                                 <article class="col 1">
                                                   <h2>Status: {{this.Status}}</h2>
+                                                  <p>Food: {{this.FoodName}} Type: {{this.FoodType}}</p>
                                                 </article>
                                                 <article class="col 3">            
                                                   <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
                                                   <p>Created by: {{this.CreatorName}}</p>
                                                   <p>Number of Diners: {{this.Diners}}</p>
+                                                  <p>Comment: {{this.Comment}}</p>  
                                                 </article>
                                             </article>   
                                          </button>
@@ -188,10 +198,12 @@
                                             <article class="row">  
                                                 <article class="col 1">
                                                   <h2>Status: {{this.Status}}</h2>
+                                                  <p>Food: {{this.FoodName}} Type: {{this.FoodType}}</p>
                                                 </article>
                                                 <article class="col 3">            
                                                   <p>Table: {{this.TableName}} ID: {{this.TableId}}</p>
                                                   <p>Created by: {{this.CreatorName}}</p>
+                                                  <p>Comment: {{this.Comment}}</p>  
                                                 </article>
                                             </article>   
                                          </button>

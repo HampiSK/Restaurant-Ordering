@@ -17,13 +17,22 @@ async function getHandlebarData(ctx, next) {
 		position: ctx.session.position,
 		username: ctx.session.username,
 		userid: ctx.session.userid,
-		authorised: ctx.session.authorised,
+		authorised: ctx.session.authorised,      
 		host: `https://${ctx.host}`
 	}
 	await message(ctx,'request')
 	for (const key in ctx.query) ctx.hbs[key] = ctx.query[key]
 	await next()
 }
+
+// Handlebars.registerHelper("printItems", function(items) {
+//   var html = "<ul>";
+//   items.forEach(function(entry) {
+//     html += "<li>" + entry + "</li>";
+//   });
+//   html += "</ul>";
+//   return html;
+// });
 
 app.use(serve('public'))
 app.use(session(app))

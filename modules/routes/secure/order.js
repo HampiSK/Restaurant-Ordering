@@ -4,21 +4,62 @@
 import message from '../../scripts/messages.js'
 import Accounts from '../../builders/accounts.js'
 import Tables from '../../builders/tables.js'
-import {sqlGet} from '../../sql/sql-module.js'
-// import tableButton from '../../scripts/table-buttons.js'
-
+import { sqlGet } from '../../sql/sql-module.js'
+import orderButton from '../../scripts/order-buttons.js'
+import { tablePostInfo } from './table.js'
 
 const DBNAME = 'website.db'
 
-const orderPostId = async(ctx) => {
+const orderCreatePost = async(ctx,order,food,table) => {
 	try{
-        console.log(await ctx.request.body)
-        console.log(await ctx.hbs)
+        const BODY = ctx.request.body
+        const NEW_ORDER = {
+            TableId: BODY.TableId,
+            FoodId: BODY.SelectedFood,
+            Comment: BODY.Comment,
+            CreatorId: ctx.hbs.userid
+        }
+        await order.Create(NEW_ORDER)
+        ctx.hbs.Table = BODY.TableId
+        await message(ctx,'modified',`New order created for Table ID: '${BODY.TableId}' by`)
+        await tablePostInfo(ctx,table,order)
 	}catch(err) {
 		await message(ctx,'failed',err.message)
-		ctx.hbs.error = `orderGetId(): ${err.message}`
+		ctx.hbs.error = `orderCreate(): ${err.message}`
 		await ctx.render('error', ctx.hbs)
-	}
+    }
+}
+
+const orderCreate = async(ctx,order,food) => {
+	try{
+        const BODY = await ctx.request.body
+        ctx.hbs.TableId = BODY.TableId
+        ctx.hbs.Tabs = await food.Get()
+        ctx.hbs.Table = await order.Get({TableId: BODY.TableId},'*','RESTAURANT_TABLE')
+        console.log(ctx.hbs)
+        await message(ctx,'sucessful')
+        await ctx.render('order-create', ctx.hbs)
+	}catch(err) {
+		await message(ctx,'failed',err.message)
+		ctx.hbs.error = `orderCreate(): ${err.message}`
+		await ctx.render('error', ctx.hbs)
+	}finally{
+        await order.Close()
+        await food.Close()
+    }
+}
+
+const orderPostId = async(ctx,order) => {
+    try{     
+        const BODY = await ctx.request.body
+        await order.Modify(BODY, BODY.OrderId) 
+        await message(ctx,'modified',`Order: ${BODY.OrderId} modified by`)
+        await orderGet(ctx,order)
+    }catch(err) {
+        await message(ctx,'failed',err.message)
+        ctx.hbs.error = `orderGetId(): ${err.message}`
+        await ctx.render('error', ctx.hbs)
+        }
 }
 
 /**
@@ -41,9 +82,9 @@ const orderGetId = async(ctx,order,food) => {
         Object.assign(ORDER, await order.GetUpdatedData(ORDER))
         if(ORDER.InUse === 0) delete ORDER.InUse
         ORDER.Tabs = await food.Get({})
-       
+        ORDER.Buttons = orderButton(ctx.hbs.position)
         Object.assign(ctx.hbs, ORDER)
-        console.log(ctx.hbs)
+        await message(ctx,'sucessful')
         await ctx.render('order-info', ctx.hbs)
 	}catch(err) {
 		await message(ctx,'failed',err.message)
@@ -74,11 +115,15 @@ const orderGetId = async(ctx,order,food) => {
 const updateList = async(order,list) => {
     try{
         const newOrder = []
+        
         for (let i in list) {
+            
             Object.assign(list[i], await order.GetUpdatedData(list[i]) )
+       
             if(list[i].InUse === 0) delete list[i].InUse
             newOrder.push(list[i])
         }
+        
         return newOrder        
     }catch(err){
         throw new Error(`updateList(): ${err.message}`)
@@ -91,13 +136,12 @@ const ordersUpdate = async(order) => {
         const PREPARED = await order.GetOrders("'Prepared'")
         const SERVED = await order.GetOrders("'Served'")
         const REST = await order.GetOrders("'Failed','Paid'")
-        const BODY =  {
+        return {
             Placed: await updateList(order,PLACED),
             Prepared: await updateList(order,PREPARED),
             Served: await updateList(order,SERVED),
             Finished: await updateList(order,REST)
         }
-        return BODY
     }catch(err){
         throw new Error(`orders.js => ordersUpdate(): ${err.message}`)
     }
@@ -148,7 +192,6 @@ const orderGet = async(ctx,order) => {
   */
 const orderPost = async(ctx, table) => {
 	try {
-        console.log("Order",ctx.hbs)
 		await tableButton(ctx.hbs.userid, ctx.request.body.Button)
 		await message(ctx,'modified',`${ctx.request.body.Button} by`)
 		await tableGet(ctx, table)
@@ -156,10 +199,8 @@ const orderPost = async(ctx, table) => {
 		await message(ctx,'failed',err.message)
 		ctx.hbs.msg = `tablePost(): ${err.message}`
 		await tableGet(ctx, table)
-	} finally {
-		await table.Close()
 	}
 }
 
 /** @Export For Table */
-export { orderGet, orderGetId, orderPost, orderPostId }
+export { orderGet, orderGetId, orderPost, orderPostId, orderCreate, orderCreatePost }

@@ -23,7 +23,6 @@
     "test": "ava"
   },
 
-  },
   "lint-staged": {
     "*.js": [
       "echo \"[Husky] Running linter fix: \"",

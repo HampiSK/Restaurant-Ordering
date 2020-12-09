@@ -51,7 +51,7 @@ class Tables {
 			const TABLES = []
 			await this.db.each(`SELECT * FROM RESTAURANT_TABLE WHERE InUse = "${flag}"`, (err, row) => {
 				if (err === 0) throw new Error('Cannot open database')
-				TABLES.push({TableName: row.TableName, TableId: row.TableId, Comment: row.Comment})
+				TABLES.push({TableName: row.TableName, Diners: row.Diners, TableId: row.TableId, Comment: row.Comment})
 			})
 			return TABLES
 		}catch(err) {
@@ -79,6 +79,7 @@ class Tables {
 			if (num > 0) {
 				num = all
 				body.InUse = 1
+                body.Diners = 0
 				body.TableId = TABLES[0]['TableId']
 				await this.Modify(body, body.TableId)
 				return true

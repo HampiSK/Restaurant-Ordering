@@ -27,6 +27,10 @@ body {
 .style-padding{
     padding: 2%;            
 }
+.style-font-light{
+  color: #dadada;
+  font-weight: bold;          
+}
 .style-btn{
     border: none;
     border-radius: 1.5rem;

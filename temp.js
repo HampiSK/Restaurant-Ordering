@@ -42,15 +42,24 @@ const ss = async () => {
 //     const ing = await new Ingredients(DBNAME)
 //     await ing.Create(potato) 
 //     await ing.Create(salt) 
-
-//     const f = {
-//     Title: "Salmon with potatoes",
-//     Type: "Main",
+//     const potato = {
+//     Title: "Potatoes",
+//     Type: "Side",
+//     Price: 2.50,
 //     Kitchen: 1,
 //     CreatorId: 2
 //     }
-    const foo = await new Foods(DBNAME)
-    await foo.Modify({Type:"Side"},1) 
+    
+//     const salmon = {
+//     Title: "Salmon with potatoes",
+//     Type: "Main",
+//     Price: 12,
+//     Kitchen: 1,
+//     CreatorId: 2
+//     }
+//     const foo = await new Foods(DBNAME)
+//     await foo.Create(salmon) 
+//     await foo.Create(potato) 
 
 //     const contain1 = {
 //     FoodId: 2,
@@ -82,57 +91,52 @@ const ss = async () => {
 //     const m = await new Menus(DBNAME)
 //     await m.Create(menu)
     
-//     const body1 = {
-//         CreatorId: 2,
-//         TableId: 2,
-//         FoodId: 1,
-//         UserId: 2,
-//         Status: "Placed",
-//         Comment: 'Comment'
-//     }
-//     const body2 = {
-//         CreatorId: 2,
-//         TableId: 1,
-//         FoodId: 1,
-//         UserId: 3,
-//         Status: "Prepared",
-//         Comment: 'Comment'
-//     }
-//     const body3 = {
-//         CreatorId: 2,
-//         TableId: 1,
-//         FoodId: 1,
-//         UserId: 3,
-//         Status: "Served",
-//         Comment: 'Comment'
-//     }
-//     const body4 = {
-//         CreatorId: 2,
-//         TableId: 1,
-//         FoodId: 1,
-//         UserId: 3,
-//         Status: "Failed"
+    const body1 = {
+        CreatorId: 2,
+        TableId: 2,
+        FoodId: 1,
+        Status: "Placed",
+        Comment: 'Comment'
+    }
+    const body2 = {
+        CreatorId: 2,
+        TableId: 3,
+        FoodId: 1,
+        Status: "Prepared",
+        Comment: 'Comment'
+    }
+    const body3 = {
+        CreatorId: 2,
+        TableId: 4,
+        FoodId: 1,
+        Status: "Served",
+        Comment: 'Comment'
+    }
+    const body4 = {
+        CreatorId: 2,
+        TableId: 3,
+        FoodId: 1,
+        Status: "Failed"
 
-//     }
-//     const body5 = {
-//         CreatorId: 2,
-//         TableId: 1,
-//         FoodId: 1,
-//         UserId: 3,
-//         Status: "Paid"
+    }
+    const body5 = {
+        CreatorId: 2,
+        TableId: 2,
+        FoodId: 1,
+        Status: "Paid"
 
-//     }
-//     const order = await new Orders(DBNAME)
+    }
+    const order = await new Orders(DBNAME)
 // //     let counter = 0
 // //     while (counter != 10000)
 // //     {
-//         await order.Create(body1)
-//         await order.Create(body2)
-//         await order.Create(body3)
-//         await order.Create(body4)
-//         await order.Create(body5)
-// //         counter++
-// //     }
+        await order.Create(body1)
+        await order.Create(body2)
+        await order.Create(body3)
+        await order.Create(body4)
+        await order.Create(body5)
+//         counter++
+//     }
 
 //     const test1 = await order.GetOrders()
 //     console.log(test1[0],test1[test1.length - 1])

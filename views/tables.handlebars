@@ -13,6 +13,7 @@
         <script type="module" src="{{host}}/main.js"></script>      
     </head> 
     <body>
+        {{pp}}
         <header> 
             <ul class="nav justify-content">
                 <li class="nav-item nav-main">
@@ -45,6 +46,7 @@
                                       <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
                                       <article class="card-body">
                                         <h5 class="card-title">{{this.TableName}} ID:{{this.TableId}}</h5>
+                                          <p class="card-text">Diners: {{this.Diners}}</p>
                                         <p class="card-text">{{this.Comment}}</p>
                                       </article>
                                       </button>
@@ -58,6 +60,8 @@
                 <section class="col-md-3">
                     <article class="container p-3 my-3 bg-white">    
                         <form action="/secure/tables" enctype="multipart/form-data" method="post">
+                            
+                            <input type="hidden" name ="TableId" value="{{Table}}"> 
                             <section class="row">
                                 <article class="col style-padding">
                                       <input type="submit" class="btn btn-outline-dark btn-lg " name="Button" value="Add Table"/>   
@@ -72,12 +76,32 @@
                                 </article>
                                 {{/if}}
                             </section>
-                            {{#if Table}}
-                            <section class="row">                               
+                        
+<!--                         <form action="/secure/tables/{{TableId}}" enctype="multipart/form-data" method="post">
+                        </form> -->
+<!--                             {{#if Table}}
+                            <section class="row">
                                 <article class="col style-padding">
-                                    <a href="{{host}}/secure/orders/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Order NW</a>  
+                                    <h5>Diners: {{Diners}}</h5>
                                 </article>
                             </section>
+                            <section class="row">
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg " name="Button" value="Add Diner"/>   
+                                </article>
+                                <article class="col style-padding">
+                                      <input type="submit" class="btn btn-outline-dark btn-lg " name="Button" value="Delete Diner"/>   
+                                </article>                                
+                            </section> -->
+                            </form>
+                            <form action="/secure/table/{{Table}}" enctype="multipart/form-data" method="post">
+                                <section class="row">                               
+                                    <article class="col style-padding"> 
+                                        <input type="hidden" name ="TableId" value="{{Table}}"> 
+                                        <input type="submit" class="btn btn-outline-dark btn-lg btn-block" value="Table Orders"/>   
+                                    </article>
+                                </section>
+                            </form>
                             <section class="row">
                                 <article class="col style-padding">
                                     <a href="{{host}}/secure/payment/{{Table}}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Payment NW</a>
@@ -85,7 +109,7 @@
                             </section>
                             <section class="row">
                                 <article class="col style-padding">
-                                    <a href="{{host}}/secure/table/{{Table}}/modify" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Modify NW</a>
+                                    <a href="{{host}}/secure/tables/{{Table}}/modify" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-pressed="true">Modify NW</a>
                                 </article>
                             </section> 
                             {{else}}
@@ -105,7 +129,6 @@
                                 </article>
                             </section> 
                             {{/if}}
-                        </form>
                     </article>
                 </section>
             </section>
