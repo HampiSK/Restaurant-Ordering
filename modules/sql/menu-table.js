@@ -9,7 +9,7 @@
  *
  * TABLE MENU
  * MenuId		    INTEGER  		The unique id to identify the menu.
- * ItemMenuId	    INTEGER	    	The unique id to identify the item.
+ * FoodId	        INTEGER	    	The unique id to identify the Food.
  * CreatorId  	    INTEGER  		The unique id to identify creator of the table.
  * CreatedAt		DATETIME		It stores the date and time at which the menu is created.
  * UpdatedAt		DATETIME		It stores the date and time at which the menu is updated.

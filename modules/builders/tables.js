@@ -79,7 +79,7 @@ class Tables {
 			if (num > 0) {
 				num = all
 				body.InUse = 1
-                body.Diners = 0
+				body.Diners = 0
 				body.TableId = TABLES[0]['TableId']
 				await this.Modify(body, body.TableId)
 				return true
@@ -157,7 +157,7 @@ class Tables {
      */
 	async SortNames() {
 		try{
-            const LTABLE = 6
+			const LTABLE = 6
 			let counter = 1
 			await this.db.each('SELECT * FROM RESTAURANT_TABLE WHERE InUse = 1', (err, row) => {
 				if (err === 0) throw new Error('Cannot open database')
@@ -173,10 +173,8 @@ class Tables {
 		}
 	}
 
-    
-    
-    
-    async Get(body,select = "*") {
+
+	async Get(body,select = '*') {
 		try{
 			const SQL = await sqlGet(body,'RESTAURANT_TABLE',select)
 			return await this.db.get(SQL)
@@ -184,9 +182,8 @@ class Tables {
 			throw new Error(`Tables => Get(): ${err.message}`)
 		}
 	}
-    
-    
-    
+
+
 	/**
 	 * @Method
      * Close.

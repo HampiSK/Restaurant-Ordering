@@ -1,24 +1,20 @@
-/** @SQL Item Table */
-// CREATE TABLE all_candy 
-//    (candy_num SERIAL PRIMARY KEY,
-//     candy_maker CHAR(25));
+/** @SQL Food Table */
 
-// CREATE TABLE hard_candy 
-//    (candy_num INT, 
-//     candy_flavor CHAR(20),
-//     FOREIGN KEY (candy_num) REFERENCES all_candy
-//     ON DELETE CASCADE)
 /**
  * @Function
- * Return string for creating sql table named ITEM.
- * Table wont be created if table ITEM already exists.
+ * Return string for creating sql table named FOOD.
+ * Table wont be created if table FOOD already exists.
  *
  * @return {string} [SQL] - Sql statement for table creation.
  *
- * TABLE ITEM_MENU
- * ItemId		    INTEGER 		The unique id to identify the item.
+ * TABLE FOOD
+ * FoodId		    INTEGER 		The unique id to identify the food.
  * Title		    VARCHAR(75)		The item title to be displayed.
- * IngredientId     INTEGER         The ingredient used for item.
+ * Type             VARCHAR(30)     Type of food, i.e.: Main, Drink, Side.
+ * Kitchen          TINYINT(1)      Flag if food needs to be prepared in kitchen.
+ * Price            FLOAT           Food price for customers.
+ * Recipe           TEXT            Recipe for food.
+ * Instructions     TEXT            Instructions how to cook food.
  * CreatorId  	    INTEGER  		The unique id to identify creator of the table.
  * CreatedAt		DATETIME		It stores the date and time at which the item is created.
  * UpdatedAt		DATETIME		It stores the date and time at which the item is updated.
@@ -42,5 +38,5 @@ const foodTable = () => {
 	return SQL
 }
 
-/** @Item Table Export */
+/** @Food Table Export */
 export default foodTable

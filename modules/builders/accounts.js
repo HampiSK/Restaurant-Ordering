@@ -4,7 +4,7 @@
 import bcrypt from 'bcrypt-promise'
 
 /* Modules */
-import { sqlInsert, sqlModify, sqlCreate } from '../sql/sql-module.js'
+import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
 import userTable from '../sql/user-table.js'
 import todayDate from '../scripts/today-date.js'
 import { stringLenghtChecker, emptyStringChecker } from '../scripts/checkers.js'
@@ -289,14 +289,13 @@ class Accounts {
 	}
 
 
-    
-    async Get(body,select = "*") {
-        try{
-            const SQL = await sqlGet(body,'USER',select)
-            return await this.db.get(SQL)
-        }catch(err) {
-            throw new Error(`Accounts => Get(): ${err.message}`)
-        }
+	async Get(body,select = '*') {
+		try{
+			const SQL = await sqlGet(body,'USER',select)
+			return await this.db.get(SQL)
+		}catch(err) {
+			throw new Error(`Accounts => Get(): ${err.message}`)
+		}
 	}
 	/**
 	 * @Method

@@ -9,7 +9,7 @@
  *
  * TABLE RESTAURANT_ORDER
  * OrderId		    INTEGER 		The unique id to identify the order.
- * ItemId		    INTEGER 		The ID item associated with order
+ * FoodId		    INTEGER 		The ID Food associated with order
  * TableId		    INTEGER 		The ID table associated with order
  * Status		    VARCHAR(15)		The status of the order can be:
  *                                  New, Paid, Failed, Placed, Prepared, Returned, and Complete.

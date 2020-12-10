@@ -11,6 +11,7 @@
  * TableId  	   INTEGER  		The unique id to identify the table.
  * TableName       VARCHAR(50)      The name of table.
  * InUse	       TINYINT(1)		The flag to identify whether the table is use.
+ * Diners          INTEGER          Number of cumstomers asociated with table.
  * CreatorId  	   INTEGER  		The unique id to identify creator of the table.
  * CreatedAt	   DATETIME		    It stores the date and time at which the table is created.
  * UpdatedAt	   DATETIME		    It stores the date and time at which the table is updated.

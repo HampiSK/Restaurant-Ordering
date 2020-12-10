@@ -1,5 +1,6 @@
 /** @Module Today Date */
 
+/* Constants */
 const BARIER = 10 // To format digit into required format
 const MAX = 200 // Maximum value for minAge
 

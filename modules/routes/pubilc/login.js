@@ -30,7 +30,6 @@ const loginGet = async(ctx) => {
 }
 
 
-
 /**
  * @Method
  * Create position name from flags
@@ -58,6 +57,15 @@ const position = body => {
 	}
 }
 
+const loginFail = async(ctx,err) => {
+    try{
+        await message(ctx,'failed',err.message)
+		ctx.hbs.msg = err.message
+		await loginGet(ctx)        
+    }catch(err){
+        await message(ctx,'failed',err.message)
+    }
+}
 
 /**
   * @Function
@@ -78,7 +86,7 @@ const loginPost = async(ctx, Accounts, dbName) => {
 	const ACCOUNT = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
 	try {
-		const BODY = ctx.request.body
+		ctx.hbs.body, const BODY = ctx.request.body
 		await ACCOUNT.Login(BODY.UserName, BODY.Password)
 		const DATA = await ACCOUNT.db.get(`SELECT UserId,UserName,
 Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '${BODY.UserName}'`)
@@ -88,9 +96,7 @@ Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '${BODY.UserName}'`)
 		await message(ctx,'sucessful')
 		return ctx.redirect(`${REFERRER}?msg=you are now logged in...`)
 	}catch(err) {
-		await message(ctx,'failed',err.message)
-		ctx.hbs.msg = err.message
-		await loginGet(ctx)
+        await loginFail(ctx,err)
 	} finally {
 		await ACCOUNT.Close()
 	}

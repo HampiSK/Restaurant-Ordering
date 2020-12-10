@@ -17,14 +17,13 @@ async function getHandlebarData(ctx, next) {
 		position: ctx.session.position,
 		username: ctx.session.username,
 		userid: ctx.session.userid,
-		authorised: ctx.session.authorised,      
+		authorised: ctx.session.authorised,
 		host: `https://${ctx.host}`
 	}
 	await message(ctx,'request')
 	for (const key in ctx.query) ctx.hbs[key] = ctx.query[key]
 	await next()
 }
-
 
 
 app.use(serve('public'))

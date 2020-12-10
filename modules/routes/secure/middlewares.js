@@ -35,6 +35,19 @@ const secureAuth = async(ctx, next) => {
 	}
 }
 
+const securePermMsg = async(flag) => {
+	try{
+		if(flag) {
+			console.log(`${await todayDate()} - SECURE PERM: Access granted for user: `+
+                        `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'`)
+		} else {
+			console.log(`${await todayDate()} - SECURE PERM: Access deined for user: `+
+                        `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'`)
+		}
+	}catch(err) {
+		throw new Error(`securePerm(): ${err.message}`)
+	}
+}
 
 /**
  * @Function
@@ -54,13 +67,11 @@ const securePerm = async(pos,ctx,next) => {
 	try{
 		for (const POSSITION of pos) {
 			if (ctx.hbs.position === POSSITION) {
-				console.log(`${await todayDate()} - SECURE PERM: Access granted for user: `+
-                            `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'`)
+				await securePermMsg(true)
 				return
 			}
 		}
-		console.log(`${await todayDate()} - SECURE PERM: Access deined for user: `+
-                    `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'`)
+		await securePermMsg(false)
 		ctx.hbs.error = 'Access Deined'
 		return ctx.redirect('error', ctx.hbs)
 	}catch(err) {

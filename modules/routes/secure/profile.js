@@ -34,18 +34,6 @@ const profileGet = async(ctx,account) => {
 	}
 }
 
-
-/**
-  * @Function UNFINISHED
-  * Update profile.
-  *
-  * @Alert
-  * Async function.
-  *
-  * @param {object} [ctx] - Context.
-  * @param {object} [account] - Users object.
-  *
-  */
 const profilePost = async(ctx, account) => {
 	try {
 		await message(ctx,'modified','Profile updated by')

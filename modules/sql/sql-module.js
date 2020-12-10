@@ -139,22 +139,22 @@ const sqlInsert = async(body,tablename) => {
 }
 
 const getStatement = (body) => {
-    let where = ''
-    if (Object.keys(body).length > 0){
-        for (const val of Object.keys(body)) {
-            if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
-            if (emptyStringChecker(body[val])) continue
-            if (where.length === 0)  where += ` WHERE ${val} = "${body[val]}"`
-            else where += `AND ${val} = "${body[val]}" ` 
-        }
-        return where
-    }
-    return ' '
+	let where = ''
+	if (Object.keys(body).length > 0) {
+		for (const val of Object.keys(body)) {
+			if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
+			if (emptyStringChecker(body[val])) continue
+			if (where.length === 0) where += ` WHERE ${val} = "${body[val]}"`
+			else where += `AND ${val} = "${body[val]}" `
+		}
+		return where
+	}
+	return ' '
 }
 
 const sqlGet = async(body,tablename,select = '*') => {
 	try {
-        const WHERE = getStatement(body)
+		const WHERE = getStatement(body)
 		const SQL = `SELECT ${select} FROM ${tablename} ${WHERE};`
 		return SQL
 	}catch(err) {

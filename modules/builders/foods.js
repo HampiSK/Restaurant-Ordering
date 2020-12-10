@@ -77,7 +77,6 @@ class Foods {
 	}
 
 
-    
    	/**
 	 * @Method
      * Modify item.
@@ -104,21 +103,22 @@ class Foods {
 
 	}
 
-    
 
-    async Get(body = {},select = "*",dbname = "FOOD") {
-        try{
-            const SQL = await sqlGet(body,dbname,select)
-            const BODY = []
-            await this.db.each(SQL, (err, row) => BODY.push(row))
-            return BODY
-        }catch(err) {
-            throw new Error(`Orders => Get(): ${err.message}`)
-        }
+	async Get(body = {},select = '*',dbname = 'FOOD') {
+		try{
+			const SQL = await sqlGet(body,dbname,select)
+			const BODY = []
+			await this.db.each(SQL, (err, row) => {
+				if (err === 0) throw new Error('Cannot open database')
+				BODY.push(row)
+			})
+			return BODY
+		}catch(err) {
+			throw new Error(`Orders => Get(): ${err.message}`)
+		}
 	}
-    
-    
-    
+
+
 	/**
 	 * @Method
      * Close.

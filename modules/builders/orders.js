@@ -31,7 +31,6 @@ class Orders {
 		return (async() => sqlCreate(this,dbName,restaurantOrderTable()) )()
 	}
 
-    
 
 	/**
 	 * @Method
@@ -61,30 +60,28 @@ class Orders {
 		}
 	}
 
-    
-    
-    async GetUpdatedData(body) { 
-//          const SPECIAL = `SELECT count(OrderId) AS count FROM 'RESTAURANT_ORDER' WHERE TableId
-//          = '${body.TableId}' AND (Status = 'Placed' OR Status = 'Served' OR Status = 'Prepared');`
-//          const COUNT = await this.db.get(SPECIAL)
-         const TABLE = await this.Get({TableId: body.TableId},'TableName,InUse,Comment,Diners','RESTAURANT_TABLE')
-         const NAME = await this.Get({UserId: body.CreatorId},'UserName','USER')
-         const FOOD = await this.Get({FoodId: body.FoodId},'Title,Type,Price','FOOD')         
-         return {
-            CreatorName: NAME.UserName,
-            TableName: TABLE.TableName,
-            InUse: TABLE.InUse,
-            TableComment: TABLE.Comment,
-            Diners: TABLE.Diners,
-            FoodName: FOOD.Title,
-            FoodType: FOOD.Type, 
-            FoodPrice: FOOD.Price       
-        }       
-    }
 
-   
-    
-    async Get(body,select = "*",dbname = "RESTAURANT_ORDER") {
+	async GetUpdatedData(body) {
+		//          const SPECIAL = `SELECT count(OrderId) AS count FROM 'RESTAURANT_ORDER' WHERE TableId
+		//          = '${body.TableId}' AND (Status = 'Placed' OR Status = 'Served' OR Status = 'Prepared');`
+		//          const COUNT = await this.db.get(SPECIAL)
+		const TABLE = await this.Get({TableId: body.TableId},'TableName,InUse,Comment,Diners','RESTAURANT_TABLE')
+		const NAME = await this.Get({UserId: body.CreatorId},'UserName','USER')
+		const FOOD = await this.Get({FoodId: body.FoodId},'Title,Type,Price','FOOD')
+		return {
+			CreatorName: NAME.UserName,
+			TableName: TABLE.TableName,
+			InUse: TABLE.InUse,
+			TableComment: TABLE.Comment,
+			Diners: TABLE.Diners,
+			FoodName: FOOD.Title,
+			FoodType: FOOD.Type,
+			FoodPrice: FOOD.Price
+		}
+	}
+
+
+	async Get(body,select = '*',dbname = 'RESTAURANT_ORDER') {
 		try{
 			const SQL = await sqlGet(body,dbname,select)
 			return await this.db.get(SQL)
@@ -93,8 +90,7 @@ class Orders {
 		}
 	}
 
-    
-    
+
    	/**
 	 * @Method
      * Create item.
@@ -119,7 +115,6 @@ class Orders {
 	}
 
 
-    
  	/**
 	 * @Method
      * Modify order.
@@ -145,7 +140,6 @@ class Orders {
 		}
 	}
 
-    
 
 	/**
 	 * @Method

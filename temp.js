@@ -142,7 +142,13 @@ const ss = async () => {
 //     console.log(test1[0],test1[test1.length - 1])
 }
 
-await ss()
+// await ss()
+
+
+let n1, n2 = 2, 2
+console.log(n1)
+console.log(n2)
+
 
 // let list = ['2020-12-05 16:26:05','2000-12-05 16:26:05','2020-10-05 16:26:05','2020-12-05 16:20:05','2020-12-05 16:27:05']
 // let sorted = []
