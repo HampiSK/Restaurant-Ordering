@@ -16,9 +16,8 @@ const DBNAME = 'website.db'
 /* Methods */
 router.get('/', async(ctx) => await defaultGetPublic(ctx))
 router.get('/login', async(ctx) => await loginGet(ctx))
-router.post('/login', async(ctx) => await loginPost(ctx, Accounts, DBNAME))
 router.get('/logout', async(ctx) => await logoutGet(ctx))
-
+router.post('/login', async(ctx) => await loginPost(ctx, Accounts, DBNAME))
 
 /** @Export For Public Router Middleware */
 export default router

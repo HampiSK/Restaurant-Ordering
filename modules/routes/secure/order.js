@@ -36,7 +36,6 @@ const orderCreate = async(ctx,order,food) => {
         ctx.hbs.TableId = BODY.TableId
         ctx.hbs.Tabs = await food.Get()
         ctx.hbs.Table = await order.Get({TableId: BODY.TableId},'*','RESTAURANT_TABLE')
-        console.log(ctx.hbs)
         await message(ctx,'sucessful')
         await ctx.render('order-create', ctx.hbs)
 	}catch(err) {
@@ -117,8 +116,7 @@ const updateList = async(order,list) => {
         const newOrder = []
         
         for (let i in list) {
-            
-            Object.assign(list[i], await order.GetUpdatedData(list[i]) )
+            Object.assign(list[i], await order.GetUpdatedData(list[i]))
        
             if(list[i].InUse === 0) delete list[i].InUse
             newOrder.push(list[i])

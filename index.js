@@ -25,14 +25,7 @@ async function getHandlebarData(ctx, next) {
 	await next()
 }
 
-// Handlebars.registerHelper("printItems", function(items) {
-//   var html = "<ul>";
-//   items.forEach(function(entry) {
-//     html += "<li>" + entry + "</li>";
-//   });
-//   html += "</ul>";
-//   return html;
-// });
+
 
 app.use(serve('public'))
 app.use(session(app))
@@ -45,6 +38,15 @@ app.use(
 )
 
 app.use(getHandlebarData)
+// app.use(async (ctx, next) => {
+//   try {
+//       ctx.hbs.pp = '<p>hello</p>'
+//     await next() // next is now a function
+//   } catch (err) {
+//     ctx.body = { message: err.message }
+//     ctx.status = err.status || 500
+//   }
+// })
 
 app.use(router.routes())
 app.use(router.allowedMethods())

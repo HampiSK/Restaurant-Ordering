@@ -22,13 +22,18 @@ const DBNAME = 'website.db'
 /* Middlewares */
 const checkLevel0 = async(ctx, next) => await secureAuth(ctx, next)
 const checkLevel1 = async(ctx, next) => await securePerm(['Waiter','Manager','Admin'],ctx,next) 
-// const checkLevel2 = async(ctx, next) => await securePerm(['Chef','Manager','Admin'],ctx,next)
+const checkLevel2 = async(ctx, next) => await securePerm(['Chef','Manager','Admin'],ctx,next)
 const checkLevel3 = async(ctx, next) => await securePerm(['Manager','Admin'],ctx,next)
 // const checkLevel4 = async(ctx, next) => await securePerm(['Admin'],ctx,next)
 
+const LEVEL1 = ['/tables','/orders','/tables/:id','/orders/:id','/orders','/table/:id','/table/:id/update','/orders','/table/:id/created']
+const LEVEL2 = ['/table/:id/create']
+const LEVEL3 = ['/register']
+
 router.use(checkLevel0)
-router.use( ['/tables','/orders'], checkLevel1 )
-router.use( ['/register'], checkLevel3 )
+router.use( LEVEL1, checkLevel1 )
+router.use( LEVEL2, checkLevel2 )
+router.use( LEVEL3, checkLevel3 )
 
 
 router.get('/', async(ctx) => await defaultGetSecure(ctx))
