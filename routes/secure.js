@@ -18,7 +18,7 @@ import { orderGet, orderGetId, orderPostId, orderCreate, orderCreatePost } from 
 /* Constants */
 const router = new Router({ prefix: '/secure'})
 const DBNAME = 'website.db'
-const LEVEL1 = ['/tables','/orders','/tables/:id','/orders/:id','/orders','/table/:id','/table/:id/update','/orders','/table/:id/created']
+const LEVEL1 = ['/tables','/orders','/orders']
 const LEVEL2 = ['/table/:id/create']
 const LEVEL3 = ['/register']
 

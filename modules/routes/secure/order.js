@@ -4,6 +4,7 @@
 import message from '../../scripts/messages.js'
 import orderButton from '../../scripts/order-buttons.js'
 import { tablePostInfo } from './table.js'
+import tableButton from '../../scripts/table-buttons.js'
 
 
 const orderCreatePost = async(ctx,order,food,table) => {
@@ -126,17 +127,17 @@ const orderGet = async(ctx,order) => {
 }
 
 
-const orderPost = async(ctx, table) => {
-	try {
-		await tableButton(ctx.hbs.userid, ctx.request.body.Button)
-		await message(ctx,'modified',`${ctx.request.body.Button} by`)
-		await tableGet(ctx, table)
-	}catch(err) {
-		await message(ctx,'failed',err.message)
-		ctx.hbs.msg = `tablePost(): ${err.message}`
-		await tableGet(ctx, table)
-	}
-}
+// const orderPost = async(ctx, table) => {
+// 	try {
+// 		await tableButton(ctx.hbs.userid, ctx.request.body.Button)
+// 		await message(ctx,'modified',`${ctx.request.body.Button} by`)
+// 		await tableGet(ctx, table)
+// 	}catch(err) {
+// 		await message(ctx,'failed',err.message)
+// 		ctx.hbs.msg = `tablePost(): ${err.message}`
+// 		await tableGet(ctx, table)
+// 	}
+// }
 
 /** @Export For Order */
-export { orderGet, orderGetId, orderPost, orderPostId, orderCreate, orderCreatePost }
+export { orderGet, orderGetId, orderPostId, orderCreate, orderCreatePost }

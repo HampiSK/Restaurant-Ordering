@@ -86,7 +86,7 @@ const loginPost = async(ctx, Accounts, dbName) => {
 	const ACCOUNT = await new Accounts(dbName)
 	ctx.hbs.body = ctx.request.body
 	try {
-		ctx.hbs.body, const BODY = ctx.request.body
+		const BODY = ctx.request.body
 		await ACCOUNT.Login(BODY.UserName, BODY.Password)
 		const DATA = await ACCOUNT.db.get(`SELECT UserId,UserName,
 Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '${BODY.UserName}'`)

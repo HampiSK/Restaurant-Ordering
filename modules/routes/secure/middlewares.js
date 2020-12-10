@@ -35,7 +35,7 @@ const secureAuth = async(ctx, next) => {
 	}
 }
 
-const securePermMsg = async(flag) => {
+const securePermMsg = async(flag,ctx) => {
 	try{
 		if(flag) {
 			console.log(`${await todayDate()} - SECURE PERM: Access granted for user: `+
@@ -67,11 +67,11 @@ const securePerm = async(pos,ctx,next) => {
 	try{
 		for (const POSSITION of pos) {
 			if (ctx.hbs.position === POSSITION) {
-				await securePermMsg(true)
+				await securePermMsg(true,ctx)
 				return
 			}
 		}
-		await securePermMsg(false)
+		await securePermMsg(false,ctx)
 		ctx.hbs.error = 'Access Deined'
 		return ctx.redirect('error', ctx.hbs)
 	}catch(err) {
