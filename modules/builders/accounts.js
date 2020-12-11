@@ -272,10 +272,10 @@ class Accounts {
 	async Login(username, password) {
 		try{
 			await this.CheckLenght({username, password})
-			let sql = `SELECT count(UserId) AS count FROM USER WHERE UserName="${username}";`
+			let sql = `SELECT count(UserId) AS count FROM USER WHERE UserName='${username}';`
 			const RECORDS = await this.db.get(sql)
-			if (!RECORDS.count) throw new Error(`Username "${username}" not found`)
-			sql = `SELECT PasswordHash FROM USER WHERE UserName = "${username}";`
+			if (RECORDS.count === 0) throw new Error(`Username "${username}" not found`)
+			sql = `SELECT PasswordHash FROM USER WHERE UserName = '${username}';`
 			const RECORD = await this.db.get(sql)
 			const VALID = await bcrypt.compare(password, RECORD.PasswordHash)
 			if (!VALID) throw new Error(`Invalid password for account "${username}"`)

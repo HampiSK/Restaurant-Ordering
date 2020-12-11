@@ -1,26 +1,3 @@
-
-<!doctype html>
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>ERROR</title>
-		<meta name="description" content="The HTML5 Template">
-		<meta name="author" content="Joe Bloggs">
-		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
-		<script type="module" src="{{host}}/main.js"></script>
-	</head>
-	<body>
-		<header>
-			<h1>An Error Has Occurred</h1>
-		</header>
-		<main>
-			<h2>{{message}}</h2>
-		</main>
-	</body>
-</html>
-
-
 <!doctype html>
 
 <html lang="en">
@@ -41,29 +18,24 @@
                 <article id="login-row" class="row justify-content-center align-items-center">
                     <article id="login-column" class="col-md-6">
                         <article id="login-box" class="col-md-12">
-                            <h3 class="text-center text-info">Welcome {{username}}!</h3>
-                            {{#if msg}}
+                            <h3 class="text-center text-info">An Error Has Occurred</h3>
                             <article class="form-group">
-                                <p class="alert alert-alert" role="alert">{{msg}}</p>
-                            </article>
-                            {{/if}}
-                            <article class="form-group">
-                                <article class="col style-padding">
-                                    <h5 class="text-info">Your ID:</h5>
-                                    <h7>{{userid}}</h7>
-                                </article>     
-                                <article class="col style-padding">
-                                    <h5 class="text-info">Position:</h5>
-                                    <h7>{{position}}</h7>
-                                </article>  
-                            </article>
-                         
+                                <article class="alert alert-danger" role="alert">
+                                    {{error}}
+                                </article>
+                            </article>   
+                            {{#if authorised}}
                             <article class="form-group">
                                 <a href="{{host}}/secure/tables" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Continue</a>
                             </article>
                             <article class="form-group">
                                 <a href="{{host}}/logout" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
                             </article>
+                            {{else}}
+                            <article class="form-group">
+                                <a href="{{host}}/login" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Login</a>
+                            </article>
+                            {{/if}}
                         </article>
                     </article>
                 </article>

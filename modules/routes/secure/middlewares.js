@@ -55,7 +55,7 @@ const securePermMsg = async(flag,ctx) => {
                         `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'` )
 		} else {
 			console.log(`${await todayDate()} - SECURE PERM: Access deined for user: `+
-                        `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'` )
+                        `'${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'` )
 		}
 	}catch(err) {
 		throw new Error(`securePerm(): ${err.message}`)
@@ -86,7 +86,7 @@ const securePerm = async(pos,ctx,next) => {
 		}
 		await securePermMsg(false,ctx)
 		ctx.hbs.error = 'Access Deined'
-		return ctx.redirect('error', ctx.hbs)
+		return ctx.redirect('/secure/tables')
 	}catch(err) {
 		console.log(`${await todayDate()} - SECURE PERM: Failed for user: '${ctx.hbs.username}'`+
                     ` id: ${ctx.hbs.userid}) in path: '${ctx.path}' due to ${err.message}`)

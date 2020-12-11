@@ -18,22 +18,23 @@ import { orderGet, orderGetId, orderPostId, orderCreate, orderCreatePost } from 
 /* Constants */
 const router = new Router({ prefix: '/secure'})
 const DBNAME = 'website.db'
-const LEVEL1 = ['/tables','/orders','/orders']
-const LEVEL2 = ['/table/:id/create']
+const LEVEL1 = ['/table/:id/created','/table/:id/create','/table/:id/update','/table/:id',
+	'/orders/:id','/tables/:id','/tables','/orders']
+// const LEVEL2 = ['']
 const LEVEL3 = ['/register']
 
 /* Middlewares */
 const checkLevel0 = async(ctx, next) => await secureAuth(ctx, next)
-const checkLevel1 = async(ctx, next) => await securePerm(['Waiter','Manager','Admin'],ctx,next)
-const checkLevel2 = async(ctx, next) => await securePerm(['Chef','Manager','Admin'],ctx,next)
+const checkLevel1 = async(ctx, next) => await securePerm(['Chef','Waiter','Manager','Admin'],ctx,next)
+// const checkLevel2 = async(ctx, next) => await securePerm(['Chef','Manager','Admin'],ctx,next)
 const checkLevel3 = async(ctx, next) => await securePerm(['Manager','Admin'],ctx,next)
 // const checkLevel4 = async(ctx, next) => await securePerm(['Admin'],ctx,next)
 
 /* Security Level Checks */
-router.use(checkLevel0)
-router.use( LEVEL1, checkLevel1 )
-router.use( LEVEL2, checkLevel2 )
 router.use( LEVEL3, checkLevel3 )
+// router.use( LEVEL2, checkLevel2 )
+router.use( LEVEL1, checkLevel1 )
+router.use(checkLevel0)
 
 /* Methods */
 router.get('/', async(ctx) => await defaultGetSecure(ctx))

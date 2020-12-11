@@ -1,5 +1,5 @@
 import test from 'ava'
-import Tables from '../modules/tables.js'
+import Tables from '../modules/builders/tables.js'
 import todayDate from '../modules/scripts/today-date.js'
 
 test('TABLE : Creating table with comment', async(test) => {

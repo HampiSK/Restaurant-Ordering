@@ -188,8 +188,8 @@ const tablePost = async(ctx, table) => {
 		await tableGet(ctx, table)
 	}catch(err) {
 		await message(ctx,'failed',err.message)
-		ctx.hbs.msg = `tablePost(): ${err.message}`
-		await tableGet(ctx, table)
+		ctx.hbs.error = `tablePost(): ${err.message}`
+		await ctx.render('error', ctx.hbs)
 	}
 }
 
