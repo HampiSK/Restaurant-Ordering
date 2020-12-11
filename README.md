@@ -17,8 +17,20 @@ waitress            p455w0rd
 chef                p455w0rd
 ```
 
-Link to uni github:
+# Link to github:
 
+UNI
 ```
 https://github.coventry.ac.uk/5001CEM-2021OCTJAN/hampacha-sem1
+```
+
+PRIVATE
+```
+https://github.com/HampiSK/Restaurant-Ordering
+```
+
+# Link to Heroku
+
+```
+https://git.heroku.com/warm-reef-70327.git
 ```
