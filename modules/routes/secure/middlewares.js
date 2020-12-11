@@ -21,28 +21,41 @@ const secureAuth = async(ctx, next) => {
 	try{
 		if (!ctx.hbs.authorised) {
 			console.log(`${TIME} - SECURE AUTH: Authorisation deined for user: `+
-                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
+                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'` )
 			return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 		}
 		console.log(`${TIME} - SECURE AUTH: Authorisation successfull for user: `+
-                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
+                        `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'` )
 	}catch(err) {
 		console.log(`${TIME} - SECURE AUTH: Authorisation failed for user: `+
-                    `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'`)
+                    `'${ctx.hbs.username}' id: '${ctx.hbs.userid}'` )
 		return ctx.redirect('/login?msg=you need to log in&referrer=/secure')
 	} finally{
 		await next()
 	}
 }
 
+/**
+ * @Function
+ * Print message based on flag.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {boolian} [flag] - Acceess granted, access deined.
+ * @param {object}  [ctx]  - Context.
+ *
+ * @redirect [/login?msg=you need to log in&referrer=/secure] - When user is not authorised is redirected.
+ *
+ */
 const securePermMsg = async(flag,ctx) => {
 	try{
 		if(flag) {
 			console.log(`${await todayDate()} - SECURE PERM: Access granted for user: `+
-                        `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'`)
+                        `${ctx.hbs.username}' id: ${ctx.hbs.userid} in path: '${ctx.path}'` )
 		} else {
 			console.log(`${await todayDate()} - SECURE PERM: Access deined for user: `+
-                        `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'`)
+                        `'${ctx.hbs.username}' id: ${ctx.hbs.userid}) in path: '${ctx.path}'` )
 		}
 	}catch(err) {
 		throw new Error(`securePerm(): ${err.message}`)
@@ -51,7 +64,7 @@ const securePermMsg = async(flag,ctx) => {
 
 /**
  * @Function
- * Secure Middleware for permission.
+ * Secure Middleware for permissions.
  *
  * @Alert
  * Async function.

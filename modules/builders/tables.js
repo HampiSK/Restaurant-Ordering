@@ -1,4 +1,4 @@
-/** module Table */
+/** @Module Tables */
 
 /* Modules */
 import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
@@ -6,6 +6,7 @@ import restaraurantTable from '../sql/restaurant_table-table.js'
 import todayDate from '../scripts/today-date.js'
 import { stringLenghtChecker } from '../scripts/checkers.js'
 
+/* Constants */
 const LCOMMENT = 1000
 
 /**
@@ -173,7 +174,20 @@ class Tables {
 		}
 	}
 
-
+   	/**
+	 * @Method
+     * Get data from database.
+     *
+     * @Alert
+     * Async.
+     *
+     * Optional:
+     * @param {object} [body]   - What to get from dtabase.
+     * @param {string} [select] - What to select from dtabase.
+     *
+     * @return {object} [BODY] - Database data.
+     *
+     */
 	async Get(body,select = '*') {
 		try{
 			const SQL = await sqlGet(body,'RESTAURANT_TABLE',select)

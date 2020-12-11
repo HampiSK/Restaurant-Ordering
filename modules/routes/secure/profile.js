@@ -34,6 +34,11 @@ const profileGet = async(ctx,account) => {
 	}
 }
 
+/**
+  * @Function
+  * UNFINIDHED - right now will refresh profile web page
+  *
+  */
 const profilePost = async(ctx, account) => {
 	try {
 		await message(ctx,'modified','Profile updated by')

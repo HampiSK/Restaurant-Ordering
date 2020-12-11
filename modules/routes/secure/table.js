@@ -4,11 +4,26 @@
 import message from '../../scripts/messages.js'
 import tableButton from '../../scripts/table-buttons.js'
 
-const tableOrders = async(order,orderList,Id) => {
+
+/**
+ * @Function
+ * Update full data.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [order] - access the order object.
+ * @param {object} [orderList] - List with orders to be updated.
+ * @param {object} [id] - Id of value to changes.
+ *
+ * @return {list} [newOrderList]  - List of orders.
+ *
+ */
+const tableOrders = async(order,orderList,id) => {
 	try {
 		const newOrderList = []
 		for (const i in orderList) {
-			if(orderList[i].TableId === parseInt(Id)) {
+			if(orderList[i].TableId === parseInt(id)) {
 				Object.assign(orderList[i], await order.GetUpdatedData(orderList[i]))
 				newOrderList.push(orderList[i])
 			}
@@ -19,6 +34,20 @@ const tableOrders = async(order,orderList,Id) => {
 	}
 }
 
+
+/**
+ * @Function
+ * Update table info with data and "refresh" the table website by running tablePostInfo function.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [ctx] - Context.
+ * @param {object} [order] - access the order object.
+ * @param {object} [table] - access the table object.
+ *
+ *
+ */
 const tableUpdateInfo = async(ctx,table,order) => {
 	try {
 		const BODY = ctx.request.body
@@ -37,6 +66,15 @@ const tableUpdateInfo = async(ctx,table,order) => {
 	}
 }
 
+/**
+ * @Function
+ * Count total price of orders.
+ *
+ * @param {object} [orders] - orders list.
+ *
+ * @return {number} [total]  - Total price.
+ *
+ */
 const totalPrice = orders => {
 	let total = 0
 	for (const i in orders)
@@ -44,6 +82,18 @@ const totalPrice = orders => {
 	return total
 }
 
+/**
+ * @Function
+ * The tables-info website page with selected table info.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [orders] - orders.
+ *
+ * @render [table-info]  - website.
+ *
+ */
 const tablePostInfo = async(ctx,table,order) => {
 	try{
 		const BODY = ctx.request.body
@@ -63,6 +113,17 @@ const tablePostInfo = async(ctx,table,order) => {
 	}
 }
 
+/**
+ * @Function
+ * Update the tables website page with selected table info.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [ctx] - Context.
+ * @param {object} [table] - access tot tables object.
+ *
+ */
 const tableGetId = async(ctx,table) => {
 	try{
 
@@ -78,6 +139,19 @@ const tableGetId = async(ctx,table) => {
 	}
 }
 
+/**
+ * @Function
+ * Render website tables page
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [ctx] - Context.
+ * @param {object} [table] - Access to tables object.
+ *
+ * @render [tables]  - website.
+ *
+ */
 const tableGet = async(ctx,table) => {
 	try{
 		const TABLES = await table.GetTables()
@@ -93,6 +167,18 @@ const tableGet = async(ctx,table) => {
 	}
 }
 
+
+/**
+ * @Function
+ * Update the tables website page with selected table info.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [ctx] - Context.
+ * @param {object} [table] - Access to tables object.
+ *
+ */
 const tablePost = async(ctx, table) => {
 	try {
 		const BODY = ctx.request.body

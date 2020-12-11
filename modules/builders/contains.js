@@ -1,4 +1,4 @@
-/** @Module Items */
+/** @Module Contains */
 
 /* Modules */
 import { sqlInsert, sqlCreate } from '../sql/sql-module.js'
@@ -89,5 +89,5 @@ class Contains {
 	}
 }
 
-/** @Export For Items */
+/** @Export For Contains */
 export default Contains

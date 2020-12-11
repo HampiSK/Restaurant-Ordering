@@ -4,7 +4,7 @@
 import message from '../../scripts/messages.js'
 
 /**
- * @Function get
+ * @Function
  * The secure home page.
  *
  * @Alert

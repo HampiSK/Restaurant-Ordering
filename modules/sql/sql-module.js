@@ -90,7 +90,6 @@ const sqlModify = async(body,tablename,column,value) => {
  * Empty values are not inserted into database. Empty values are created by database with NULL value by default.
  *
  * @param {object} [body] - object from which sql statement is created.
- * @param {string} [body] - table name where data will be inserted.
  *
  * @return {array} - Values for statement
  *
@@ -138,20 +137,59 @@ const sqlInsert = async(body,tablename) => {
 	}
 }
 
-const getStatement = (body) => {
+/**
+ * @Function
+ * All strings are modified by trim() function.
+ * Empty values are not inserted into database. Empty values are created by database with NULL value by default.
+ *
+ * @param {object} [body] - object from which sql statement is created.
+ *
+ * @return {string} [where] - Sql statement.
+ *
+ */
+const loopStatement = body => {
 	let where = ''
-	if (Object.keys(body).length > 0) {
-		for (const val of Object.keys(body)) {
-			if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
-			if (emptyStringChecker(body[val])) continue
-			if (where.length === 0) where += ` WHERE ${val} = "${body[val]}"`
-			else where += `AND ${val} = "${body[val]}" `
-		}
-		return where
+	for (const val of Object.keys(body)) {
+		if (typeof body[val] === 'string') body[val] = body[val].trim() // modify whitespaces
+		if (emptyStringChecker(body[val])) continue
+		if (where.length === 0) where += ` WHERE ${val} = "${body[val]}"`
+		else where += `AND ${val} = "${body[val]}" `
 	}
+	return where
+}
+
+/**
+ * @Function
+ * Return sql statement
+ *
+ * @param {object} [body] - object from which sql statement is created.
+ *
+ * @return {string} - Sql statement or empty string.
+ *
+ */
+const getStatement = body => {
+	if (Object.keys(body).length > 0)
+		return loopStatement(body)
 	return ' '
 }
 
+/**
+ * @Function
+ * Return sql statement to get data.
+ *
+ * @Alert
+ * Async function.
+ *
+ * @param {object} [body]      - Object from which sql statement is created.
+ * @param {string} [tablename] - Table name where data will be inserted.
+ *
+ * Optional:
+ * @param {string} [select]    - Name of column to select.
+ *                             - On default select all.
+ *
+ * @return {string} [SQL] - Returns sql statement.
+ *
+ */
 const sqlGet = async(body,tablename,select = '*') => {
 	try {
 		const WHERE = getStatement(body)

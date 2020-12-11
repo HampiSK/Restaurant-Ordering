@@ -45,13 +45,17 @@ router.get('/orders/:id', async(ctx) => await orderGetId(ctx, await new Orders(D
 router.get('/orders', async(ctx) => await orderGet(ctx, await new Orders(DBNAME)))
 
 router.post('/tables', async(ctx) => await tablePost(ctx, await new Tables(DBNAME)))
-router.post('/table/:id', async(ctx) => await tablePostInfo(ctx, await new Tables(DBNAME),await new Orders(DBNAME)))
-router.post('/table/:id/update', async(ctx) => await tableUpdateInfo(ctx, await new Tables(DBNAME),await new Orders(DBNAME)))
+router.post('/table/:id', async(ctx) =>
+	await tablePostInfo(ctx, await new Tables(DBNAME),await new Orders(DBNAME)))
+router.post('/table/:id/update', async(ctx) =>
+	await tableUpdateInfo(ctx, await new Tables(DBNAME),await new Orders(DBNAME)))
 router.post('/register', async(ctx) => await registerPost(ctx, await new Accounts(DBNAME)))
 router.post('/profile', async(ctx) => await profilePost(ctx, await new Accounts(DBNAME)))
 router.post('/orders', async(ctx) => await orderPostId(ctx, await new Orders(DBNAME)))
-router.post('/table/:id/create', async(ctx) => await orderCreate(ctx, await new Orders(DBNAME), await new Foods(DBNAME)))
-router.post('/table/:id/created', async(ctx) => await orderCreatePost(ctx, await new Orders(DBNAME), await new Foods(DBNAME), await new Tables(DBNAME) ))
+router.post('/table/:id/create', async(ctx) =>
+	await orderCreate(ctx, await new Orders(DBNAME), await new Foods(DBNAME)))
+router.post('/table/:id/created', async(ctx) =>
+	await orderCreatePost(ctx, await new Orders(DBNAME), await new Foods(DBNAME), await new Tables(DBNAME) ))
 
 /** @Export For Secure Router Middleware */
 export default router

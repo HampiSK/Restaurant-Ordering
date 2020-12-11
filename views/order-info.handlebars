@@ -67,15 +67,14 @@
                         </article>
                         {{#if InUse}}
                         <article class="row">  
-                           
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                {{#each Tabs}}
-                                    <li class="nav-item">  
-                                        <a class="nav-link nav-b" id="{{this.Type}}-tab" data-toggle="tab" href="#{{this.Type}}" role="tab" aria-controls="{{this.Type}}" aria-selected="false">{{this.Type}}</a>
-                                    </li>  
-                                {{/each}}
+                            {{#each Tabs}}
                                 <li class="nav-item">  
-                                        <a class="nav-link nav-b" id="Comment-tab" data-toggle="tab" href="#Comment" role="tab" aria-controls="Comment" aria-selected="false">Comment</a>
+                                    <a class="nav-link nav-b" id="{{this.Type}}-tab" data-toggle="tab" href="#{{this.Type}}" role="tab" aria-controls="{{this.Type}}" aria-selected="false">{{this.Type}}</a>
+                                </li>  
+                            {{/each}}
+                                <li class="nav-item">  
+                                    <a class="nav-link nav-b" id="Comment-tab" data-toggle="tab" href="#Comment" role="tab" aria-controls="Comment" aria-selected="false">Comment</a>
                                 </li>  
                             </ul>
                         </article>                   
@@ -110,9 +109,7 @@
                         {{/if}}
                     </article>
                 </section>   
-          
-                <section class="col-md-3">
-                    
+                <section class="col-md-3">              
                     <article class="container p-3 my-3 bg-white">     
                         <article class="row">
                             <form action="/secure/table/{{this.TableId}}" enctype="multipart/form-data" method="post">
@@ -170,10 +167,8 @@
                         </section> 
                     {{/if}} 
                         </form>
-                    </article>
-                    
+                    </article>                   
                 </section>
-                
             </section>           
         </main>
     </body>

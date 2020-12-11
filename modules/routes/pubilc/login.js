@@ -57,14 +57,30 @@ const position = body => {
 	}
 }
 
+
+/**
+  * @Function
+  * When login post fails.
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [Account] - Account to login.
+  * @param {string} [dbName] - Name of database to store data.
+  *
+  * @redirect [/secure] - When user is authorised is redirected to secure.
+  * @render [/login]  - When something went wrong error is rendered.
+  *
+  */
 const loginFail = async(ctx,err) => {
-    try{
-        await message(ctx,'failed',err.message)
+	try{
+		await message(ctx,'failed',err.message)
 		ctx.hbs.msg = err.message
-		await loginGet(ctx)        
-    }catch(err){
-        await message(ctx,'failed',err.message)
-    }
+		await loginGet(ctx)
+	}catch(err) {
+		await message(ctx,'failed',err.message)
+	}
 }
 
 /**
@@ -96,7 +112,7 @@ Admin,Chef,Manager,Waiter FROM USER WHERE UserName = '${BODY.UserName}'`)
 		await message(ctx,'sucessful')
 		return ctx.redirect(`${REFERRER}?msg=you are now logged in...`)
 	}catch(err) {
-        await loginFail(ctx,err)
+		await loginFail(ctx,err)
 	} finally {
 		await ACCOUNT.Close()
 	}

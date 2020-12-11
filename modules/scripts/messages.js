@@ -5,6 +5,35 @@ import todayDate from './today-date.js'
 
 /**
   * @Function
+  * Cases for console message.
+  *
+  * @param {object} [ctx]      - Context.
+  * @param {string} [option]   - Type of message returned.
+  * @param {string} [message]  - Additional message if needed.
+  * @param {string} [date]     - Current date.
+  *
+  */
+const switchCases = (ctx,option,message,date) => {
+	switch(option) {
+		case 'request':
+			console.log(request(date,ctx))
+			break
+		case 'sucessful':
+			console.log(sucessful(date,ctx))
+			break
+		case 'failed':
+			console.log(failed(date,ctx,message))
+			break
+		case 'modified':
+			console.log(modified(date,ctx,message))
+			break
+		default:
+			throw new Error('Invalid option')
+	}
+}
+
+/**
+  * @Function
   * Print specified console message.
   *
   * @Alert
@@ -21,22 +50,7 @@ import todayDate from './today-date.js'
 const message = async(ctx,option,message = 'unknown error') => {
 	const DATE = await todayDate()
 	try{
-		switch(option) {
-			case 'request':
-				console.log(request(DATE,ctx))
-				break
-			case 'sucessful':
-				console.log(sucessful(DATE,ctx))
-				break
-			case 'failed':
-				console.log(failed(DATE,ctx,message))
-				break
-			case 'modified':
-				console.log(modified(DATE,ctx,message))
-				break
-			default:
-				throw new Error('Invalid option')
-		}
+		switchCases(ctx,option,message,DATE)
 	}catch(err) {
 		throw new Error(`message(): Message not generated => ${err.message}`)
 	}

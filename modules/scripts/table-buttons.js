@@ -1,19 +1,18 @@
 /** @Scripts For Table Buttons */
 
-/* Modules */
-import Tables from '../builders/tables.js'
-
 /**
   * @Function
-  * Actions for buttons in table
+  * Actions for buttons associated with diners.
   *
   * @Alert
-  * Async function
+  * Async function.
   *
-  * @param {string} [option] - Button action
+  * @param {string} [option] - Button action.
+  * @param {number} [id]     - Id of value to modify.
+  * @param {object} [table]  - Access the table object.
   *
   */
-const tableButton = async(table, Id, option) => {
+const updateTable = async(table, Id, option) => {
 	try{
 		switch (option) {
 			case 'Add Table':
@@ -22,6 +21,27 @@ const tableButton = async(table, Id, option) => {
 			case 'Delete Table':
 				await tableDel(Id,table)
 				break
+		}
+	}catch(err) {
+		throw new Error(`updateTable(): ${err.message}`)
+	}
+}
+
+/**
+  * @Function
+  * Actions for buttons associated with table.
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {string} [option] - Button action.
+  * @param {number} [id]     - Id of value to modify.
+  * @param {object} [table]  - Access the table object.
+  *
+  */
+const updateDiner = async(table, Id, option) => {
+	try{
+		switch (option) {
 			case 'Add Diner':
 				await dinerAdd(Id,table)
 				break
@@ -30,33 +50,90 @@ const tableButton = async(table, Id, option) => {
 				break
 		}
 	}catch(err) {
+		throw new Error(`updateDiner(): ${err.message}`)
+	}
+}
+
+/**
+  * @Function
+  * Actions for buttons in table
+  *
+  * @Alert
+  * Async function
+  *
+  * @param {string} [option] - Button action.
+  * @param {number} [id]     - Id of value to modify.
+  * @param {object} [table]  - Access the table object.
+  *
+  */
+const tableButton = async(table, Id, option) => {
+	try{
+		if(option === 'Add Table' || option === 'Delete Table')
+			await updateTable(table, Id, option)
+		else
+			await updateDiner(table, Id, option)
+	}catch(err) {
 		throw new Error(`tableButton(): ${err.message}`)
 	}
 }
 
+
+/**
+  * @Function
+  * Delete diner for table
+  *
+  * @Alert
+  * Async function
+  *
+  * @param {number} [tableId] - Id if table to modify.
+  * @param {object} [table]   - Access table object.
+  *
+  */
 const dinerDel = async(tableId,table) => {
 	try{
-		const DATA2 = await table.Get({TableId: Id},'Diners')
+		const DATA2 = await table.Get({TableId: tableId},'Diners')
 		let num2 = DATA2.Diners
 		num2--
 		if (num2 < 0) num2 = 0
-		await table.Modify({Diners: num2}, Id)
+		await table.Modify({Diners: num2}, tableId)
 	}catch(err) {
 		throw new Error(`dinerAdd(): ${err.message}`)
 	}
 }
 
+/**
+  * @Function
+  * Add diner in table
+  *
+  * @Alert
+  * Async function
+  *
+  * @param {number} [tableId] - Id if table to modify.
+  * @param {object} [table]   - Access table object.
+  *
+  */
 const dinerAdd = async(tableId,table) => {
 	try{
-		const DATA = await table.Get({TableId: Id},'Diners')
+		const DATA = await table.Get({TableId: tableId},'Diners')
 		let num = DATA.Diners
 		num++
-		await table.Modify({Diners: num}, Id)
+		await table.Modify({Diners: num}, tableId)
 	}catch(err) {
 		throw new Error(`dinerAdd(): ${err.message}`)
 	}
 }
 
+/**
+  * @Function
+  * Add table
+  *
+  * @Alert
+  * Async function
+  *
+  * @param {number} [tableId] - Id if table to modify.
+  * @param {object} [table]   - Access table object.
+  *
+  */
 const tableAdd = async(userId,table) => {
 	try {
 		const body = {
@@ -68,6 +145,17 @@ const tableAdd = async(userId,table) => {
 	}
 }
 
+/**
+  * @Function
+  * Delete table
+  *
+  * @Alert
+  * Async function
+  *
+  * @param {number} [tableId] - Id if table to modify.
+  * @param {object} [table]   - Access table object.
+  *
+  */
 const tableDel = async(userId,table) => {
 	try{
 		const TABLES = await table.GetTables()
@@ -80,4 +168,5 @@ const tableDel = async(userId,table) => {
 	}
 }
 
+/* Export For Table Buttons */
 export default tableButton

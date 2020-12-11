@@ -18,9 +18,9 @@ const orderButton = option => {
 		case 'Chef':
 			return ['Served']
 		case 'Waiter':
-			return ['Prepared']
+			return ['Prepared','Paid']
 	}
 }
 
-/** @Scripts For Order Buttons */
+/** @Export For Order Buttons */
 export default orderButton

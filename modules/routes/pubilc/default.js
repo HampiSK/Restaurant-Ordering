@@ -27,5 +27,5 @@ const defaultGetPublic = async(ctx) => {
 	}
 }
 
-/** @Export For Default Pubilc*/
+/** @Export For Default Pubilc */
 export default defaultGetPublic

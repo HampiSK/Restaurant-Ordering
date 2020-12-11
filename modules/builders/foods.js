@@ -1,4 +1,4 @@
-/** @Module Items */
+/** @Module Foods */
 
 /* Modules */
 import { sqlInsert, sqlModify, sqlCreate, sqlGet } from '../sql/sql-module.js'
@@ -6,18 +6,19 @@ import foodTable from '../sql/food-table.js'
 import todayDate from '../scripts/today-date.js'
 import { stringLenghtChecker } from '../scripts/checkers.js'
 
+/* Constants */
 const LTITLE = 75
 const LCOMMENT = 1000
 
 /**
  * @Object
- * Object Items is ES6 module that handles creating and modifying items.
+ * Object Foods is ES6 module that handles creating and modifying Foods.
  *
  */
 class Foods {
 	/**
      * @Constructor
-     * Create an Item object.
+     * Create an Foods object.
      *
      * @Alert
      * Async.
@@ -55,14 +56,14 @@ class Foods {
 
    	/**
 	 * @Method
-     * Create item.
+     * Create Food.
      *
      * @Alert
      * Async.
      *
-     * @param {object} [body] - Object with new item data.
+     * @param {object} [body] - Object with new food data.
      *
-     * @return {boolean} - True if item was created.
+     * @return {boolean} - True if food was created.
      *
      */
 	async Create(body) {
@@ -84,10 +85,10 @@ class Foods {
      * @Alert
      * Async.
      *
-     * @param {object} [body]   - Object with new item data.
-     * @param {string} [ItemId] - Id of item to change
+     * @param {object} [body]   - Object with new food data.
+     * @param {string} [ItemId] - Id of food to change
      *
-     * @return {boolean} - True if ingredient was modified.
+     * @return {boolean} - True if food was modified.
      *
      */
 	async Modify(body, FoodId) {
@@ -104,6 +105,21 @@ class Foods {
 	}
 
 
+   	/**
+	 * @Method
+     * Get data from database.
+     *
+     * @Alert
+     * Async.
+     *
+     * Optional:
+     * @param {object} [body]   - Object with new food data.
+     * @param {string} [select] - What to select from dtabase.
+     * @param {string} [dbanme] - Name of table in dtabase.
+     *
+     * @return {object} [BODY] - Database data.
+     *
+     */
 	async Get(body = {},select = '*',dbname = 'FOOD') {
 		try{
 			const SQL = await sqlGet(body,dbname,select)
@@ -132,5 +148,5 @@ class Foods {
 	}
 }
 
-/** @Export For Items */
+/** @Export For Foods */
 export default Foods

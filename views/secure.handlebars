@@ -2,27 +2,50 @@
 <!doctype html>
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Home Page</title>
-		<meta name="description" content="form to add new books">
-		<meta name="author" content="Mark Tyers">
-		<link href="{{host}}/style.css" type="text/css" rel="stylesheet" />
-		<script type="module" src="{{host}}/main.js"></script>
-	</head>
-	<body>
-		<header>
-		<h1>Secure Page</h1>
-		<a href="/logout">Log out</a>
-		</header>
-		{{#if msg}}
- 			<aside>
-				<p class="msg">{{msg}}</p>
-			</aside>
-		{{/if}}
-		<main>
-		<p>This is a secure page. Users need to have a valid account and be logged in to see it.</p>
-		<p><a href="/">Home page</a></p>
-		</main>
-	</body>
-</html>
+    <head>
+        <meta charset="utf-8">
+        <title>Log In</title>
+        <meta name="description" content="Form to log in">
+        <meta name="author" content="Adam Hampachel">
+        <link href="{{host}}/styles/style-login.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{{host}}/bootstrap/dist/css/bootstrap.min.css">           
+        <script type="text/javascript" src="{{host}}jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="{{host}}/bootstrap/dist/js/bootstrap.min.js"></script>  
+        <script type="module" src="{{host}}/main.js"></script>      
+    </head>   
+    <body class="login-body">
+        <section id="login">
+            <article class="container">
+                <article id="login-row" class="row justify-content-center align-items-center">
+                    <article id="login-column" class="col-md-6">
+                        <article id="login-box" class="col-md-12">
+                            <h3 class="text-center text-info">Welcome {{username}}!</h3>
+                            {{#if msg}}
+                            <article class="form-group">
+                                <p class="alert alert-success" role="alert">{{msg}}</p>
+                            </article>
+                            {{/if}}
+                            <article class="form-group">
+                                <article class="col style-padding">
+                                    <h5 class="text-info">Your ID:</h5>
+                                    <h7>{{userid}}</h7>
+                                </article>     
+                                <article class="col style-padding">
+                                    <h5 class="text-info">Position:</h5>
+                                    <h7>{{position}}</h7>
+                                </article>  
+                            </article>
+                         
+                            <article class="form-group">
+                                <a href="{{host}}/secure/tables" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Continue</a>
+                            </article>
+                            <article class="form-group">
+                                <a href="{{host}}/logout" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Logout</a>
+                            </article>
+                        </article>
+                    </article>
+                </article>
+            </article>
+        </section>
+    </body>
+</html> 

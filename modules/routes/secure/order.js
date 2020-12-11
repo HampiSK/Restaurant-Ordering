@@ -4,9 +4,20 @@
 import message from '../../scripts/messages.js'
 import orderButton from '../../scripts/order-buttons.js'
 import { tablePostInfo } from './table.js'
-import tableButton from '../../scripts/table-buttons.js'
 
-
+/**
+  * @Function
+  * Create order post method
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [order] - Access the order object.
+  * @param {object} [food] - Access the food object.
+  * @param {object} [table] - Access the table object.
+  *
+  */
 const orderCreatePost = async(ctx,order,food,table) => {
 	try{
 		const BODY = ctx.request.body
@@ -27,6 +38,20 @@ const orderCreatePost = async(ctx,order,food,table) => {
 	}
 }
 
+/**
+  * @Function
+  * Create order-create website
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [order] - Access the order object.
+  * @param {object} [food] - Access the food object.
+  *
+  * @render [order-create]  - website.
+  *
+  */
 const orderCreate = async(ctx,order,food) => {
 	try{
 		const BODY = await ctx.request.body
@@ -45,6 +70,17 @@ const orderCreate = async(ctx,order,food) => {
 	}
 }
 
+/**
+  * @Function
+  * Post method for specific order data
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [order] - Access the order object.
+  *
+  */
 const orderPostId = async(ctx,order) => {
 	try{
 		const BODY = await ctx.request.body
@@ -58,6 +94,20 @@ const orderPostId = async(ctx,order) => {
 	}
 }
 
+/**
+  * @Function
+  * Create order-info website
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [order] - Access the order object.
+  * @param {object} [food] - Access the food object.
+  *
+  * @render [order-info]  - website.
+  *
+  */
 const orderGetId = async(ctx,order,food) => {
 	try{
 		const ORDER = await order.Get({OrderId: ctx.hbs.Order})
@@ -78,13 +128,25 @@ const orderGetId = async(ctx,order,food) => {
 	}
 }
 
+/**
+  * @Function
+  * Update list of orders
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [list] - List of orders to update.
+  * @param {object} [order] - Access the order object.
+  *
+  * @return {list} [order-info]  - website.
+  *
+  */
 const updateList = async(order,list) => {
 	try{
 		const newOrder = []
 
 		for (const i in list) {
 			Object.assign(list[i], await order.GetUpdatedData(list[i]))
-
 			if(list[i].InUse === 0) delete list[i].InUse
 			newOrder.push(list[i])
 		}
@@ -95,6 +157,18 @@ const updateList = async(order,list) => {
 	}
 }
 
+/**
+  * @Function
+  * Update all orders
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [order] - Access the order object.
+  *
+  * @return {object}  - Updated orders.
+  *
+  */
 const ordersUpdate = async(order) => {
 	try{
 		const PLACED = await order.GetOrders('\'Placed\'')
@@ -112,6 +186,20 @@ const ordersUpdate = async(order) => {
 	}
 }
 
+
+/**
+  * @Function
+  * Create order website
+  *
+  * @Alert
+  * Async function.
+  *
+  * @param {object} [ctx] - Context.
+  * @param {object} [order] - Access the order object.
+  *
+  * @render [orders]  - website.
+  *
+  */
 const orderGet = async(ctx,order) => {
 	try{
 		Object.assign(ctx.hbs, await ordersUpdate(order))
@@ -125,19 +213,6 @@ const orderGet = async(ctx,order) => {
 		await order.Close()
 	}
 }
-
-
-// const orderPost = async(ctx, table) => {
-// 	try {
-// 		await tableButton(ctx.hbs.userid, ctx.request.body.Button)
-// 		await message(ctx,'modified',`${ctx.request.body.Button} by`)
-// 		await tableGet(ctx, table)
-// 	}catch(err) {
-// 		await message(ctx,'failed',err.message)
-// 		ctx.hbs.msg = `tablePost(): ${err.message}`
-// 		await tableGet(ctx, table)
-// 	}
-// }
 
 /** @Export For Order */
 export { orderGet, orderGetId, orderPostId, orderCreate, orderCreatePost }

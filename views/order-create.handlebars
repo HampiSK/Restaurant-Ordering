@@ -33,7 +33,6 @@
             </ul>
         </header>      
         <main class="block">
-
             <section class="row">
                 <section class="col-md-9">
                     <article class="container p-3 my-3 bg-white">  
@@ -62,12 +61,10 @@
                                       <p>Comment: </p>
                                     </article>
                                 </article>  
-                                                                            <section class="row justify-content-end">
-                          
-                          <article class="col-0 style-padding">
-                          <input class="btn btn-outline-light btn-lg" type="submit" name="Button" value="Create Order">
-                          </article>
-
+                          <section class="row justify-content-end">                        
+                              <article class="col-0 style-padding">
+                                  <input class="btn btn-outline-light btn-lg" type="submit" name="Button" value="Create Order">
+                              </article>
                           </section>
                           </article>
                         </article>
@@ -84,9 +81,7 @@
                                 </li>  
                             </ul>
                         </article>   
-                
-                <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5">  
-                    
+                    <article class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-md-5">                  
                         <article class="tab-content pad" id="myTabContent">
                             {{#each Tabs}}
                                 <section class="tab-pane fade" id="{{this.Type}}" role="tabpanel" aria-labelledby="{{this.Type}}-tab">    
@@ -109,21 +104,17 @@
                                 </article> 
                             </section>
                             </article>
-                         
-                        </article> 
-                        
+                        </article>                      
                         {{/if}}
                         </form>
                     </article>
-                </section>   
-          
-                <section class="col-md-3">
-                    
+                </section>         
+                <section class="col-md-3">                  
                     <article class="container p-3 my-3 bg-white">     
                         <article class="row">
                             <form action="/secure/table/{{Table.TableId}}" enctype="multipart/form-data" method="post">
                                 <input type="hidden" name ="TableId" value="{{Table.TableId}}">                   
-                          <article class="col mb-3">
+                                <article class="col mb-3">
                                 {{#if Table.InUse}}
                                   <button type="submit" name="Table" value="{{Table.TableId}}">
                                       <img src="{{host}}/images/table.jpg" class="card-img-top" alt="Table">
@@ -134,7 +125,7 @@
                                   </button>
                               <section class = "row">
                             <article class="col style-padding">
-                                  <a href="{{host}}/secure/orders}" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-disabled="true">Cancel Order</a>
+                                  <a href="{{host}}/secure/orders" class="btn btn-outline-dark btn-lg btn-block" role="button" aria-disabled="true">Cancel Order</a>
                             </article>
                                   </section>
                                 {{else}}
@@ -154,10 +145,8 @@
                             </article>                      
                         </form>
                     </article> 
-                    </article>
-                    
-                </section>
-                
+                    </article>      
+                </section>                
             </section>           
         </main>
     </body>
