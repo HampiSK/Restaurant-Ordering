@@ -17,7 +17,7 @@ waitress            p455w0rd
 chef                p455w0rd
 ```
 
-Link to github:
+Link to uni github:
 
 ```
 https://github.coventry.ac.uk/5001CEM-2021OCTJAN/hampacha-sem1
