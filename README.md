@@ -1,10 +1,6 @@
 # Restaurant-Ordering
 
-To download and configure a copy of this template code for your assignment open your Codio box, locate the Terminal and run the following commend:
-
-```shell
-$ curl -sL https://bit.ly/2TJtxjF | sudo -E bash -
-```
+Restaurant ordering system for small businesses
 
 Accounts:
 
@@ -15,22 +11,4 @@ manager             p455w0rd
 waiter              p455w0rd
 waitress            p455w0rd
 chef                p455w0rd
-```
-
-# Link to github:
-
-UNI
-```
-https://github.coventry.ac.uk/5001CEM-2021OCTJAN/hampacha-sem1
-```
-
-PRIVATE
-```
-https://github.com/HampiSK/Restaurant-Ordering
-```
-
-# Link to Heroku
-
-```
-https://git.heroku.com/warm-reef-70327.git
 ```
